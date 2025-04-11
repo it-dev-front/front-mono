@@ -32,7 +32,7 @@ export default function Home() {
           priority
         />
         <ol>
-          <li>FCDB</li>
+          <li>FCDB!!!</li>
           <li>Save and see your changes instantly.</li>
         </ol>
 
