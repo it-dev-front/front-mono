@@ -55,7 +55,7 @@ importers:
         specifier: 5.8.2
         version: 5.8.2
 
-  apps/fcdb:
+  apps/web:
     dependencies:
       '@repo/ui':
         specifier: workspace:*
