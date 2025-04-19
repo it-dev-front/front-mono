@@ -1,0 +1,14 @@
+.profile-card {
+  background-color: #212121;
+
+  background-image: url("/images/profile_background.png");
+  background-size: cover;
+  background-position: center;
+  width: 200px;
+  height: 160px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}

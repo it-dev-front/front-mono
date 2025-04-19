@@ -23,8 +23,7 @@ body {
 
 * {
   box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 a {
@@ -47,4 +46,12 @@ a {
   .imgDark {
     display: unset;
   }
+}
+
+@font-face {
+  font-family: "NEXON Lv1 Gothic OTF";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
 }

@@ -1,0 +1,10 @@
+.circle-bg {
+  transform: rotate(90deg);
+  transform-origin: center;
+}
+
+.circle-progress {
+  transform: rotate(90deg);
+  transform-origin: center;
+  transition: stroke-dashoffset 0.5s ease;
+}
