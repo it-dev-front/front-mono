@@ -9,7 +9,7 @@ export const UserSearchForm = () => {
       />
       <button
         type="submit"
-        className="ml-4 w-32 h-[60px] bg-gray-900 text-[#FFFFFF] px-4 py-2 rounded-lg"
+        className="ml-4 w-32 h-[60px] bg-gray-900 text-[#FFFFFF] px-4 py-2 rounded-lg hover:bg-gray-800"
       >
         전적보기
       </button>
