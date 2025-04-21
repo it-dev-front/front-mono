@@ -20,7 +20,7 @@ export const Header = () => {
         <Link
           href="/"
           className={clsx(
-            "pb-1.5",
+            "pb-2.5",
             isPlayer && "border-b-2 border-primary-300"
           )}
         >
@@ -29,7 +29,7 @@ export const Header = () => {
         <Link
           href="/ranking"
           className={clsx(
-            "pb-1.5",
+            "pb-2.5",
             isRanking && "border-b-2 border-primary-300"
           )}
         >
