@@ -8,8 +8,8 @@ import Link from "next/link";
 export const Header = () => {
   const pathname = usePathname();
 
-  const isPlayer = pathname === "/" || pathname === "/player";
-  const isRanking = pathname === "/ranking";
+  const isUserSearchPage = pathname === "/" || pathname === "/user";
+  const isRankingPage = pathname === "/ranking";
 
   return (
     <header className="w-full bg-gray-900 sticky top-0 z-10 flex items-center px-24 py-4">
@@ -21,7 +21,7 @@ export const Header = () => {
           href="/"
           className={clsx(
             "pb-2.5",
-            isPlayer && "border-b-2 border-primary-300"
+            isUserSearchPage && "border-b-2 border-primary-300"
           )}
         >
           전적검색
@@ -30,7 +30,7 @@ export const Header = () => {
           href="/ranking"
           className={clsx(
             "pb-2.5",
-            isRanking && "border-b-2 border-primary-300"
+            isRankingPage && "border-b-2 border-primary-300"
           )}
         >
           랭킹

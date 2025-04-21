@@ -8,10 +8,12 @@ export const User = ({ name }: UserPageProps) => {
   return (
     <div>
       <Header />
-      <ol>
-        <li>Player!</li>
-        <li>{name}</li>
-      </ol>
+      <div className="pt-40 flex justify-center">
+        <ol>
+          <li>player</li>
+          <li>{name}</li>
+        </ol>
+      </div>
     </div>
   );
 };

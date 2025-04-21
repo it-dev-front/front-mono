@@ -4,9 +4,11 @@ export const Ranking = () => {
   return (
     <div>
       <Header />
-      <ol>
-        <li>Ranking!</li>
-      </ol>
+      <div className="pt-40 flex justify-center">
+        <ol>
+          <li>ranking-page</li>
+        </ol>
+      </div>
     </div>
   );
 };
