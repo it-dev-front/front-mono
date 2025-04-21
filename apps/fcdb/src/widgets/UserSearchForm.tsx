@@ -1,9 +1,10 @@
+import Form from "next/form";
+
 export const UserSearchForm = () => {
   return (
-    <form action="/user" method="GET">
+    <Form action="/user">
       <input
         name="name"
-        type="text"
         placeholder="구단주 이름을 입력해주세요."
         className="w-[500px] h-14 bg-white text-[#000000] px-4 py-2 rounded-lg"
       />
@@ -13,6 +14,6 @@ export const UserSearchForm = () => {
       >
         전적보기
       </button>
-    </form>
+    </Form>
   );
 };
