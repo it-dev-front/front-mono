@@ -12,7 +12,7 @@ export const Header = () => {
   const isRankingPage = pathname === "/ranking";
 
   return (
-    <header className="w-full bg-gray-900 sticky top-0 z-10 flex items-center px-24 py-4">
+    <header className="w-full bg-gray-900 fixed top-0 left-0 z-50 flex items-center px-24 py-4">
       <Link href="/">
         <Image src="/logo.svg" alt="logo" width={108} height={20} />
       </Link>
