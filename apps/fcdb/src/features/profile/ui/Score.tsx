@@ -1,6 +1,9 @@
+"use client";
+
 import { CircularProgressBar } from "@/shared/ui/progressbar/CircularProgressBar";
 import { Typography } from "@/shared/ui/typography";
 import { ReactElement } from "react";
+import { useMediaQuery } from "react-responsive";
 
 type ScoreType = {
   total: number;
@@ -23,16 +26,26 @@ const calcScorePercentage = (score: ScoreType): number => {
 };
 
 export const Score = (): ReactElement => {
+  const isMobile = useMediaQuery({ maxWidth: 768 });
   const percentage = calcScorePercentage(MOCK_DATA);
 
+  const fontSize = isMobile ? 12 : 16;
   return (
     <div className="flex flex-col gap-4">
       <CircularProgressBar percentage={percentage} />
       <p className="flex gap-2">
-        <Typography as={"span"}>{MOCK_DATA.total}전</Typography>
-        <Typography as={"span"}>{MOCK_DATA.win}승</Typography>
-        <Typography as={"span"}>{MOCK_DATA.defeat}패</Typography>
-        <Typography as={"span"}>{MOCK_DATA.draw}무</Typography>
+        <Typography as={"span"} fontSize={fontSize}>
+          {MOCK_DATA.total}전
+        </Typography>
+        <Typography as={"span"} fontSize={fontSize}>
+          {MOCK_DATA.win}승
+        </Typography>
+        <Typography as={"span"} fontSize={fontSize}>
+          {MOCK_DATA.defeat}패
+        </Typography>
+        <Typography as={"span"} fontSize={fontSize}>
+          {MOCK_DATA.draw}무
+        </Typography>
       </p>
     </div>
   );

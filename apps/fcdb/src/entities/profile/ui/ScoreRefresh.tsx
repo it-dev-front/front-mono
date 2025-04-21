@@ -32,7 +32,7 @@ export const ScoreRefreshButton = ({
       className="flex items-center justify-center gap-1 w-[120px] h-[40px] bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white text-m px-3 py-1.5 rounded-md transition"
     >
       전적갱신
-      <RotateCcw size={14} className="text-lime-400" />
+      <RotateCcw size={14} className="text-primary-300" />
     </button>
   );
 };
