@@ -1,0 +1,41 @@
+"use client";
+
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import clsx from "clsx";
+import Link from "next/link";
+
+export const Header = () => {
+  const pathname = usePathname();
+
+  const isUserSearchPage = pathname === "/" || pathname === "/user";
+  const isRankingPage = pathname === "/ranking";
+
+  return (
+    <header className="w-full bg-gray-900 fixed top-0 left-0 z-50 flex items-center px-24 py-4">
+      <Link href="/">
+        <Image src="/logo.svg" alt="logo" width={108} height={20} />
+      </Link>
+      <nav className="space-x-10 text-primary-300 text-xl pl-24">
+        <Link
+          href="/"
+          className={clsx(
+            "pb-2.5",
+            isUserSearchPage && "border-b-2 border-primary-300"
+          )}
+        >
+          전적검색
+        </Link>
+        <Link
+          href="/ranking"
+          className={clsx(
+            "pb-2.5",
+            isRankingPage && "border-b-2 border-primary-300"
+          )}
+        >
+          랭킹
+        </Link>
+      </nav>
+    </header>
+  );
+};
