@@ -28,7 +28,7 @@ const MOCK_TIER_DATA = {
 /**@description Mobile 프로필 */
 export const MobileProfileSummary = (): ReactElement => {
   return (
-    <div className="flex flex-col items-start justify-between bg-gray-900 px-[20px] py-[16px] gap-[16px]">
+    <div className="mx-auto h-full w-full flex flex-col items-start justify-between bg-gray-900 px-[20px] py-[16px] gap-[16px]">
       <div className="w-full flex items-center justify-evenly gap-[24px]">
         <PlayerProfileCard spId={289015723} />
         <Score />
@@ -53,7 +53,7 @@ export const MobileProfileSummary = (): ReactElement => {
 /**@description Pc 프로필 */
 export const PcProfileSummary = (): ReactElement => {
   return (
-    <div className="flex items-center justify-between bg-gray-900 max-w-[1080px] h-[240px] p-[40px]">
+    <div className="mx-auto h-full w-full flex items-center justify-between bg-gray-900 max-w-[1080px] h-[240px] p-[40px]">
       <div className="flex items-center gap-[24px]">
         <PlayerProfileCard spId={289015723} />
         <ProfileBox

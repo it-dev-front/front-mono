@@ -1,7 +1,6 @@
 import { Header } from "@/widgets/Header";
 import { Footer } from "@/widgets/Footer";
-
-import { UserInformation } from "@/widgets/UserInformation";
+import { ProfileSummary } from "@/features/profile/ui/ProfileSummary";
 
 interface UserPageProps {
   name: string;
@@ -11,13 +10,9 @@ export const User = ({ name }: UserPageProps) => {
   return (
     <div>
       <Header />
-      <div className="flex flex-col min-h-screen pt-[60px]">
-        <main className="flex-grow flex justify-center pb-[520px]">
-          <div>
-            <div className="h-4" />
-            <UserInformation />
-            <p className="pt-4">{name}</p>
-          </div>
+      <div className="w-full min-w-[366px] flex flex-col min-h-screen pt-[60px]">
+        <main className="w-full flex-grow flex justify-center py-0 md:py-[1rem]">
+          <ProfileSummary />
         </main>
         <Footer />
       </div>

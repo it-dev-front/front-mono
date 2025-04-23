@@ -48,7 +48,8 @@ function baseElement(props: TypographyProps) {
   const fontClass = clsx(
     fontFamily === "noto-sans" && styles.notoSans,
     fontFamily === "nexon-gothic" && styles.nexonGothic,
-    className
+    className,
+    color
   );
 
   return React.createElement(
@@ -56,7 +57,6 @@ function baseElement(props: TypographyProps) {
     {
       className: fontClass,
       style: {
-        color,
         fontWeight,
         fontSize: `min(5vw, ${fontSize}px)`,
         lineHeight: `${lineHeight}px`,
