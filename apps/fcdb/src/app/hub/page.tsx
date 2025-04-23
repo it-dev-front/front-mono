@@ -1,9 +1,9 @@
-import { UserInformation } from "@/widgets/UserInformation";
+import { ProfileSummary } from "@/features/profile/ui/ProfileSummary";
 
 export default function HubPage() {
   return (
     <div>
-      <UserInformation />
+      <ProfileSummary />
     </div>
   );
 }
