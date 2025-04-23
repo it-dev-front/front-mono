@@ -1,6 +1,4 @@
 .profile-card {
-  background-color: var(--background);
-
   background-image: url("/images/profile_background.png");
   background-size: cover;
   background-position: center;
