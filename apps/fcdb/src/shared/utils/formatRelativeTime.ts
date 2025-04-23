@@ -5,7 +5,7 @@ import { TIME_FORMATS } from "@/shared/constant/time";
  * 주어진 날짜와 현재 날짜의 차이를 상대적인 시간 표현으로 변환합니다.
  * 예: '방금 전', '5분 전', '3시간 전', '2일 전', '1주 전' 등
  *
- * @param date - ISO 문자열 형식의 날짜
+ * @param date - Date 객체
  * @returns 상대적 시간 표현 문자열
  */
 
