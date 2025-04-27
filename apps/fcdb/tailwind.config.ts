@@ -6,11 +6,6 @@ const tailwindConfig: Pick<
 > = {
   darkMode: "class",
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
-  theme: {
-    screens: {
-      mobile: { max: "640px" },
-    },
-  },
 };
 
 export default tailwindConfig;
