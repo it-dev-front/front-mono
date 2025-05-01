@@ -12,6 +12,7 @@ import { PlayerProfileCard } from "@/entities/profile/ui/PlayerProfileCard";
 import { TierImage } from "@/entities/tier/ui/TierImage";
 import { DivisionLabel } from "@/entities/tier/ui/DivisionLabel";
 import { Typography } from "@/shared/ui/typography";
+import { UserProfileFetcher } from "./UserProfileFetcher";
 
 const MOCK_USER_DATA = {
   ouid: "string",
@@ -33,6 +34,7 @@ export const MobileProfileSummary = (): ReactElement => {
         <PlayerProfileCard spId={289015723} />
         <Score />
       </div>
+      <UserProfileFetcher />
       <div className="flex items-center justify-evenly w-full">
         <div className="w-[200px] flex items-center justify-start gap-[16px]">
           <TierImage divisionId={MOCK_TIER_DATA.division} />
@@ -53,7 +55,7 @@ export const MobileProfileSummary = (): ReactElement => {
 /**@description Pc 프로필 */
 export const PcProfileSummary = (): ReactElement => {
   return (
-    <div className="mx-auto h-full w-full flex items-center justify-between bg-gray-900 max-w-[1080px] h-[240px] p-[40px]">
+    <div className="mx-auto w-full flex items-center justify-between bg-gray-900 max-w-[1080px] h-[240px] p-[40px]">
       <div className="flex items-center gap-[24px]">
         <PlayerProfileCard spId={289015723} />
         <ProfileBox
@@ -73,11 +75,9 @@ export const PcProfileSummary = (): ReactElement => {
 };
 
 export const ProfileSummary = (): React.ReactElement | null => {
-  const [isClient, setIsClient] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
@@ -86,8 +86,6 @@ export const ProfileSummary = (): React.ReactElement | null => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  if (!isClient) return null;
 
   return isMobile ? <MobileProfileSummary /> : <PcProfileSummary />;
 };

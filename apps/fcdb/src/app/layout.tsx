@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./(app)/styles/globals.css";
 import "./(app)/styles/tailwind.css";
+import { AppProvider } from "./(app)/providers";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,7 +23,9 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <AppProvider>{children}</AppProvider>
+      </body>
     </html>
   );
 }
