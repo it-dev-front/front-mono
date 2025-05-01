@@ -1,8 +1,16 @@
 import { Header } from "@/widgets/Header";
 import { Footer } from "@/widgets/Footer";
 import { ProfileSummary } from "@/features/profile/ui/ProfileSummary";
+import { getOuid } from "@/entities/id/api";
 
-export const User = () => {
+interface UserPageProps {
+  name: string;
+}
+
+export const User = async ({ name }: UserPageProps) => {
+  const { ouid } = await getOuid(name);
+
+  console.log("@@@ ouid : ", ouid);
   return (
     <>
       <Header />

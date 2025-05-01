@@ -33,3 +33,9 @@
   --color-red-000: var(--red-000);
   --color-blue-000: var(--blue-000);
 }
+
+@custom-variant mobile {
+  @media (max-width: 360px) {
+    @slot;
+  }
+}
