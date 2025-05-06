@@ -4,7 +4,7 @@ import { MatchTypeLabel } from "@/entities/tier/ui/MatchTypeLabel";
 import { TierImage } from "@/entities/tier/ui/TierImage";
 import { ReactElement } from "react";
 
-const parseObject = (
+export const parseTierData = (
   data: TierBadgeType | TierBadgeType[]
 ): TierBadgeType | null => {
   if (Array.isArray(data)) {
@@ -24,8 +24,8 @@ interface TierBadgeProps {
   data: TierBadgeType | TierBadgeType[];
 }
 
-export const TierBadge = ({data}: TierBadgeProps): ReactElement => {
-  const parseData = parseObject(data);
+export const TierBadge = ({ data }: TierBadgeProps): ReactElement => {
+  const parseData = parseTierData(data);
 
   if (!parseData) return <div>정보가 없움</div>;
 

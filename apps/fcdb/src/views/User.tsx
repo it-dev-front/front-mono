@@ -1,22 +1,19 @@
 import { Header } from "@/widgets/Header";
 import { Footer } from "@/widgets/Footer";
+import { UserProfileFetcher } from "@/features/profile/ui/UserProfileFetcher";
 import { ProfileSummary } from "@/features/profile/ui/ProfileSummary";
-import { getOuid } from "@/entities/id/api";
 
 interface UserPageProps {
   name: string;
 }
 
-export const User = async ({ name }: UserPageProps) => {
-  const { ouid } = await getOuid(name);
-
-  console.log("@@@ ouid : ", ouid);
+export const User = async () => {
   return (
     <>
       <Header />
       <main className="w-full min-w-[366px] flex flex-col min-h-screen pt-[62px]">
         <div className="w-full flex-grow flex justify-center py-0 md:py-[1rem] border-t border-[#424242] md:border-t-0">
-          <ProfileSummary />
+          <UserProfileFetcher />
         </div>
       </main>
       <Footer />

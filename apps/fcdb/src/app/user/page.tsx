@@ -16,7 +16,7 @@ export default async function UserPage({ searchParams }: UserPageProps) {
     method: "GET",
     headers: {
       accept: "application/json",
-      "x-nxopen-api-key": process.env.DEV_API_KEY as string,
+      "x-nxopen-api-key": process.env.NEXT_PUBLIC_DEV_API_KEY as string,
     },
   });
   const ouid = await res.json();
@@ -24,7 +24,7 @@ export default async function UserPage({ searchParams }: UserPageProps) {
 
   return (
     <div>
-      <User name={name} />
+      <User  />
     </div>
   );
 }

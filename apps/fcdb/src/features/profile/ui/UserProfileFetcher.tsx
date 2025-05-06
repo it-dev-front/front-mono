@@ -1,20 +1,32 @@
 "use client";
 
-import { FcClient } from "@/entities/fc-database/lib/FcClient";
-import { useQuery } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
+import { ProfileSummary } from "./ProfileSummary";
+import { ProfileQueries } from "@/entities/profile/model/queries";
 
-const MOCK_OUID = "99156cc13fbdadffb8c87df57f12f3ad";
+//TODO ouid 추출
+const MOCK_OUID = "6d92bf89ca76f233a7ce750b5a24cad5";
 
 export const UserProfileFetcher = () => {
-  const { data, isLoading } = useQuery({
-    queryKey: ["test"],
-    queryFn: () =>
-      FcClient.get("User").then((api) => api.getUserInfo(MOCK_OUID)),
+  const results = useQueries({
+    queries: [
+      ProfileQueries.getUserProfile(MOCK_OUID),
+      ProfileQueries.getUserBestRating(MOCK_OUID),
+    ],
   });
 
-  if (isLoading) return <div>롸</div>;
+  const [profileQuery, ratingQuery] = results;
 
-  console.log(data);
+  const isLoading = results.some((query) => query.isLoading);
+  const isDataReady = results.every((query) => query.data);
 
-  return <div>성공</div>;
+  // TODO 로딩 스피너
+  if (isLoading || !isDataReady) return <div>로딩 중...</div>;
+
+  return (
+    <ProfileSummary
+      profileData={profileQuery.data!}
+      ratingData={ratingQuery.data!}
+    />
+  );
 };

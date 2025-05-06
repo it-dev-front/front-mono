@@ -10,7 +10,7 @@ interface UserProfileResponse extends UserOuidResponse {
 interface BestGradeResponse {
   matchType: number;
   division: number;
-  achievementDate: Date;
+  achievementDate: string;
 }
 
 export type { UserOuidResponse, UserProfileResponse, BestGradeResponse };
