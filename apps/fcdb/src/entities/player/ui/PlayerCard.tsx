@@ -1,4 +1,4 @@
-import Badge from "@/entities/player-card/ui/Badge";
+import Badge from "@/entities/player/ui/Badge";
 import clsx from "clsx";
 import Image from "next/image";
 
