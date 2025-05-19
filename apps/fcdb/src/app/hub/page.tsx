@@ -1,9 +1,14 @@
 import { ProfileSummary } from "@/features/profile/ui/ProfileSummary";
+import MatchSummary from "@/widgets/match/MatchSummary";
+import HubPageLayout from "./layout";
 
 export default function HubPage() {
   return (
-    <div>
+    <HubPageLayout>
       <ProfileSummary />
-    </div>
+      <MatchSummary />
+      <MatchSummary />
+      <MatchSummary />
+    </HubPageLayout>
   );
 }

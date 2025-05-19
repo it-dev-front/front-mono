@@ -32,6 +32,10 @@
 
   --color-red-000: var(--red-000);
   --color-blue-000: var(--blue-000);
+
+  --color-win: #abee02;
+  --color-draw: #cfcececc;
+  --color-loss: #fc5555;
 }
 
 @custom-variant mobile {
