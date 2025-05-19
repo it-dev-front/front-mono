@@ -24,7 +24,7 @@ const PossessionIndicator = ({
   };
 
   return (
-    <figure className="flex w-full h-[36px] mobile:h-[20px] text-[20px] mobile:text-[16px] font-bold">
+    <figure className="flex w-full h-[36px] mobile:h-[20px] text-[20px] mobile:text-[10px] font-bold">
       <section
         className={userSectionStyle}
         style={{

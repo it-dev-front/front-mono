@@ -1,11 +1,6 @@
 import { Header } from "@/widgets/Header";
 import { Footer } from "@/widgets/Footer";
 import { UserProfileFetcher } from "@/features/profile/ui/UserProfileFetcher";
-import { ProfileSummary } from "@/features/profile/ui/ProfileSummary";
-
-interface UserPageProps {
-  name: string;
-}
 
 export const User = async () => {
   return (

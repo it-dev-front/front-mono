@@ -31,7 +31,7 @@ export const MobileProfileSummary = ({
         <PlayerProfileCard spId={289015723} />
         <Score />
       </div>
-      <div className="flex items-center justify-evenly w-full">
+      <div className="flex items-center w-full justify-evenly">
         <div className="w-[200px] flex items-center justify-start gap-[16px]">
           <TierImage divisionId={tierData?.division || 0} />
           <div className={"flex flex-col gap-[8px]"}>
