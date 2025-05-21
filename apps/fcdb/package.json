@@ -8,10 +8,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint --max-warnings 0",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "generate-types": "npx supabase gen types typescript --project-id orgwoukgwyxadtjhexiv --schema public > types_db.ts"
   },
   "dependencies": {
     "@repo/ui": "workspace:*",
+    "@supabase/supabase-js": "^2.49.4",
+    "cheerio": "^1.0.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.501.0",
     "next": "^15.2.4",
