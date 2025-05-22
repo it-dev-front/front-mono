@@ -1,3 +1,4 @@
+import { FcClient } from "@/entities/fc-database/lib/FcClient";
 import { User } from "@/views/User";
 
 interface UserPageProps {
@@ -10,21 +11,22 @@ const MOCK_OUID = "99156cc13fbdadffb8c87df57f12f3ad;";
 
 export default async function UserPage({ searchParams }: UserPageProps) {
   const { name } = await searchParams;
-  // ouid 가져오기 API 테스트
-  const url = `https://open.api.nexon.com/fconline/v1/id?nickname=${name}`;
-  const res = await fetch(url, {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      "x-nxopen-api-key": process.env.NEXT_PUBLIC_DEV_API_KEY as string,
-    },
-  });
-  const ouid = await res.json();
-  console.log(ouid);
+  let ouid = "";
+
+  try {
+    const result = await FcClient.get("User").then((api) => api.getOuid(name));
+    if (result.ouid) {
+      ouid = result.ouid;
+    }
+    return <User ouid={ouid} />;
+  } catch (e) {
+    // 존재하지 않는 값
+    console.error(e);
+  }
 
   return (
     <div>
-      <User  />
+      <User ouid={ouid} />
     </div>
   );
 }
