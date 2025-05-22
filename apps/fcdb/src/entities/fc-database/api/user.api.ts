@@ -12,8 +12,18 @@ export const userApi = async (request: ApiRequest) => ({
    * @param nickname - 조회할 유저의 닉네임
    * @returns ouid를 포함한 객체
    */
-  getOuid: (nickname: string): Promise<UserOuidResponse> =>
-    request("/fconline/v1/id", { query: { nickname } }),
+  getOuid: async (nickname: string): Promise<UserOuidResponse> => {
+    try {
+      const response = await request<UserOuidResponse>("/fconline/v1/id", {
+        query: { nickname },
+      });
+      return response;
+    } catch (error) {
+      return {
+        ouid: "",
+      };
+    }
+  },
   /**
    * 계정 식별자(ouid)로 유저의 기본 정보를 조회합니다.
    * @param ouid - 유저 식별자

@@ -1,5 +1,5 @@
 import { Header } from "@/widgets/Header";
-import { UserSearchForm } from "@/widgets/UserSearchForm";
+import { UserSearchForm } from "@/features/user-search/ui/UserSearchForm";
 import { Footer } from "@/widgets/Footer";
 import { Banner } from "@/widgets/Banner";
 

@@ -1,8 +1,21 @@
+"use client";
+
 import Form from "next/form";
+import { userSearchAction } from "./UserSearchForm.server";
+import { useActionState, useEffect } from "react";
 
 export const UserSearchForm = () => {
+  const [state, formAction] = useActionState(userSearchAction, { error: null });
+
+  useEffect(() => {
+    if (state.error) {
+      //TODO toast
+      console.log(state.error);
+    }
+  }, [state.error]);
+
   return (
-    <Form action="/user">
+    <Form action={formAction}>
       <input
         name="name"
         placeholder="구단주 이름을 입력해주세요."
