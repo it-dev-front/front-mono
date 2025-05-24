@@ -9,7 +9,10 @@
     "start": "next start",
     "lint": "next lint --max-warnings 0",
     "check-types": "tsc --noEmit",
-    "generate-types": "npx supabase gen types typescript --project-id orgwoukgwyxadtjhexiv --schema public > types_db.ts"
+    "generate-types": "npx supabase gen types typescript --project-id orgwoukgwyxadtjhexiv --schema public > types_db.ts",
+    "test": "jest",
+    "test:ci": "jest --ci --passWithNoTests",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@repo/ui": "workspace:*",
@@ -36,6 +39,12 @@
     "@types/react-dom": "19.1.1",
     "eslint": "^9.24.0",
     "tailwindcss": "^4.1.1",
-    "typescript": "5.8.2"
+    "typescript": "5.8.2",
+    "@testing-library/dom": "^9.3.1",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^14.0.0",
+    "@types/jest": "^29.5.12",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
   }
 }
