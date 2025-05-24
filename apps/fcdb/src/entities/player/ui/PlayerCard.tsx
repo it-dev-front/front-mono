@@ -28,7 +28,7 @@ const isUser = true;
 
 const PlayerCard = () => {
   const imageOverlayBaseStyle =
-    "relative w-[72px] h-[72px] mobile:w-[52px] mobile:h-[52px] rounded-full border-[2px] bg-gray-900 mx-auto overflow-hidden";
+    "relative w-[72px] h-[72px] rounded-full border-[2px] bg-gray-900 mx-auto overflow-hidden";
   const opponentImageOverlayStyle = clsx(
     imageOverlayBaseStyle,
     "border-gray-600"
@@ -36,7 +36,7 @@ const PlayerCard = () => {
   const userImageOverlayStyle = clsx(imageOverlayBaseStyle, "border-[#ABEE02]");
 
   return (
-    <figure className="flex flex-col justify-between w-[124px] h-[117px] mobile:w-[80px] mobile:h-[82px] mobile:text-[10px]">
+    <figure className="flex flex-col justify-between w-[124px] h-[117px] mobile:w-[80px] mobile:h-[82px]">
       <section className="relative h-[93px]">
         <Badge.Mvp isMvp />
         <div
@@ -57,7 +57,7 @@ const PlayerCard = () => {
         </div>
       </section>
 
-      <section className="flex gap-[4px] justify-center text-[14px] whitespace-nowrap mobile:text-[10px]">
+      <section className="flex gap-[4px] text-[14px] whitespace-nowrap">
         <span className="text-[#CE535D]">
           {/* TODO: object mapping */}
           {MOCK_POSITION_DESC}
