@@ -3,14 +3,14 @@
 import Form from "next/form";
 import { userSearchAction } from "./UserSearchForm.server";
 import { useActionState, useEffect } from "react";
+import { toast } from "sonner";
 
 export const UserSearchForm = () => {
   const [state, formAction] = useActionState(userSearchAction, { error: null });
 
   useEffect(() => {
     if (state.error) {
-      //TODO toast
-      console.log(state.error);
+      toast.error(state.error);
     }
   }, [state.error]);
 
