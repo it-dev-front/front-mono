@@ -7,11 +7,16 @@ export const User = async () => {
   return (
     <>
       <Header />
-      <main className="w-full min-w-[366px] flex flex-col min-h-screen pt-[62px] items-center">
+      <main className="w-full min-w-[366px] flex flex-col min-h-screen pt-[62px]">
         <div className="w-full flex justify-center py-0 md:py-[1rem] border-t border-[#424242] md:border-t-0">
           <UserProfileFetcher />
         </div>
-        <MatchSummary />
+        <div className="w-full flex flex-col items-center gap-[8px]">
+          <MatchSummary />
+          <MatchSummary />
+          <MatchSummary />
+          <MatchSummary />
+        </div>
       </main>
       <Footer />
     </>
