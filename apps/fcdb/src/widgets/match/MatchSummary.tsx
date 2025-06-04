@@ -9,6 +9,7 @@ import PossessionIndicator from "@/entities/match/ui/PossessionIndicator";
 import ScoreCard from "@/entities/match/ui/ScoreBoard";
 import MatchResultLabel from "@/entities/match/ui/MatchResultLabel";
 import MatchDateLabel from "@/entities/match/ui/MatchDateLabel";
+import { UserSearchFormation } from "@/features/user-search/ui/UserSearchFormation";
 
 // TODO: 동적 데이터 바인딩
 
@@ -73,6 +74,7 @@ const MatchSummary = () => {
           )}
         >
           {/* Accordion content */}
+          <UserSearchFormation />
         </div>
       </section>
     </article>
