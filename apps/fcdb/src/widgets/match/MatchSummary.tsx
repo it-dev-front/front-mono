@@ -11,8 +11,6 @@ import MatchResultLabel from "@/entities/match/ui/MatchResultLabel";
 import MatchDateLabel from "@/entities/match/ui/MatchDateLabel";
 import { UserSearchFormation } from "@/features/user-search/ui/UserSearchFormation";
 
-// TODO: 동적 데이터 바인딩
-
 const MatchSummary = () => {
   const MOCK_USER_POSSESSION = 90;
   const MOCK_OPPONENT_POSSESSION = 10;
