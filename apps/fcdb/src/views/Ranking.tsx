@@ -2,6 +2,7 @@ import { Header } from "@/widgets/Header";
 import { getRanking } from "@/entities/ranking/api";
 import RankingPageHeader from "@/widgets/ranking/RankingPageHeader";
 import Image from "next/image";
+import { CircularProgressBar } from "@/shared/ui/progressbar/CircularProgressBar";
 
 export default async function Ranking() {
   const pageNumber = 1;
@@ -33,7 +34,7 @@ export default async function Ranking() {
             {data?.map((record: any) => (
               <ul
                 key={record.rankNo}
-                className="flex items-center h-[75px] px-10 py-3 bg-gray-900 rounded-[8px] text-[16px] text-white"
+                className="flex items-center h-[84px] px-10 py-3 bg-gray-900 rounded-[8px] text-[16px] text-white"
               >
                 <li className="w-20 text-center text-[24px]">
                   {record.rankNo}
@@ -47,7 +48,13 @@ export default async function Ranking() {
                   {record.record.win + record.record.draw + record.record.lose}
                   전 {record.win}승 {record.lose}패
                 </li>
-                <li className="text-center w-30">{record.odds}</li>
+                <li className="text-center w-30">
+                  <CircularProgressBar
+                    percentage={parseInt(record.odds)}
+                    size={60}
+                    strokeWidth={3}
+                  />
+                </li>
                 <li className="flex justify-center text-center w-30">
                   <div className="relative overflow-hidden rounded-full w-15 h-15">
                     <Image src={record.rankBestImg} fill alt="최고등급" />
@@ -61,19 +68,3 @@ export default async function Ranking() {
     </>
   );
 }
-
-// {
-//   "rankNo": 1,
-//   "created_at": "2025-05-06T17:39:25.464517+00:00",
-//   "nickname": "NSRimGC",
-//   "clubValue": "667조 7,427억",
-//   "level": 4715,
-//   "rankingScore": 3532.11,
-//   "record": {
-//       "win": 222,
-//       "draw": 6,
-//       "lose": 55
-//   },
-//   "odds": 78.4,
-//   "rankBestImg": "https://ssl.nexon.com/s2/game/fo4/obt/rank/large/update_2009/ico_rank0.png"
-// }
