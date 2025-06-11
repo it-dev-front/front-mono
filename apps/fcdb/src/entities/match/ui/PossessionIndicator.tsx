@@ -2,15 +2,15 @@ import clsx from "clsx";
 import { MIN_WIDTH } from "../constants";
 
 interface PossessionIndicatorProps {
-  userPossession: number;
-  opponentPossession: number;
+  userPossession: number | null;
+  opponentPossession: number | null;
   userNickName: string;
   opponentNickName: string;
 }
 
 const PossessionIndicator = ({
-  userPossession,
-  opponentPossession,
+  userPossession = 0,
+  opponentPossession = 0,
   userNickName,
   opponentNickName,
 }: PossessionIndicatorProps) => {

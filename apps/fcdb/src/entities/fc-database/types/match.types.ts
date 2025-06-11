@@ -11,17 +11,17 @@ interface MatchDeatil {
   seasonId: number;
   matchResult: string;
   matchEndType: number;
-  systemPause: number;
-  foul: number;
-  injury: number;
-  redCards: number;
-  yellowCards: number;
-  dribble: number;
-  cornerKick: number;
-  possession: number;
-  OffsideCount: number;
-  averageRating: number;
-  controller: string; // "keyboard" | "pad"
+  systemPause: number | null;
+  foul: number | null;
+  injury: number | null;
+  redCards: number | null;
+  yellowCards: number | null;
+  dribble: number | null;
+  cornerKick: number | null;
+  possession: number | null;
+  offsideCount: number | null;
+  averageRating: number | null;
+  controller: "keyboard" | "gamepad" | "etc";
 }
 
 interface PlayerStatus {
@@ -37,7 +37,7 @@ interface PlayerStatus {
   dribbleTry: number;
   dribbleSuccess: number;
   ballPossesionTry: number;
-  ballPossesionSuc: number;
+  ballPossesionSuccess: number;
   aerialTry: number;
   aerialSuccess: number;
   blockTry: number;
@@ -49,7 +49,26 @@ interface PlayerStatus {
   spRating: number;
 }
 
-export interface Player {
+interface ShootType {
+  shootTotal: number;
+  effectiveShootTotal: number;
+  shootOutScore: number;
+  goalTotal: number;
+  goalTotalDisplay: number;
+  ownGoal: number;
+  shootHeading: number;
+  goalHeading: number;
+  shootFreekick: number;
+  goalFreekick: number;
+  shootInPenalty: number;
+  goalInPenalty: number;
+  shootOutPenalty: number;
+  goalOutPenalty: number;
+  shootPenaltyKick: number;
+  goalPenaltyKick: number;
+}
+
+interface Player {
   spId: number;
   spPosition: number;
   spGrade: number;
@@ -67,7 +86,7 @@ interface ShootDetail {
   spLevel: number;
   spIdType: boolean;
   assist: boolean;
-  assistSpI: number;
+  assistSpId: number;
   assistX: number;
   assistY: number;
   hitPost: boolean;
@@ -100,8 +119,9 @@ interface DefenceStats {
 
 interface MatchInfo {
   ouid: string;
-  nickanme: string;
+  nickname: string;
   matchDetail: MatchDeatil;
+  shoot: ShootType;
   shootDetail: ShootDetail[];
   pass: PassStats;
   defence: DefenceStats;

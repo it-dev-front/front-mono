@@ -2,8 +2,6 @@ import { API_URL, NEXON_API_KEY } from "@/app/(app)/config/env";
 import { ApiRequestConfig, ApiErrorResponse } from "../types";
 import { apiFactoryMap } from "../model/apiFactoryMap";
 
-console.log(API_URL, NEXON_API_KEY);
-
 type ApiFactoryMap = typeof apiFactoryMap;
 type ApiType = keyof ApiFactoryMap;
 

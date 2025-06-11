@@ -1,4 +1,4 @@
-import { MatchDetailType } from "../../types/match.types";
+import { MatchDetailType } from "@/entities/match/types/match.types";
 
 export const MATCH_DETAIL_MOCK: MatchDetailType = {
   matchId: "68308ac10e1a47536f945e00",

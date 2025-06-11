@@ -1,7 +1,7 @@
 import { Header } from "@/widgets/Header";
 import { Footer } from "@/widgets/Footer";
 import { UserProfileFetcher } from "@/features/profile/ui/UserProfileFetcher";
-import MatchSummary from "@/widgets/match/MatchSummary";
+import { MatchSummaryFetcher } from "@/features/match/ui/MatchSummaryFetcher";
 
 export const User = async () => {
   return (
@@ -12,10 +12,7 @@ export const User = async () => {
           <UserProfileFetcher />
         </div>
         <div className="w-full flex flex-col items-center gap-[8px]">
-          <MatchSummary />
-          <MatchSummary />
-          <MatchSummary />
-          <MatchSummary />
+          <MatchSummaryFetcher />
         </div>
       </main>
       <Footer />

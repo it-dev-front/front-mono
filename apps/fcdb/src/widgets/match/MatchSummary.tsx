@@ -10,13 +10,13 @@ import ScoreCard from "@/entities/match/ui/ScoreBoard";
 import MatchResultLabel from "@/entities/match/ui/MatchResultLabel";
 import MatchDateLabel from "@/entities/match/ui/MatchDateLabel";
 import { UserSearchFormation } from "@/features/user-search/ui/UserSearchFormation";
+import { ConvertedMatchInfo } from "@/entities/match/lib/getMatchInfo";
 
-const MatchSummary = () => {
-  const MOCK_USER_POSSESSION = 90;
-  const MOCK_OPPONENT_POSSESSION = 10;
-  const MOCK_USER_NICKNAME = "유저유저";
-  const MOCK_OPPONENT_NICKNAME = "상대상대";
+interface MatchSummaryProps {
+  match: ConvertedMatchInfo;
+}
 
+const MatchSummary = ({ match }: MatchSummaryProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -31,9 +31,12 @@ const MatchSummary = () => {
             <PlayerCard />
 
             <div className="flex flex-col items-center justify-center gap-2 [&>*:not(:nth-child(2))]:hidden mobile:[&>*:not(:nth-child(2))]:block">
-              <MatchResultLabel matchResult="패" />
-              <ScoreCard userScore={4} opponentScore={2} />
-              <MatchDateLabel matchDate={new Date()} />
+              <MatchResultLabel matchResult={match.matchResult} />
+              <ScoreCard
+                userScore={match.score.userScore}
+                opponentScore={match.score.opponentScore}
+              />
+              <MatchDateLabel matchDate={match.matchDate} />
             </div>
 
             <PlayerCard />
@@ -59,10 +62,10 @@ const MatchSummary = () => {
         </header>
 
         <PossessionIndicator
-          userPossession={MOCK_USER_POSSESSION}
-          opponentPossession={MOCK_OPPONENT_POSSESSION}
-          userNickName={MOCK_USER_NICKNAME}
-          opponentNickName={MOCK_OPPONENT_NICKNAME}
+          userNickName={match.indicator.userNickName}
+          userPossession={match.indicator.userPossession}
+          opponentNickName={match.indicator.opponentNickName}
+          opponentPossession={match.indicator.opponentPossession}
         />
 
         <div

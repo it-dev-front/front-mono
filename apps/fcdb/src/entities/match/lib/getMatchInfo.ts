@@ -1,48 +1,35 @@
-/**@description 매치 종료 타입 변환*/
-const convertMatchEndType = (matchEndType: number): string | undefined => {
-  if (matchEndType === 0) {
-    return "정상종료";
-  } else if (matchEndType === 1) {
-    return "몰수 승";
-  } else if (matchEndType === 2) {
-    return "몰수 패";
-  }
-};
-
-/**@description 매치 플레이어 정보 변환*/
-const convertMatchPlayers = (players: any[]) => {
-  return players.map((player, index) => {
-    if (index !== 0) return null;
-    return {
-      id: player.spId,
-      position: player.spPosition,
-      grade: player.spGrade,
-      status: {
-        shoot: player.status.shoot,
-        effectiveShoot: player.status.effectiveShoot,
-        assist: player.status.assist,
-        goal: player.status.goal,
-        spRating: player.status.spRating,
-      },
-    };
-  });
-};
+import { ConvertedMatchInfo } from "../types/match.info.types";
+import { MatchPlayerInfoType } from "../types/match.types";
 
 /**@description 매치 정보 변환*/
-const convertMatchInfo = (matchInfo: any[]) => {
-  return matchInfo.map((info) => ({
-    user: {
-      ouid: info.ouid,
-      seasonId: info.matchDetail.seasonId,
-      nickname: info.nickname,
+const convertMatchInfo = (
+  matchInfo: MatchPlayerInfoType[]
+): ConvertedMatchInfo => {
+  const firstMatch = matchInfo[0];
+  const secondMatch = matchInfo[1];
+
+  if (!firstMatch || !secondMatch) {
+    throw new Error("매치 정보 없음");
+  }
+
+  return {
+    indicator: {
+      userNickName: firstMatch.nickname,
+      userPossession: firstMatch.matchDetail.possession ?? null,
+      opponentNickName: secondMatch.nickname,
+      opponentPossession: secondMatch.matchDetail.possession ?? null,
     },
-    match: {
-      matchResult: info.matchDetail.matchResult,
-      matchEndType: convertMatchEndType(info.matchDetail.matchEndType),
-      point: info.shoot.goalTotalDisplay,
+    score: {
+      userScore: firstMatch.shoot.goalTotalDisplay,
+      opponentScore: secondMatch.shoot.goalTotalDisplay,
     },
-    players: convertMatchPlayers(info.player),
-  }));
+    matchDate: new Date(),
+    matchResult: firstMatch.matchDetail.matchResult as "승" | "패" | "무",
+    players: {
+      user: firstMatch.player,
+      opponent: secondMatch.player,
+    },
+  };
 };
 
 export { convertMatchInfo };

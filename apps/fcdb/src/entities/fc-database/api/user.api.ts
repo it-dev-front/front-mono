@@ -38,4 +38,11 @@ export const userApi = async (request: ApiRequest) => ({
    */
   getUserBestRating: (ouid: string): Promise<BestGradeResponse> =>
     request("/fconline/v1/user/maxdivision", { query: { ouid } }),
+  getUserMatchList: (params: {
+    ouid: string;
+    matchtype: number;
+    limit: number;
+    offset: number;
+  }): Promise<any> =>
+    request("/fconline/v1/user/match", { query: { ...params } }),
 });
