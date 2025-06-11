@@ -6,7 +6,10 @@ import { Fragment } from "react";
 import { MatchQueries } from "@/entities/match/model/queries";
 import { useQuery } from "@tanstack/react-query";
 import { FcClient } from "@/entities/fc-database/lib/FcClient";
-import { convertMatchInfo } from "@/entities/match/lib/getMatchInfo";
+import {
+  convertMatchInfo,
+  covertMatchStatus,
+} from "@/entities/match/lib/getMatchInfo";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -16,7 +19,12 @@ const fetchMatchDetails = async (matchIds: string[]) => {
 
   for (const matchId of matchIds) {
     const response = await matchApi.getMatchDetail(matchId);
-    matchList.push(convertMatchInfo(response.matchInfo));
+    const matchStatus = covertMatchStatus(response);
+    const matchInfo = convertMatchInfo(response.matchInfo);
+    matchList.push({
+      matchInfo,
+      matchStatus,
+    });
     await delay(10);
   }
 

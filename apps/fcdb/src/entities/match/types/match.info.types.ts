@@ -18,9 +18,18 @@ interface ConvertedPlayersType {
 interface ConvertedMatchInfo {
   indicator: ConvertedIndicatorType;
   score: ConvertedScoreType;
-  matchDate: Date;
-  matchResult: "승" | "패" | "무";
+  matchResult: string;
   players: ConvertedPlayersType;
+}
+
+interface ConvertedMatchStatus {
+  matchType: number;
+  matchDate: Date;
+}
+
+interface MatchSummaryType {
+  matchInfo: ConvertedMatchInfo;
+  matchStatus: ConvertedMatchStatus;
 }
 
 export type {
@@ -28,4 +37,6 @@ export type {
   ConvertedScoreType,
   ConvertedPlayersType,
   ConvertedMatchInfo,
+  ConvertedMatchStatus,
+  MatchSummaryType,
 };

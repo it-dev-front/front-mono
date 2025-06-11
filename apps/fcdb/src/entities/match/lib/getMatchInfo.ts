@@ -1,5 +1,13 @@
+import { MatchDetailResponse } from "@/entities/fc-database/types";
 import { ConvertedMatchInfo } from "../types/match.info.types";
 import { MatchPlayerInfoType } from "../types/match.types";
+
+const covertMatchStatus = (match: MatchDetailResponse) => {
+  return {
+    matchType: match.matchType,
+    matchDate: match.matchDate,
+  };
+};
 
 /**@description 매치 정보 변환*/
 const convertMatchInfo = (
@@ -23,8 +31,7 @@ const convertMatchInfo = (
       userScore: firstMatch.shoot.goalTotalDisplay,
       opponentScore: secondMatch.shoot.goalTotalDisplay,
     },
-    matchDate: new Date(),
-    matchResult: firstMatch.matchDetail.matchResult as "승" | "패" | "무",
+    matchResult: firstMatch.matchDetail.matchResult,
     players: {
       user: firstMatch.player,
       opponent: secondMatch.player,
@@ -32,4 +39,4 @@ const convertMatchInfo = (
   };
 };
 
-export { convertMatchInfo };
+export { convertMatchInfo, covertMatchStatus };

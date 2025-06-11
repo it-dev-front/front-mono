@@ -10,10 +10,10 @@ import ScoreCard from "@/entities/match/ui/ScoreBoard";
 import MatchResultLabel from "@/entities/match/ui/MatchResultLabel";
 import MatchDateLabel from "@/entities/match/ui/MatchDateLabel";
 import { UserSearchFormation } from "@/features/user-search/ui/UserSearchFormation";
-import { ConvertedMatchInfo } from "@/entities/match/lib/getMatchInfo";
+import { MatchSummaryType } from "@/entities/match/types/match.info.types";
 
 interface MatchSummaryProps {
-  match: ConvertedMatchInfo;
+  match: MatchSummaryType;
 }
 
 const MatchSummary = ({ match }: MatchSummaryProps) => {
@@ -21,22 +21,31 @@ const MatchSummary = ({ match }: MatchSummaryProps) => {
 
   return (
     <article className="flex w-full max-w-[1080px] rounded-[8px] bg-gray-900 border border-gray-800 overflow-hidden mobile:rounded-none">
-      <aside className="w-2 mobile:w-1 bg-primary-300" aria-hidden="true" />
+      <aside
+        className={`w-2 mobile:w-1 ${match.matchInfo.matchResult === "승" ? "bg-primary-300" : "bg-red-500"}`}
+        aria-hidden="true"
+      />
 
       <section className="flex flex-col w-full">
         <header className="flex justify-between items-center h-[165px] mobile:h-[98px]">
-          <MatchSummaryHeader />
+          <MatchSummaryHeader
+            matchType={match.matchStatus.matchType}
+            matchResult={match.matchInfo.matchResult}
+            matchDate={match.matchStatus.matchDate}
+          />
 
           <div className="flex items-center gap-[34.5px] mx-auto">
             <PlayerCard />
 
             <div className="flex flex-col items-center justify-center gap-2 [&>*:not(:nth-child(2))]:hidden mobile:[&>*:not(:nth-child(2))]:block">
-              <MatchResultLabel matchResult={match.matchResult} />
-              <ScoreCard
-                userScore={match.score.userScore}
-                opponentScore={match.score.opponentScore}
+              <MatchResultLabel
+                matchResult={match.matchInfo.matchResult as "승" | "패" | "무"}
               />
-              <MatchDateLabel matchDate={match.matchDate} />
+              <ScoreCard
+                userScore={match.matchInfo.score.userScore}
+                opponentScore={match.matchInfo.score.opponentScore}
+              />
+              <MatchDateLabel matchDate={match.matchStatus.matchDate} />
             </div>
 
             <PlayerCard />
@@ -62,10 +71,10 @@ const MatchSummary = ({ match }: MatchSummaryProps) => {
         </header>
 
         <PossessionIndicator
-          userNickName={match.indicator.userNickName}
-          userPossession={match.indicator.userPossession}
-          opponentNickName={match.indicator.opponentNickName}
-          opponentPossession={match.indicator.opponentPossession}
+          userNickName={match.matchInfo.indicator.userNickName}
+          userPossession={match.matchInfo.indicator.userPossession}
+          opponentNickName={match.matchInfo.indicator.opponentNickName}
+          opponentPossession={match.matchInfo.indicator.opponentPossession}
         />
 
         <div
