@@ -41,3 +41,22 @@ export const POSITION_LOCATIONS = {
   8: ["LF", "LCF", "CF", "RCF", "RF"],
   9: ["LW", "LS", "ST", "RS", "RW"],
 };
+
+type PositionCategoryKeyType = "fw" | "mf" | "df";
+
+export const POSITION_CATEGORY: Record<PositionCategoryKeyType, string[]> = {
+  fw: [...POSITION_LOCATIONS[9], ...POSITION_LOCATIONS[8]].filter(
+    (position) => position
+  ),
+  mf: [
+    ...POSITION_LOCATIONS[7],
+    ...POSITION_LOCATIONS[6],
+    ...POSITION_LOCATIONS[5],
+  ].filter((position) => position),
+  df: [
+    ...POSITION_LOCATIONS[4],
+    ...POSITION_LOCATIONS[3],
+    ...POSITION_LOCATIONS[2],
+    ...POSITION_LOCATIONS[1],
+  ].filter((position) => position),
+};
