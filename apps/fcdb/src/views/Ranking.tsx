@@ -1,33 +1,19 @@
+"use client";
+
 import { Header } from "@/widgets/Header";
-import { Footer } from "@/widgets/Footer";
-import { getRanking } from "@/entities/ranking/api";
+import RankingPageHeader from "@/widgets/ranking/RankingPageHeader";
+import { RankingTable } from "@/widgets/ranking/RankingTable";
 
-export default async function Ranking() {
-  const pageNumber = 1;
-  const { data, error, hasNextPage } = await getRanking(pageNumber);
-
-  console.log("@@@ data", data);
-  console.log("@@@ hasNextPage", hasNextPage);
-
-  if (error) {
-    console.error("Error fetching ranking data:", error);
-  }
-
+export default function Ranking() {
   return (
-    <div>
+    <>
       <Header />
-      <div className="flex flex-col min-h-screen pt-[60px]">
-        <Header />
-        <main className="flex-grow flex justify-center pb-[520px]">
-          <div>
-            <div className="h-40" />
-            <ol>
-              <li>ranking-page</li>
-            </ol>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    </div>
+      <main className="w-full min-w-[366px] flex flex-col min-h-screen pt-[62px]">
+        <div className="flex flex-col items-center max-w-[1080px] flex-grow w-full m-auto">
+          <RankingPageHeader />
+          <RankingTable />
+        </div>
+      </main>
+    </>
   );
 }
