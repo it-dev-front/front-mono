@@ -19,23 +19,25 @@ export const RankingTable = () => {
   }
 
   return (
-    <table className="w-full">
-      <RankingTableHeader />
+    <>
+      <table className="w-full">
+        <RankingTableHeader />
 
-      <tbody className="flex flex-col gap-1 pb-21">
-        {allItems.map((record) => (
-          <Fragment key={record.rankNo}>
-            <RankingTableRow record={record} />
-          </Fragment>
-        ))}
+        <tbody className="flex flex-col gap-1 pb-21">
+          {allItems.map((record) => (
+            <Fragment key={record.rankNo}>
+              <RankingTableRow record={record} />
+            </Fragment>
+          ))}
+        </tbody>
+      </table>
 
-        {hasNextPage && <div ref={loadMoreRef} className="h-4" />}
-        {isFetchingNextPage && (
-          <div className="flex justify-center items-center h-auto">
-            <BallSpinner />
-          </div>
-        )}
-      </tbody>
-    </table>
+      {hasNextPage && <div ref={loadMoreRef} className="h-4" />}
+      {isFetchingNextPage && (
+        <div className="flex justify-center items-center h-auto">
+          <BallSpinner />
+        </div>
+      )}
+    </>
   );
 };
