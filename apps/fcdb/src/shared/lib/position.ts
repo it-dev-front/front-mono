@@ -19,7 +19,7 @@ export const getPositionColor = (positionCategory: "fw" | "mf" | "df" | "gk" | "
     if (POSITION_CATEGORY.fw.includes(position)) return "fw";
     if (POSITION_CATEGORY.mf.includes(position)) return "mf";
     if (POSITION_CATEGORY.df.includes(position)) return "df";
-    if (position === "GK")return "gk";
+    if (POSITION_CATEGORY.gk.includes(position)) return "gk";
     
     return "";
   };
