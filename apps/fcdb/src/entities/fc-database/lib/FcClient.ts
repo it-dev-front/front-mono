@@ -7,6 +7,12 @@ type ApiType = keyof ApiFactoryMap;
 
 const buildUrl = (url: string, query?: Record<string, any>) => {
   const qs = query ? `?${new URLSearchParams(query).toString()}` : "";
+
+  // "http://"로 시작할 경우 API_URL 없이 url 사용(Meta API URL 대응)
+  if (url.startsWith("http://") || url.startsWith("https://")) {
+    return `${url}${qs}`;
+  }
+
   return `${API_URL}${url}${qs}`;
 };
 

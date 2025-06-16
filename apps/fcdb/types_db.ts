@@ -19,7 +19,7 @@ export type Database = {
           rankBestImg: string | null
           rankingScore: number | null
           rankNo: number
-          record: Json | null
+          record: { win: number; draw: number; lose: number} | null
         }
         Insert: {
           clubValue?: string | null
