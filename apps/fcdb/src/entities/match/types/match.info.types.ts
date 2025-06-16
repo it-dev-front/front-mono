@@ -32,7 +32,10 @@ interface ConvertedMatchStatus {
 interface MatchSummaryType {
   matchInfo: ConvertedMatchInfo;
   matchStatus: ConvertedMatchStatus;
-  matchPlayers: Array<{ [key: string]: PlayerType[] }>;
+  matchPlayers: Array<{
+    players: Record<string, PlayerType>;
+    bestPlayer: PlayerType & { total: number };
+  }>;
 }
 
 export type {

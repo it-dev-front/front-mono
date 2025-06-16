@@ -35,7 +35,9 @@ const MatchSummary = ({ match }: MatchSummaryProps) => {
           />
 
           <div className="flex items-center gap-[34.5px] mx-auto">
-            <PlayerCard />
+            <PlayerCard
+              bestPlayer={match?.matchPlayers[0]?.bestPlayer || null}
+            />
 
             <div className="flex flex-col items-center justify-center gap-2 [&>*:not(:nth-child(2))]:hidden mobile:[&>*:not(:nth-child(2))]:block">
               <MatchResultLabel
@@ -48,7 +50,9 @@ const MatchSummary = ({ match }: MatchSummaryProps) => {
               <MatchDateLabel matchDate={match.matchStatus.matchDate} />
             </div>
 
-            <PlayerCard />
+            <PlayerCard
+              bestPlayer={match?.matchPlayers[1]?.bestPlayer || null}
+            />
           </div>
 
           <button

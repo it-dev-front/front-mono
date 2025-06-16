@@ -6,6 +6,27 @@ import SafeImage from "@/shared/components/SafeImage";
 import { getPositionColor, findPositionCategory } from "@/shared/lib/position";
 import { PlayerType } from "@/entities/match/types/match.types";
 
+export const getPlayerImageSrc = (spId: number) => {
+  const imgSrc = `https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p${spId}.png`;
+
+  return imgSrc;
+};
+
+export const getGradeBgColor = (grade: number) => {
+  if (grade > 4 && grade < 8) return "#CBCED5";
+  if (grade > 7) return "#FFEB34";
+
+  return "#BC7350";
+};
+
+export const getGradeTextColor = (grade: number) => {
+  if (grade < 5) {
+    return "#FFFFFF";
+  }
+
+  return "#000000";
+};
+
 export const UserSearchFormationHalfCoat = ({
   formation,
   formationGroup,
@@ -35,25 +56,6 @@ export const UserSearchFormationHalfCoat = ({
             return null;
           }
 
-          const getPlayerImageSrc = () => {
-            const imgSrc = `https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p${soccerPlayer.spId}.png`;
-
-            return imgSrc;
-          };
-          const getGradeBgColor = (grade: number) => {
-            if (grade > 4 && grade < 8) return "#CBCED5";
-            if (grade > 7) return "#FFEB34";
-
-            return "#BC7350";
-          };
-          const getGradeTextColor = (grade: number) => {
-            if (grade < 5) {
-              return "#FFFFFF";
-            }
-
-            return "#000000";
-          };
-
           const playerName = soccerPlayerMeta?.find(
             (player) => player.id === soccerPlayer.spId
           )?.name;
@@ -80,7 +82,7 @@ export const UserSearchFormationHalfCoat = ({
             >
               <div className="relative w-[50px] h-[60px] flex items-center justify-center">
                 <SafeImage
-                  src={getPlayerImageSrc()}
+                  src={getPlayerImageSrc(soccerPlayer.spId)}
                   alt={playerName ? playerName : "선수 이미지"}
                   width={50}
                   height={60}

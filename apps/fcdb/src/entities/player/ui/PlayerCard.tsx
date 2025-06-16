@@ -1,4 +1,9 @@
+import { PlayerType } from "@/entities/match/types/match.types";
+import { MetaQueries } from "@/entities/meta/model/queries";
 import Badge from "@/entities/player/ui/Badge";
+import { getPlayerImageSrc } from "@/features/user-search/ui/UserSearchFormationHalfCoat";
+import { POSITION } from "@/shared/constant/position";
+import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import Image from "next/image";
 
@@ -20,13 +25,25 @@ interface PlayerCardProps {
 // "name": "앨런 시어러"
 // 이미지: spid 뒷 6자리
 // 시즌: seasonId 앞 3자리
-const MOCK_POSITION_DESC = "FW";
-const MOCK_PLAYER_NAME = "홍길동";
-const MOCK_PLAYER_IMAGE =
-  "https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p100000051.png";
 const isUser = true;
 
-const PlayerCard = () => {
+interface PlayerCardProps {
+  bestPlayer: (PlayerType & { total: number }) | null;
+}
+
+const PlayerCard = ({ bestPlayer }: PlayerCardProps) => {
+  const { data: soccerPlayerMeta } = useQuery(MetaQueries.getPlayerMeta());
+
+  if (!bestPlayer) {
+    return null;
+  }
+
+  const { spId, spPosition, spGrade } = bestPlayer;
+  const seasonId = Number(spId.toString().slice(0, 3));
+  const playerName = soccerPlayerMeta?.find(
+    (player) => player.id === spId
+  )?.name;
+
   const imageOverlayBaseStyle =
     "relative w-[72px] h-[72px] rounded-full border-[2px] bg-gray-900 mx-auto overflow-hidden";
   const opponentImageOverlayStyle = clsx(
@@ -43,30 +60,25 @@ const PlayerCard = () => {
           className={isUser ? userImageOverlayStyle : opponentImageOverlayStyle}
         >
           <Image
-            src={MOCK_PLAYER_IMAGE}
-            alt={MOCK_PLAYER_NAME}
+            src={getPlayerImageSrc(spId)}
+            alt={playerName ? playerName : "선수 이미지"}
             fill
             className="object-cover"
           />
         </div>
-
         {/* 하단 뱃지 */}
         <div className="absolute w-full bottom-0 flex justify-center gap-[8px] z-1">
-          <Badge.Season seasonId={100} />
-          <Badge.Grade spGrade={8} />
+          <Badge.Season seasonId={seasonId} />
+          <Badge.Grade spGrade={spGrade} />
         </div>
       </section>
 
       <section className="flex gap-[4px] text-[14px] whitespace-nowrap">
         <span className="text-[#CE535D]">
-          {/* TODO: object mapping */}
-          {MOCK_POSITION_DESC}
+          {POSITION[spPosition as keyof typeof POSITION]}
         </span>
 
-        <span className="text-color-white">
-          {/* player name */}
-          {MOCK_PLAYER_NAME}
-        </span>
+        <span className="text-color-white">{playerName}</span>
       </section>
     </figure>
   );

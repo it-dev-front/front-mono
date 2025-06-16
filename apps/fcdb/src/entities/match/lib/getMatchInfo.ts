@@ -40,9 +40,16 @@ const convertMatchInfo = (
   };
 };
 
-const conertPlayers = (matchInfo: MatchPlayerInfoType[]) => {
+/**@description 선수 리스트 조회 */
+const conertPlayers = (
+  matchInfo: MatchPlayerInfoType[]
+): Array<{
+  players: Record<string, PlayerType>;
+  bestPlayer: PlayerType & { total: number };
+}> => {
   return matchInfo.map((match) => {
-    return match.player.reduce(
+    const bestPlayer = getBestPlayer(match.player);
+    const players = match.player.reduce(
       (acc, player) => {
         const position = POSITION[player.spPosition as keyof typeof POSITION];
         acc[position] = {
@@ -53,7 +60,39 @@ const conertPlayers = (matchInfo: MatchPlayerInfoType[]) => {
       },
       {} as Record<string, PlayerType>
     );
+
+    return {
+      players,
+      bestPlayer,
+    };
   });
 };
+
+const getPlayerTotal = (player: PlayerType) =>
+  player.status.shoot +
+  player.status.assist +
+  player.status.effectiveShoot +
+  player.status.passSuccess +
+  player.status.dribbleSuccess;
+
+/**@description 매 경기 최고의 플레이어 */
+const getBestPlayer = (
+  players: PlayerType[]
+): (PlayerType & { total: number }) | undefined => {
+  if (players.length === 0) return undefined;
+  return players.reduce(
+    (best, player) => {
+      const total = getPlayerTotal(player);
+      const bestTotal = getPlayerTotal(best);
+      return total > bestTotal
+        ? { ...player, total }
+        : { ...best, total: bestTotal };
+    },
+    { ...players[0], total: getPlayerTotal(players[0]) }
+  );
+};
+
+/**@description 유저의 최고의 플레이어 조회 */
+const getUserBestPlayer = (matchInfo: MatchPlayerInfoType[]) => {};
 
 export { convertMatchInfo, covertMatchStatus, conertPlayers };

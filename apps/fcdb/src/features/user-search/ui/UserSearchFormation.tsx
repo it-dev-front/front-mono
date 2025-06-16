@@ -3,18 +3,21 @@ import { UserSearchFormationHalfCoat } from "@/features/user-search/ui/UserSearc
 import { PlayerType } from "@/entities/match/types/match.types";
 
 interface UserSearchFormationProps {
-  matchPlayers: Array<{ [key: string]: PlayerType }>;
+  matchPlayers: Array<{
+    players: Record<string, PlayerType>;
+    bestPlayer: PlayerType & { total: number };
+  }>;
 }
 
 export const UserSearchFormation = ({
   matchPlayers,
 }: UserSearchFormationProps) => {
   const getPlayers = (idx: 0 | 1) => {
-    if (!matchPlayers || matchPlayers.length === 0) {
+    if (!matchPlayers || !matchPlayers[idx]) {
       return {};
     }
 
-    return matchPlayers[idx];
+    return matchPlayers[idx]?.players;
   };
 
   const getPlayersBySpPositon = (idx: 0 | 1) => {
