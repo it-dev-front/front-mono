@@ -84,7 +84,7 @@ const MatchSummary = ({ match }: MatchSummaryProps) => {
           )}
         >
           {/* Accordion content */}
-          <UserSearchFormation />
+          <UserSearchFormation matchPlayers={match.matchPlayers} />
         </div>
       </section>
     </article>

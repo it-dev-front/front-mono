@@ -105,7 +105,7 @@ type PlayerStatusType = {
 
 type PlayerType = {
   spId: number;
-  spPosition: number;
+  spPosition: number | string;
   spGrade: number;
   status: PlayerStatusType;
 };
@@ -128,4 +128,4 @@ type MatchDetailType = {
   matchInfo: MatchPlayerInfoType[];
 };
 
-export type { MatchDetailType, MatchPlayerInfoType };
+export type { MatchDetailType, MatchPlayerInfoType, PlayerType };

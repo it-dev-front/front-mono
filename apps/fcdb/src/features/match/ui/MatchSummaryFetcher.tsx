@@ -9,18 +9,21 @@ import { FcClient } from "@/entities/fc-database/lib/FcClient";
 import {
   convertMatchInfo,
   covertMatchStatus,
+  conertPlayers,
 } from "@/entities/match/lib/getMatchInfo";
 
 const fetchMatchDetails = async (matchIds: string[]) => {
   const matchApi = await FcClient.get("Match");
-  // 5개 id를 병렬로 요청
   const matchDetailPromises = matchIds.map(async (matchId) => {
     const response = await matchApi.getMatchDetail(matchId);
     const matchStatus = covertMatchStatus(response);
     const matchInfo = convertMatchInfo(response.matchInfo);
+    const matchPlayers = conertPlayers(response.matchInfo);
+
     return {
       matchInfo,
       matchStatus,
+      matchPlayers,
     };
   });
   return Promise.all(matchDetailPromises);

@@ -4,21 +4,17 @@ import { useQuery } from "@tanstack/react-query";
 import { MetaQueries } from "@/entities/meta/model/queries";
 import SafeImage from "@/shared/components/SafeImage";
 import { getPositionColor, findPositionCategory } from "@/shared/lib/position";
+import { PlayerType } from "@/entities/match/types/match.types";
 
 export const UserSearchFormationHalfCoat = ({
   formation,
   formationGroup,
 }: {
   formation: {
-    [key: string]: {
-      spId: number;
-      spPosition: string;
-      spGrade: number;
-    };
+    [key: string]: PlayerType;
   };
   formationGroup: "first" | "second";
 }) => {
-
   const { data: soccerPlayerMeta } = useQuery(MetaQueries.getPlayerMeta());
   const { data: seasonIdMeta } = useQuery(MetaQueries.getSeasonIdMeta());
 
@@ -46,7 +42,7 @@ export const UserSearchFormationHalfCoat = ({
           };
           const getGradeBgColor = (grade: number) => {
             if (grade > 4 && grade < 8) return "#CBCED5";
-            if (grade > 7 ) return "#FFEB34";
+            if (grade > 7) return "#FFEB34";
 
             return "#BC7350";
           };
@@ -67,7 +63,7 @@ export const UserSearchFormationHalfCoat = ({
             (element) => element.seasonId == seasonId
           )?.seasonImg;
           const positionCategory = findPositionCategory(
-            soccerPlayer.spPosition
+            soccerPlayer.spPosition as string
           );
           const positionColor = getPositionColor(positionCategory);
           const gradeBgColor = getGradeBgColor(grade);
@@ -100,8 +96,14 @@ export const UserSearchFormationHalfCoat = ({
                         height={20}
                         className="rounded-[4px]"
                       />
-                      <div className="border-[1px] border-[#ABEE02] h-[20px] w-[20px] flex items-center justify-center rounded-[4px]" style={{ backgroundColor: gradeBgColor }}>
-                        <p className="font-semibold text-[10px]" style={{ color: gradeTextColor }}>
+                      <div
+                        className="border-[1px] border-[#ABEE02] h-[20px] w-[20px] flex items-center justify-center rounded-[4px]"
+                        style={{ backgroundColor: gradeBgColor }}
+                      >
+                        <p
+                          className="font-semibold text-[10px]"
+                          style={{ color: gradeTextColor }}
+                        >
                           {grade}
                         </p>
                       </div>

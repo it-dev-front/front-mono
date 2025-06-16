@@ -1,6 +1,7 @@
 import { MatchDetailResponse } from "@/entities/fc-database/types";
 import { ConvertedMatchInfo } from "../types/match.info.types";
-import { MatchPlayerInfoType } from "../types/match.types";
+import { MatchPlayerInfoType, PlayerType } from "../types/match.types";
+import { POSITION } from "@/shared/constant/position";
 
 const covertMatchStatus = (match: MatchDetailResponse) => {
   return {
@@ -39,4 +40,20 @@ const convertMatchInfo = (
   };
 };
 
-export { convertMatchInfo, covertMatchStatus };
+const conertPlayers = (matchInfo: MatchPlayerInfoType[]) => {
+  return matchInfo.map((match) => {
+    return match.player.reduce(
+      (acc, player) => {
+        const position = POSITION[player.spPosition as keyof typeof POSITION];
+        acc[position] = {
+          ...player,
+          spPosition: position,
+        };
+        return acc;
+      },
+      {} as Record<string, PlayerType>
+    );
+  });
+};
+
+export { convertMatchInfo, covertMatchStatus, conertPlayers };

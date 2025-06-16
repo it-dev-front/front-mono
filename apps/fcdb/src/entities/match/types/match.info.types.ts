@@ -1,3 +1,5 @@
+import { PlayerType } from "./match.types";
+
 interface ConvertedIndicatorType {
   userNickName: string;
   userPossession: number | null;
@@ -30,6 +32,7 @@ interface ConvertedMatchStatus {
 interface MatchSummaryType {
   matchInfo: ConvertedMatchInfo;
   matchStatus: ConvertedMatchStatus;
+  matchPlayers: Array<{ [key: string]: PlayerType[] }>;
 }
 
 export type {

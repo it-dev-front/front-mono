@@ -1,17 +1,22 @@
 import { PositionIndicator } from "@/entities/formation/ui/PositionIndicator";
-import { POSITION } from "@/shared/constant/position";
-import matchDetailMock from "@/shared/mocks/match-detail.json";
 import { UserSearchFormationHalfCoat } from "@/features/user-search/ui/UserSearchFormationHalfCoat";
+import { PlayerType } from "@/entities/match/types/match.types";
 
-export const UserSearchFormation = () => {
-  const matchDetailData = matchDetailMock.matchInfo;
+interface UserSearchFormationProps {
+  matchPlayers: Array<{ [key: string]: PlayerType }>;
+}
 
+export const UserSearchFormation = ({
+  matchPlayers,
+}: UserSearchFormationProps) => {
   const getPlayers = (idx: 0 | 1) => {
-    return matchDetailData[idx]?.player.map((player) => ({
-      ...player,
-      ...{ spPosition: POSITION[player.spPosition as keyof typeof POSITION] },
-    }));
+    if (!matchPlayers || matchPlayers.length === 0) {
+      return {};
+    }
+
+    return matchPlayers[idx];
   };
+
   const getPlayersBySpPositon = (idx: 0 | 1) => {
     const players = getPlayers(idx);
 
@@ -19,24 +24,26 @@ export const UserSearchFormation = () => {
       return;
     }
 
-    return players.reduce(
-      (acc, cur) => ({ ...acc, ...{ [cur.spPosition]: cur } }),
-      {}
-    );
+    return players;
   };
 
   const leftUserFormation = getPlayersBySpPositon(0);
   const rightUserFormation = getPlayersBySpPositon(1);
-  
+
   return (
     <div>
       <p className="text-center text-[20px] pt-[16px] pb-[14px]">스쿼드 정보</p>
+
       <div className="flex gap-[24px] px-[20px]">
         <PositionIndicator color="#CE535D" label="FW" />
+
         <PositionIndicator color="#79CD8C" label="MF" />
+
         <PositionIndicator color="#507EED" label="DF" />
+
         <PositionIndicator color="#E67E22" label="GK" />
       </div>
+
       <div className="pt-[12px] px-[16px]">
         <div
           className="relative w-full h-0 pb-[60%] bg-contain bg-center bg-no-repeat"
@@ -45,14 +52,19 @@ export const UserSearchFormation = () => {
           }}
         >
           <div className="absolute inset-0 flex">
-            <UserSearchFormationHalfCoat
-              formation={leftUserFormation}
-              formationGroup="first"
-            />
-            <UserSearchFormationHalfCoat
-              formation={rightUserFormation}
-              formationGroup="second"
-            />
+            {leftUserFormation && (
+              <UserSearchFormationHalfCoat
+                formation={leftUserFormation}
+                formationGroup="first"
+              />
+            )}
+
+            {rightUserFormation && (
+              <UserSearchFormationHalfCoat
+                formation={rightUserFormation}
+                formationGroup="second"
+              />
+            )}
           </div>
         </div>
       </div>
