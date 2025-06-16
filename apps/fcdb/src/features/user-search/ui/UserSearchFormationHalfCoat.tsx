@@ -44,6 +44,19 @@ export const UserSearchFormationHalfCoat = ({
 
             return imgSrc;
           };
+          const getGradeBgColor = (grade: number) => {
+            if (grade > 4 && grade < 8) return "#CBCED5";
+            if (grade > 7 ) return "#FFEB34";
+
+            return "#BC7350";
+          };
+          const getGradeTextColor = (grade: number) => {
+            if (grade < 5) {
+              return "#FFFFFF";
+            }
+
+            return "#000000";
+          };
 
           const playerName = soccerPlayerMeta?.find(
             (player) => player.id === soccerPlayer.spId
@@ -57,6 +70,8 @@ export const UserSearchFormationHalfCoat = ({
             soccerPlayer.spPosition
           );
           const positionColor = getPositionColor(positionCategory);
+          const gradeBgColor = getGradeBgColor(grade);
+          const gradeTextColor = getGradeTextColor(grade);
 
           return (
             <div
@@ -85,8 +100,8 @@ export const UserSearchFormationHalfCoat = ({
                         height={20}
                         className="rounded-[4px]"
                       />
-                      <div className="border-[1px] border-[#ABEE02] h-[20px] w-[20px] flex items-center justify-center bg-[#212121] rounded-[4px]">
-                        <p className="text-[#CE535D] font-semibold text-[10px]">
+                      <div className="border-[1px] border-[#ABEE02] h-[20px] w-[20px] flex items-center justify-center rounded-[4px]" style={{ backgroundColor: gradeBgColor }}>
+                        <p className="font-semibold text-[10px]" style={{ color: gradeTextColor }}>
                           {grade}
                         </p>
                       </div>
