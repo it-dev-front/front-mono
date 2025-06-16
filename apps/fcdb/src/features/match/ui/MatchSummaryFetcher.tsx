@@ -11,24 +11,19 @@ import {
   covertMatchStatus,
 } from "@/entities/match/lib/getMatchInfo";
 
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
 const fetchMatchDetails = async (matchIds: string[]) => {
   const matchApi = await FcClient.get("Match");
-  const matchList = [];
-
-  for (const matchId of matchIds) {
+  // 5개 id를 병렬로 요청
+  const matchDetailPromises = matchIds.map(async (matchId) => {
     const response = await matchApi.getMatchDetail(matchId);
     const matchStatus = covertMatchStatus(response);
     const matchInfo = convertMatchInfo(response.matchInfo);
-    matchList.push({
+    return {
       matchInfo,
       matchStatus,
-    });
-    await delay(10);
-  }
-
-  return matchList;
+    };
+  });
+  return Promise.all(matchDetailPromises);
 };
 
 export const MatchSummaryFetcher = () => {
@@ -36,7 +31,7 @@ export const MatchSummaryFetcher = () => {
   const ouid = searchParams.get("q") ?? "";
 
   const { data: matchIds, isLoading: isMatchIdsLoading } = useQuery(
-    MatchQueries.getMatchIds(ouid, { limit: 10, offset: 0 })
+    MatchQueries.getMatchIds(ouid, { limit: 5, offset: 0 })
   );
 
   const { data: matches, isLoading: isMatchesLoading } = useQuery({
