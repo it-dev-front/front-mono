@@ -92,7 +92,42 @@ const getBestPlayer = (
   );
 };
 
+type ScorePanel = {
+  win: number;
+  defeat: number;
+  draw: number;
+  winRate: number; // 승률 (%)
+};
+
+const getScorePanel = (matchInfo: MatchPlayerInfoType[]): ScorePanel => {
+  let win = 0;
+  let defeat = 0;
+  let draw = 0;
+
+  matchInfo.forEach((match) => {
+    const { matchResult } = match.matchDetail;
+
+    if (matchResult === "승") {
+      win++;
+    } else if (matchResult === "패") {
+      defeat++;
+    } else {
+      draw++;
+    }
+  });
+
+  const total = win + defeat + draw;
+  const winRate = total > 0 ? (win / total) * 100 : 0;
+
+  return {
+    win,
+    defeat,
+    draw,
+    winRate,
+  };
+};
+
 /**@description 유저의 최고의 플레이어 조회 */
 const getUserBestPlayer = (matchInfo: MatchPlayerInfoType[]) => {};
 
-export { convertMatchInfo, covertMatchStatus, conertPlayers };
+export { convertMatchInfo, covertMatchStatus, conertPlayers, getScorePanel };

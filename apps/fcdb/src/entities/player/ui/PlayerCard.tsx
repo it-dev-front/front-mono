@@ -8,15 +8,6 @@ import clsx from "clsx";
 import Image from "next/image";
 
 // TODO: 컴포넌트 분리, SRP에 맞게 분리
-// MOCK_DATA API교체
-// TODO: 모바일 고려
-interface PlayerCardProps {
-  spId: string;
-  spPosition: number;
-  name: string;
-  team: string;
-}
-
 // 포지션: spposition:number -> desc:string 교환`
 // 선수정보 : spId
 // 이미지 spid 뒷6자리
