@@ -41,7 +41,7 @@ const convertMatchInfo = (
 };
 
 /**@description 선수 리스트 조회 */
-const conertPlayers = (
+const convertPlayers = (
   matchInfo: MatchPlayerInfoType[]
 ): Array<{
   players: Record<string, PlayerType>;
@@ -97,37 +97,41 @@ type ScorePanel = {
   defeat: number;
   draw: number;
   winRate: number; // 승률 (%)
+  total: number;
 };
 
-const getScorePanel = (matchInfo: MatchPlayerInfoType[]): ScorePanel => {
+const getScorePanel = (matchInfo: any[]): ScorePanel => {
   let win = 0;
   let defeat = 0;
   let draw = 0;
-
+  let total = 0;
   matchInfo.forEach((match) => {
-    const { matchResult } = match.matchDetail;
-
+    const matchResult = match[0].matchDetail?.matchResult || "";
     if (matchResult === "승") {
       win++;
     } else if (matchResult === "패") {
       defeat++;
-    } else {
+    } else if (matchResult === "무") {
       draw++;
+    } else {
+      defeat++;
     }
+    total++;
   });
 
-  const total = win + defeat + draw;
-  const winRate = total > 0 ? (win / total) * 100 : 0;
+  const sum = win + defeat + draw;
+  const winRate = sum > 0 ? (win / sum) * 100 : 0;
 
   return {
     win,
     defeat,
     draw,
     winRate,
+    total
   };
 };
 
 /**@description 유저의 최고의 플레이어 조회 */
 const getUserBestPlayer = (matchInfo: MatchPlayerInfoType[]) => {};
 
-export { convertMatchInfo, covertMatchStatus, conertPlayers, getScorePanel };
+export { convertMatchInfo, covertMatchStatus, convertPlayers, getScorePanel };

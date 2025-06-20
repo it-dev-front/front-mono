@@ -19,9 +19,11 @@ import {
 export const MobileProfileSummary = ({
   profileData,
   ratingData,
+  scorePanel,
 }: {
   profileData: UserProfileResponse;
   ratingData: BestGradeResponse;
+  scorePanel: any;
 }): ReactElement => {
   const tierData = parseTierData(ratingData);
 
@@ -29,7 +31,7 @@ export const MobileProfileSummary = ({
     <div className="mx-auto h-auto w-full flex flex-col items-start justify-between bg-gray-900 px-[20px] py-[16px] gap-[16px]">
       <div className="w-full flex items-center justify-evenly gap-[24px]">
         <PlayerProfileCard spId={289015723} />
-        <Score />
+        <Score score={scorePanel} />
       </div>
       <div className="flex items-center w-full justify-evenly">
         <div className="w-[200px] flex items-center justify-start gap-[16px]">
@@ -52,9 +54,11 @@ export const MobileProfileSummary = ({
 export const PcProfileSummary = ({
   profileData,
   ratingData,
+  scorePanel,
 }: {
   profileData: UserProfileResponse;
   ratingData: BestGradeResponse;
+  scorePanel: any;
 }): ReactElement => {
   return (
     <div className="mx-auto w-full flex items-center justify-between bg-gray-900 max-w-[1080px] h-[240px] p-[40px]">
@@ -69,7 +73,7 @@ export const PcProfileSummary = ({
       </div>
       <div className="flex items-end gap-[66px]">
         <TierBadge data={ratingData} />
-        <Score />
+        <Score score={scorePanel} />
         <ScoreRefresh updatedAt={"10분전"} />
       </div>
     </div>
@@ -79,9 +83,11 @@ export const PcProfileSummary = ({
 export const ProfileSummary = ({
   profileData,
   ratingData,
+  scorePanel,
 }: {
   profileData: UserProfileResponse;
   ratingData: BestGradeResponse;
+  scorePanel: any;
 }): React.ReactElement => {
   return (
     <>
@@ -89,12 +95,17 @@ export const ProfileSummary = ({
         <MobileProfileSummary
           profileData={profileData}
           ratingData={ratingData}
+          scorePanel={scorePanel}
         />
       </div>
 
       {/* PC 전용 */}
       <div className="hidden md:block w-full">
-        <PcProfileSummary profileData={profileData} ratingData={ratingData} />
+        <PcProfileSummary
+          profileData={profileData}
+          ratingData={ratingData}
+          scorePanel={scorePanel}
+        />
       </div>
     </>
   );

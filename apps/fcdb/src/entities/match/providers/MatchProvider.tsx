@@ -2,9 +2,10 @@
 
 import { FcClient } from "@/entities/fc-database/lib/FcClient";
 import {
-  conertPlayers,
+  convertPlayers,
   convertMatchInfo,
   covertMatchStatus,
+  getScorePanel,
 } from "@/entities/match/lib/getMatchInfo";
 import { MatchQueries } from "@/entities/match/model/queries";
 import { MatchSummaryType } from "@/entities/match/types/match.info.types";
@@ -12,23 +13,44 @@ import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { createContext, useContext } from "react";
+import { MatchPlayerInfoType } from "@/entities/match/types/match.types";
+
+// ScorePanel 타입 직접 정의
+type ScorePanel = {
+  win: number;
+  defeat: number;
+  draw: number;
+  winRate: number;
+};
 
 // 매치 상세 조회
-export const fetchMatchDetails = async (matchIds: string[]) => {
+export const fetchMatchDetails = async (
+  matchIds: string[]
+): Promise<{ matchDetail: MatchSummaryType[]; scorePanel: ScorePanel }> => {
   const matchApi = await FcClient.get("Match");
-  const matchDetailPromises = matchIds.map(async (matchId) => {
-    const response = await matchApi.getMatchDetail(matchId);
-    const matchStatus = covertMatchStatus(response);
-    const matchInfo = convertMatchInfo(response.matchInfo);
-    const matchPlayers = conertPlayers(response.matchInfo);
+  const scoreList: MatchPlayerInfoType[][] = [];
 
-    return {
-      matchInfo,
-      matchStatus,
-      matchPlayers,
-    };
-  });
-  return Promise.all(matchDetailPromises);
+  const matchDetailPromises: Promise<MatchSummaryType>[] = matchIds.map(
+    async (matchId) => {
+      const response = await matchApi.getMatchDetail(matchId);
+      scoreList.push(response.matchInfo);
+      const matchStatus = covertMatchStatus(response);
+      const matchInfo = convertMatchInfo(response.matchInfo);
+      const matchPlayers = convertPlayers(response.matchInfo);
+      return {
+        matchInfo,
+        matchStatus,
+        matchPlayers,
+      };
+    }
+  );
+  const matchDetail = await Promise.all(matchDetailPromises);
+  const scorePanel = getScorePanel(scoreList);
+
+  return {
+    matchDetail,
+    scorePanel,
+  };
 };
 
 interface MatchFetcherProps {
@@ -38,6 +60,7 @@ interface MatchFetcherProps {
 interface MatchFetcherContextType {
   matchIds: string[];
   matches: MatchSummaryType[] | undefined;
+  scorePanel: ScorePanel | undefined;
   isMatchIdsLoading: boolean;
   isMatchesLoading: boolean;
   page: number;
@@ -66,9 +89,15 @@ const MatchProvider = ({ children }: MatchFetcherProps) => {
     MatchQueries.getMatchIds(ouid, { limit: 5, offset: page * 5 })
   );
 
-  const { data: matches, isLoading: isMatchesLoading } = useQuery({
+  const { data, isLoading: isMatchesLoading } = useQuery({
     queryKey: ["matchDetails", matchIds],
-    queryFn: () => (matchIds ? fetchMatchDetails(matchIds) : []),
+    queryFn: () =>
+      matchIds
+        ? fetchMatchDetails(matchIds)
+        : Promise.resolve({
+            matchDetail: [],
+            scorePanel: { win: 0, defeat: 0, draw: 0, winRate: 0 },
+          }),
     enabled: !!matchIds,
   });
 
@@ -76,7 +105,8 @@ const MatchProvider = ({ children }: MatchFetcherProps) => {
     <MatchFetcherContext.Provider
       value={{
         matchIds,
-        matches,
+        matches: data?.matchDetail,
+        scorePanel: data?.scorePanel,
         isMatchIdsLoading,
         isMatchesLoading,
         page,

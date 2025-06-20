@@ -4,6 +4,7 @@ import { useQueries } from "@tanstack/react-query";
 import { ProfileSummary } from "./ProfileSummary";
 import { ProfileQueries } from "@/entities/profile/model/queries";
 import { useSearchParams } from "next/navigation";
+import { useMatchFetcher } from "@/entities/match/providers/MatchProvider";
 
 export const UserProfileFetcher = () => {
   const searchParams = useSearchParams();
@@ -15,17 +16,21 @@ export const UserProfileFetcher = () => {
       ProfileQueries.getUserBestRating(ouid),
     ],
   });
-
+  const { scorePanel, isMatchesLoading } = useMatchFetcher();
   const [profileQuery, ratingQuery] = results;
   const isLoading = results.some((query) => query.isLoading);
   const isDataReady = results.every((query) => query.data);
 
-  if (isLoading || !isDataReady) return <div>로딩 중...</div>;
-
+  if (isLoading || !isDataReady || isMatchesLoading)
+    return <div>로딩 중...</div>;
+  // const scorePanel = getScorePanel(matches);
+  // console.log(scorePanel);
+  console.log(scorePanel);
   return (
     <ProfileSummary
       profileData={profileQuery.data!}
       ratingData={ratingQuery.data!}
+      scorePanel={scorePanel}
     />
   );
 };

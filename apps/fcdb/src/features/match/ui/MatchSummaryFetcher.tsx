@@ -2,7 +2,7 @@
 
 import MatchSummary from "@/widgets/match/MatchSummary";
 import { Fragment } from "react";
-import { useMatchFetcher } from "@/features/match/providers/MatchProvider";
+import { useMatchFetcher } from "@/entities/match/providers/MatchProvider";
 import { MatchSummaryType } from "@/entities/match/types/match.info.types";
 
 export const MatchSummaryFetcher = () => {

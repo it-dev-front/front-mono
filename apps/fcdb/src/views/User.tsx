@@ -2,7 +2,7 @@ import { Header } from "@/widgets/Header";
 import { Footer } from "@/widgets/Footer";
 import { UserProfileFetcher } from "@/features/profile/ui/UserProfileFetcher";
 import { MatchSummaryFetcher } from "@/features/match/ui/MatchSummaryFetcher";
-import MatchProvider from "@/features/match/providers/MatchProvider";
+import MatchProvider from "@/entities/match/providers/MatchProvider";
 
 export const User = async () => {
   return (
