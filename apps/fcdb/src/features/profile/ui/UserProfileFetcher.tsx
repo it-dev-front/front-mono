@@ -23,9 +23,7 @@ export const UserProfileFetcher = () => {
 
   if (isLoading || !isDataReady || isMatchesLoading)
     return <div>로딩 중...</div>;
-  // const scorePanel = getScorePanel(matches);
-  // console.log(scorePanel);
-  console.log(scorePanel);
+  
   return (
     <ProfileSummary
       profileData={profileQuery.data!}

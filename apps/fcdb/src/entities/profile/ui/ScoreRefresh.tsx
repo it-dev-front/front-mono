@@ -2,6 +2,8 @@
 
 import { ReactElement } from "react";
 import { RotateCcw } from "lucide-react";
+import { QueryClient, useQueryClient } from "@tanstack/react-query";
+import { MATH_QUERY_KEY } from "@/entities/match/model/keys/queryKeys";
 
 // TODO 쿼리 캐시 초기화
 
@@ -10,12 +12,17 @@ interface ScoreRefreshProps {
   onRefresh: () => void;
 }
 
+const refreshMatch = (queryClient: QueryClient) => {
+  queryClient.resetQueries({ queryKey: [MATH_QUERY_KEY.IDS] });
+  queryClient.resetQueries({ queryKey: [MATH_QUERY_KEY.LIST] });
+  queryClient.resetQueries({ queryKey: [MATH_QUERY_KEY.DETAIL] });
+};
+
 export const ScoreRefresh = ({
   updatedAt,
 }: Pick<ScoreRefreshProps, "updatedAt">) => {
-  const handleClickOnRefresh = (): void => {
-    alert("새로고침");
-  };
+  const queryClient = useQueryClient();
+  const handleClickOnRefresh = (): void => refreshMatch(queryClient);
 
   return (
     <div className="flex flex-col items-center gap-[8px] text-sm text-gray-400">
@@ -28,9 +35,8 @@ export const ScoreRefresh = ({
 export const MobileScoreRefresh = ({
   updatedAt,
 }: Pick<ScoreRefreshProps, "updatedAt">) => {
-  const handleClickOnRefresh = (): void => {
-    alert("새로고침");
-  };
+  const queryClient = useQueryClient();
+  const handleClickOnRefresh = (): void => refreshMatch(queryClient);
 
   return (
     <div className="w-full flex flex-col items-center gap-[8px] text-sm text-gray-400">
