@@ -16,19 +16,20 @@ export const UserProfileFetcher = () => {
       ProfileQueries.getUserBestRating(ouid),
     ],
   });
-  const { scorePanel, isMatchesLoading } = useMatchFetcher();
+  const { scorePanel, isMatchesLoading, bestPlayer } = useMatchFetcher();
   const [profileQuery, ratingQuery] = results;
   const isLoading = results.some((query) => query.isLoading);
   const isDataReady = results.every((query) => query.data);
 
   if (isLoading || !isDataReady || isMatchesLoading)
     return <div>로딩 중...</div>;
-  
+
   return (
     <ProfileSummary
       profileData={profileQuery.data!}
       ratingData={ratingQuery.data!}
       scorePanel={scorePanel}
+      bestPlayer={bestPlayer}
     />
   );
 };

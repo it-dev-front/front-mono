@@ -78,17 +78,17 @@ const getPlayerTotal = (player: PlayerType) =>
 /**@description 매 경기 최고의 플레이어 */
 const getBestPlayer = (
   players: PlayerType[]
-): (PlayerType & { total: number }) | undefined => {
-  if (players.length === 0) return undefined;
+): (PlayerType & { total: number }) | null => {
+  if (players.length === 0) return null;
   return players.reduce(
     (best, player) => {
       const total = getPlayerTotal(player);
       const bestTotal = getPlayerTotal(best);
       return total > bestTotal
-        ? { ...player, total }
-        : { ...best, total: bestTotal };
+        ? { ...(player as PlayerType), total }
+        : { ...(best as PlayerType), total: bestTotal };
     },
-    { ...players[0], total: getPlayerTotal(players[0]) }
+    { ...(players[0] as PlayerType), total: getPlayerTotal(players[0]) }
   );
 };
 
@@ -127,11 +127,8 @@ const getScorePanel = (matchInfo: any[]): ScorePanel => {
     defeat,
     draw,
     winRate,
-    total
+    total,
   };
 };
-
-/**@description 유저의 최고의 플레이어 조회 */
-const getUserBestPlayer = (matchInfo: MatchPlayerInfoType[]) => {};
 
 export { convertMatchInfo, covertMatchStatus, convertPlayers, getScorePanel };

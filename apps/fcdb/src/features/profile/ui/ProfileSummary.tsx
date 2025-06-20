@@ -20,17 +20,19 @@ export const MobileProfileSummary = ({
   profileData,
   ratingData,
   scorePanel,
+  bestPlayer,
 }: {
   profileData: UserProfileResponse;
   ratingData: BestGradeResponse;
   scorePanel: any;
+  bestPlayer: any;
 }): ReactElement => {
   const tierData = parseTierData(ratingData);
 
   return (
     <div className="mx-auto h-auto w-full flex flex-col items-start justify-between bg-gray-900 px-[20px] py-[16px] gap-[16px]">
       <div className="w-full flex items-center justify-evenly gap-[24px]">
-        <PlayerProfileCard spId={289015723} />
+        <PlayerProfileCard spId={bestPlayer?.spId} />
         <Score score={scorePanel} />
       </div>
       <div className="flex items-center w-full justify-evenly">
@@ -55,15 +57,17 @@ export const PcProfileSummary = ({
   profileData,
   ratingData,
   scorePanel,
+  bestPlayer,
 }: {
   profileData: UserProfileResponse;
   ratingData: BestGradeResponse;
   scorePanel: any;
+  bestPlayer: any;
 }): ReactElement => {
   return (
     <div className="mx-auto w-full flex items-center justify-between bg-gray-900 max-w-[1080px] h-[240px] p-[40px]">
       <div className="flex items-center gap-[24px]">
-        <PlayerProfileCard spId={289015723} />
+        <PlayerProfileCard spId={bestPlayer?.spId} />
         <ProfileBox
           user={{
             nickname: profileData.nickname,
@@ -84,10 +88,12 @@ export const ProfileSummary = ({
   profileData,
   ratingData,
   scorePanel,
+  bestPlayer,
 }: {
   profileData: UserProfileResponse;
   ratingData: BestGradeResponse;
   scorePanel: any;
+  bestPlayer: any;
 }): React.ReactElement => {
   return (
     <>
@@ -96,6 +102,7 @@ export const ProfileSummary = ({
           profileData={profileData}
           ratingData={ratingData}
           scorePanel={scorePanel}
+          bestPlayer={bestPlayer}
         />
       </div>
 
@@ -105,6 +112,7 @@ export const ProfileSummary = ({
           profileData={profileData}
           ratingData={ratingData}
           scorePanel={scorePanel}
+          bestPlayer={bestPlayer}
         />
       </div>
     </>

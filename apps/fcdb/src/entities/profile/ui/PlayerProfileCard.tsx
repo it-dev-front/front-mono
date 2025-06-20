@@ -4,7 +4,7 @@ import Image from "next/image";
 
 interface PlayerProfileCardProps {
   spId: number;
-};
+}
 
 const playerActionImageSource = (spId: number): string => {
   // 선수 일반 이미지 경로
@@ -22,13 +22,15 @@ export const PlayerProfileCard = ({
   const imageSource = playerActionImageSource(spId);
   return (
     <div className={styles["profile-card"]}>
-      <Image
-        className="absolute bottom-[6px]"
-        src={imageSource}
-        alt={`${spId}_action_image`}
-        width={140}
-        height={160}
-      />
+      {spId && (
+        <Image
+          className="absolute bottom-[6px]"
+          src={imageSource}
+          alt={`${spId}_action_image`}
+          width={140}
+          height={160}
+        />
+      )}
     </div>
   );
 };

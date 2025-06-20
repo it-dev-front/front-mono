@@ -13,7 +13,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { createContext, useContext } from "react";
-import { MatchPlayerInfoType } from "@/entities/match/types/match.types";
+import {
+  MatchPlayerInfoType,
+  PlayerType,
+} from "@/entities/match/types/match.types";
 
 // ScorePanel 타입 직접 정의
 type ScorePanel = {
@@ -29,6 +32,7 @@ export const fetchMatchDetails = async (
 ): Promise<{ matchDetail: MatchSummaryType[]; scorePanel: ScorePanel }> => {
   const matchApi = await FcClient.get("Match");
   const scoreList: MatchPlayerInfoType[][] = [];
+  const bestPlayerList = [];
 
   const matchDetailPromises: Promise<MatchSummaryType>[] = matchIds.map(
     async (matchId) => {
@@ -37,6 +41,11 @@ export const fetchMatchDetails = async (
       const matchStatus = covertMatchStatus(response);
       const matchInfo = convertMatchInfo(response.matchInfo);
       const matchPlayers = convertPlayers(response.matchInfo);
+
+      if (matchPlayers && matchPlayers[0] && matchPlayers[0].bestPlayer) {
+        bestPlayerList.push(matchPlayers[0].bestPlayer);
+      }
+
       return {
         matchInfo,
         matchStatus,
@@ -46,10 +55,14 @@ export const fetchMatchDetails = async (
   );
   const matchDetail = await Promise.all(matchDetailPromises);
   const scorePanel = getScorePanel(scoreList);
+  const bestPlayer = bestPlayerList.reduce((prev, current) =>
+    prev.total > current.total ? prev : current
+  );
 
   return {
     matchDetail,
     scorePanel,
+    bestPlayer,
   };
 };
 
@@ -61,6 +74,7 @@ interface MatchFetcherContextType {
   matchIds: string[];
   matches: MatchSummaryType[] | undefined;
   scorePanel: ScorePanel | undefined;
+  bestPlayer: any;
   isMatchIdsLoading: boolean;
   isMatchesLoading: boolean;
   page: number;
@@ -107,6 +121,7 @@ const MatchProvider = ({ children }: MatchFetcherProps) => {
         matchIds,
         matches: data?.matchDetail,
         scorePanel: data?.scorePanel,
+        bestPlayer: data?.bestPlayer,
         isMatchIdsLoading,
         isMatchesLoading,
         page,
