@@ -17,6 +17,8 @@ import {
   MatchPlayerInfoType,
   PlayerType,
 } from "@/entities/match/types/match.types";
+import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
+import { useMatchInfinityScroll } from "../hooks/useMatchInfinityScroll";
 
 // ScorePanel 타입 직접 정의
 type ScorePanel = {
@@ -29,7 +31,11 @@ type ScorePanel = {
 // 매치 상세 조회
 export const fetchMatchDetails = async (
   matchIds: string[]
-): Promise<{ matchDetail: MatchSummaryType[]; scorePanel: ScorePanel }> => {
+): Promise<{
+  matchDetail: MatchSummaryType[];
+  scorePanel: ScorePanel;
+  bestPlayer: PlayerType & { total: number };
+}> => {
   const matchApi = await FcClient.get("Match");
   const scoreList: MatchPlayerInfoType[][] = [];
   const bestPlayerList = [];
@@ -71,19 +77,25 @@ interface MatchFetcherProps {
 }
 
 interface MatchFetcherContextType {
-  matchIds: string[];
   matches: MatchSummaryType[] | undefined;
-  scorePanel: ScorePanel | undefined;
+  scorePanel: any;
   bestPlayer: any;
   isMatchIdsLoading: boolean;
   isMatchesLoading: boolean;
-  page: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const MatchFetcherContext = createContext<MatchFetcherContextType | undefined>(
   undefined
 );
+
+const getBestPlayer = (bestPlayerList: any[]) => {
+  console.log(bestPlayerList);
+  return bestPlayerList.length > 0
+    ? bestPlayerList.reduce((prev, current) =>
+        prev.total > current.total ? prev : current
+      )
+    : null;
+};
 
 export const useMatchFetcher = () => {
   const context = useContext(MatchFetcherContext);
@@ -94,42 +106,43 @@ export const useMatchFetcher = () => {
 };
 
 const MatchProvider = ({ children }: MatchFetcherProps) => {
-  // 페이지네이션
-  const [page, setPage] = useState(0);
   const searchParams = useSearchParams();
   const ouid = searchParams.get("q") ?? "";
 
-  const { data: matchIds, isLoading: isMatchIdsLoading } = useQuery(
-    MatchQueries.getMatchIds(ouid, { limit: 5, offset: page * 5 })
-  );
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useMatchInfinityScroll({
+      ouid,
+    });
 
-  const { data, isLoading: isMatchesLoading } = useQuery({
-    queryKey: ["matchDetails", matchIds],
-    queryFn: () =>
-      matchIds
-        ? fetchMatchDetails(matchIds)
-        : Promise.resolve({
-            matchDetail: [],
-            scorePanel: { win: 0, defeat: 0, draw: 0, winRate: 0 },
-          }),
-    enabled: !!matchIds,
+  const { setTarget } = useIntersectionObserver({
+    hasNextPage,
+    fetchNextPage,
   });
 
+  const matches = data?.pages.map((page) => page.matchDetail).flat();
+  // const matchInfo = data?.pages.map((page) => page.matchInfo).flat();
+  // const scorePanel = getScorePanel(matchInfo ?? []);
+  // const bestPlayer = getBestPlayer(matchInfo ?? []);
+
   return (
-    <MatchFetcherContext.Provider
-      value={{
-        matchIds,
-        matches: data?.matchDetail,
-        scorePanel: data?.scorePanel,
-        bestPlayer: data?.bestPlayer,
-        isMatchIdsLoading,
-        isMatchesLoading,
-        page,
-        setPage,
-      }}
-    >
-      {children}
-    </MatchFetcherContext.Provider>
+    <>
+      <MatchFetcherContext.Provider
+        value={{
+          matches,
+          scorePanel: [],
+          bestPlayer: [],
+          isMatchIdsLoading: isLoading,
+          isMatchesLoading: isLoading,
+        }}
+      >
+        {children}
+        {isFetchingNextPage ? (
+          <div>로딩</div>
+        ) : (
+          <div className="h-[1px]" ref={setTarget} />
+        )}
+      </MatchFetcherContext.Provider>
+    </>
   );
 };
 
