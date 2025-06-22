@@ -1,4 +1,4 @@
-import { PlayerType } from "./match.types";
+import { MatchPlayerInfoType, PlayerType } from "./match.types";
 
 interface ConvertedIndicatorType {
   userNickName: string;
@@ -36,6 +36,7 @@ interface MatchSummaryType {
     players: Record<string, PlayerType>;
     bestPlayer: PlayerType & { total: number };
   }>;
+  matches: MatchPlayerInfoType[];
 }
 
 export type {

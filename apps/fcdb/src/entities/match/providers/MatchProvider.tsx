@@ -1,21 +1,12 @@
 "use client";
 
-import { FcClient } from "@/entities/fc-database/lib/FcClient";
-import {
-  convertPlayers,
-  convertMatchInfo,
-  covertMatchStatus,
-  getScorePanel,
-} from "@/entities/match/lib/getMatchInfo";
-import { MatchQueries } from "@/entities/match/model/queries";
+import { getScorePanel } from "@/entities/match/lib/getMatchInfo";
 import { MatchSummaryType } from "@/entities/match/types/match.info.types";
-import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
 import { createContext, useContext } from "react";
 import {
-  MatchPlayerInfoType,
   PlayerType,
+  MatchPlayerInfoType,
 } from "@/entities/match/types/match.types";
 import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
 import { useMatchInfinityScroll } from "../hooks/useMatchInfinityScroll";
@@ -26,50 +17,7 @@ type ScorePanel = {
   defeat: number;
   draw: number;
   winRate: number;
-};
-
-// 매치 상세 조회
-export const fetchMatchDetails = async (
-  matchIds: string[]
-): Promise<{
-  matchDetail: MatchSummaryType[];
-  scorePanel: ScorePanel;
-  bestPlayer: PlayerType & { total: number };
-}> => {
-  const matchApi = await FcClient.get("Match");
-  const scoreList: MatchPlayerInfoType[][] = [];
-  const bestPlayerList = [];
-
-  const matchDetailPromises: Promise<MatchSummaryType>[] = matchIds.map(
-    async (matchId) => {
-      const response = await matchApi.getMatchDetail(matchId);
-      scoreList.push(response.matchInfo);
-      const matchStatus = covertMatchStatus(response);
-      const matchInfo = convertMatchInfo(response.matchInfo);
-      const matchPlayers = convertPlayers(response.matchInfo);
-
-      if (matchPlayers && matchPlayers[0] && matchPlayers[0].bestPlayer) {
-        bestPlayerList.push(matchPlayers[0].bestPlayer);
-      }
-
-      return {
-        matchInfo,
-        matchStatus,
-        matchPlayers,
-      };
-    }
-  );
-  const matchDetail = await Promise.all(matchDetailPromises);
-  const scorePanel = getScorePanel(scoreList);
-  const bestPlayer = bestPlayerList.reduce((prev, current) =>
-    prev.total > current.total ? prev : current
-  );
-
-  return {
-    matchDetail,
-    scorePanel,
-    bestPlayer,
-  };
+  total: number;
 };
 
 interface MatchFetcherProps {
@@ -78,23 +26,28 @@ interface MatchFetcherProps {
 
 interface MatchFetcherContextType {
   matches: MatchSummaryType[] | undefined;
-  scorePanel: any;
-  bestPlayer: any;
-  isMatchIdsLoading: boolean;
-  isMatchesLoading: boolean;
+  scorePanel: ScorePanel;
+  bestPlayer: PlayerType | null;
 }
 
 const MatchFetcherContext = createContext<MatchFetcherContextType | undefined>(
   undefined
 );
 
-const getBestPlayer = (bestPlayerList: any[]) => {
-  console.log(bestPlayerList);
-  return bestPlayerList.length > 0
-    ? bestPlayerList.reduce((prev, current) =>
-        prev.total > current.total ? prev : current
-      )
-    : null;
+const getBestPlayer = (bestPlayerList: { bestPlayer: PlayerType | null }[]) => {
+  const validPlayers = bestPlayerList
+    .map((item) => item.bestPlayer)
+    .filter((player): player is PlayerType => player !== null);
+
+  if (validPlayers.length === 0) return null;
+
+  return validPlayers.reduce((prev, current) => {
+    const prevScore = prev.status.goal + prev.status.assist + prev.status.shoot;
+    const currentScore =
+      current.status.goal + current.status.assist + current.status.shoot;
+
+    return currentScore > prevScore ? current : prev;
+  });
 };
 
 export const useMatchFetcher = () => {
@@ -109,7 +62,7 @@ const MatchProvider = ({ children }: MatchFetcherProps) => {
   const searchParams = useSearchParams();
   const ouid = searchParams.get("q") ?? "";
 
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useMatchInfinityScroll({
       ouid,
     });
@@ -120,26 +73,29 @@ const MatchProvider = ({ children }: MatchFetcherProps) => {
   });
 
   const matches = data?.pages.map((page) => page.matchDetail).flat();
-  // const matchInfo = data?.pages.map((page) => page.matchInfo).flat();
-  // const scorePanel = getScorePanel(matchInfo ?? []);
-  // const bestPlayer = getBestPlayer(matchInfo ?? []);
+  const matchPlayers = matches?.map((page) => page.matchPlayers).flat() || [];
+  const bestPlayer = getBestPlayer(matchPlayers);
+  const scorePanel = getScorePanel(
+    matches
+      ?.map((page) => page.matches[0])
+      .filter((match): match is MatchPlayerInfoType => match !== undefined) ||
+      []
+  );
 
   return (
     <>
       <MatchFetcherContext.Provider
         value={{
           matches,
-          scorePanel: [],
-          bestPlayer: [],
-          isMatchIdsLoading: isLoading,
-          isMatchesLoading: isLoading,
+          scorePanel,
+          bestPlayer,
         }}
       >
         {children}
         {isFetchingNextPage ? (
           <div>로딩</div>
         ) : (
-          <div className="h-[1px]" ref={setTarget} />
+          <div className="h-[100px]" ref={setTarget} />
         )}
       </MatchFetcherContext.Provider>
     </>
