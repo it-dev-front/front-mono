@@ -10,6 +10,7 @@ import ScoreCard from "@/entities/match/ui/ScoreBoard";
 import MatchResultLabel from "@/entities/match/ui/MatchResultLabel";
 import MatchDateLabel from "@/entities/match/ui/MatchDateLabel";
 import { UserSearchFormation } from "@/features/user-search/ui/UserSearchFormation";
+import { UserSearchFormationMoblie } from "@/features/user-search/ui/UserSearchFormationMoblie";
 import { MatchSummaryType } from "@/entities/match/types/match.info.types";
 
 interface MatchSummaryProps {
@@ -84,11 +85,17 @@ const MatchSummary = ({ match }: MatchSummaryProps) => {
         <div
           className={clsx(
             "overflow-hidden transition-[height] duration-300 ease-in-out",
-            isExpanded ? "h-[814px] mobile:h-[1014px]" : "h-0"
+            // 기존 mobile:h-[1014px]는 선수 이미지를 너무 작게 해야해서 mobile:h-[1300px]로 변경
+            isExpanded ? "h-[814px] mobile:h-[1300px]" : "h-0"
           )}
         >
           {/* Accordion content */}
-          <UserSearchFormation matchPlayers={match.matchPlayers} />
+          <div className="hidden lg:block">
+            <UserSearchFormation matchPlayers={match.matchPlayers} />
+          </div>
+          <div className="block lg:hidden">
+            <UserSearchFormationMoblie matchPlayers={match.matchPlayers} />
+          </div>
         </div>
       </section>
     </article>

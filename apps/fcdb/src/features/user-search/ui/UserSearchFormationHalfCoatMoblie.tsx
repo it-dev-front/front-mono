@@ -28,7 +28,7 @@ export const getGradeTextColor = (grade: number) => {
   return "#000000";
 };
 
-export const UserSearchFormationHalfCoat = ({
+export const UserSearchFormationHalfCoatMoblie = ({
   formation,
   formationGroup,
 }: {
@@ -47,8 +47,7 @@ export const UserSearchFormationHalfCoat = ({
       : [...positionsEntries].reverse();
 
   return (
-    // 확인 후 pb-[44px] 제거 필요
-    <div className="w-1/2 h-full grid grid-cols-9 grid-rows-5 gap-1 px-[20px] pb-[44px] pt-[20px]">
+    <div className="w-full h-full grid grid-cols-5 grid-rows-9 pb-[14px] px-[8px]">
       {positionsList.map(([key, positions], columnIndex) =>
         positions.map((position, rowIndex) => {
           const soccerPlayer = formation?.[position];
@@ -78,31 +77,31 @@ export const UserSearchFormationHalfCoat = ({
               key={position}
               className={`w-full h-full flex flex-col items-center justify-center`}
               style={{
-                gridColumn: columnIndex + 1,
-                gridRow: rowIndex + 1,
+                gridColumn: rowIndex + 1,
+                gridRow: columnIndex + 1,
               }}
             >
-              <div className="relative w-[50px] h-[60px] flex items-center justify-center">
+              <div className="relative w-full h-full flex items-center justify-center">
                 <Goal goal={goal} />
                 <SafeImage
                   src={getPlayerImageSrc(soccerPlayer.spId)}
                   alt={playerName ? playerName : "선수 이미지"}
-                  width={50}
-                  height={60}
+                  width={38}
+                  height={38}
                   className="rounded-full border-[1px] border-[#ABEE02]"
                 />
                 {seasonImg && (
-                  <div className="absolute left-0 -bottom-[20px] w-full">
-                    <div className="flex justify-between w-full items-center">
+                  <div className="absolute left-0 -bottom-[8px] w-full">
+                    <div className="flex justify-center gap-[4px] w-full items-center">
                       <Image
                         src={seasonImg}
                         alt="season-image"
-                        width={26}
-                        height={20}
+                        width={20}
+                        height={14}
                         className="rounded-[4px]"
                       />
                       <div
-                        className="border-[1px] border-[#ABEE02] h-[20px] w-[20px] flex items-center justify-center rounded-[4px]"
+                        className="border-[1px] border-[#ABEE02] h-[14px] w-[14px] flex items-center justify-center rounded-[4px]"
                         style={{ backgroundColor: gradeBgColor }}
                       >
                         <p
