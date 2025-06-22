@@ -7,27 +7,13 @@ import { BallSpinner } from "@/shared/ui/spinner/BallSpinner";
 import { Fragment } from "react";
 
 export const RankingTable = () => {
-  const {
-    allItems,
-    hasNextPage,
-    isFetchingNextPage,
-    error,
-    loadMoreRef,
-    isFetching,
-  } = useInfiniteRankingData();
+  const { allItems, hasNextPage, isFetchingNextPage, error, loadMoreRef } =
+    useInfiniteRankingData();
 
   if (error) {
     return (
       <div className="text-center py-8 text-red-500">
         데이터를 불러오는 중 오류가 발생했습니다.
-      </div>
-    );
-  }
-
-  if (isFetching) {
-    return (
-      <div className="flex justify-center items-center w-full h-dvh">
-        <BallSpinner />
       </div>
     );
   }
