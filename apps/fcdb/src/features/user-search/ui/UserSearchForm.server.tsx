@@ -10,7 +10,7 @@ export async function userSearchAction(
   const name = formData.get("name") as string;
   const userApi = await FcClient.get("User");
   const result = await userApi.getOuid(name);
-
+  console.log("result : ", result);
   if (!result.ouid) {
     return { error: "존재하지 않는 유저입니다." };
   }
