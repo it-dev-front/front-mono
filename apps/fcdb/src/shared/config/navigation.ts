@@ -8,7 +8,8 @@ export const navigationConfig: NavigationItem[] = [
   {
     href: "/",
     label: "전적검색",
-    isActive: (pathname: string) => pathname === "/" || pathname === "/user",
+    isActive: (pathname: string) =>
+      pathname === "/" || pathname.startsWith("/user"),
   },
   {
     href: "/ranking",

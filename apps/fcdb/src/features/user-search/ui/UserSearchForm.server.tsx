@@ -16,5 +16,5 @@ export async function userSearchAction(
   }
 
   // 정상 처리
-  redirect(`/user?name=${encodeURIComponent(name)}`);
+  redirect(`/user/${name}`);
 }
