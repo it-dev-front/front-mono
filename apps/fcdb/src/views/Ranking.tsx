@@ -1,10 +1,19 @@
+import { infiniteRankingQueryOptions } from "@/entities/ranking/model/queries";
 import RankingPageHeader from "@/widgets/ranking/RankingPageHeader";
 import { RankingTable } from "@/widgets/ranking/RankingTable";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import Image from "next/image";
 
-export default function Ranking() {
+export default async function Ranking() {
+  const queryClient = new QueryClient();
+  await queryClient.prefetchInfiniteQuery(infiniteRankingQueryOptions());
+
   return (
-    <>
+    <HydrationBoundary state={dehydrate(queryClient)}>
       <main className="relative w-full min-w-[366px] flex flex-col min-h-screen pt-[62px]">
         <Image
           src="/images/ranking-bg.png"
@@ -18,6 +27,8 @@ export default function Ranking() {
           <RankingTable />
         </div>
       </main>
-    </>
+    </HydrationBoundary>
   );
 }
+
+export const revalidate = 60;
