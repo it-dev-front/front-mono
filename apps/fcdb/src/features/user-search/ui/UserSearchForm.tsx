@@ -23,7 +23,7 @@ export const UserSearchForm = () => {
       />
       <button
         type="submit"
-        className="ml-[2vw] w-[24vw] h-10 bg-gray-900 text-xs font-bold text-[#FFFFFF] px-4 py-2 rounded-lg hover:bg-gray-800 lg:text-[16px] lg:ml-4 lg:w-32 lg:h-14"
+        className="ml-[2vw] w-[24vw] h-10 bg-gray-900 text-xs font-bold text-[#FFFFFF] px-4 py-2 rounded-lg hover:bg-gray-800 lg:text-[16px] lg:ml-4 lg:w-32 lg:h-14 cursor-pointer"
       >
         전적보기
       </button>

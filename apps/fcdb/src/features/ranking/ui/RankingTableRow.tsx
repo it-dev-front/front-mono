@@ -13,7 +13,7 @@ export const RankingTableRow = ({ record }: RankingTableRowProps) => {
   const loseCount = recordData.lose || 0;
 
   return (
-    <tr className="flex items-center h-[84px] px-10 py-3 bg-gray-900 rounded-[8px] text-[16px] text-white mobile:text-[12px] mobile:px-[15px] mobile:py-[3px] mobile:justify-between">
+    <tr className="flex items-center h-[84px] px-10 py-3 bg-gray-900 rounded-[8px] text-[16px] text-white mobile:text-[12px] mobile:px-[15px] mobile:py-[3px] mobile:justify-between hover:bg-gray-800 cursor-pointer">
       <td className="w-20 text-center text-[24px] mobile:w-10 mobile:text-[18px]">
         {record.rankNo}
       </td>
