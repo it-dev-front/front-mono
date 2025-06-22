@@ -5,6 +5,7 @@ import { MetaQueries } from "@/entities/meta/model/queries";
 import SafeImage from "@/shared/components/SafeImage";
 import { getPositionColor, findPositionCategory } from "@/shared/lib/position";
 import { PlayerType } from "@/entities/match/types/match.types";
+import { Goal } from "@/entities/formation/ui/Goal";
 
 export const getPlayerImageSrc = (spId: number) => {
   const imgSrc = `https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p${spId}.png`;
@@ -46,8 +47,8 @@ export const UserSearchFormationHalfCoat = ({
       : [...positionsEntries].reverse();
 
   return (
-    // 확인 후 pb-[24px] 제거 필요
-    <div className="w-1/2 h-full grid grid-cols-9 grid-rows-5 gap-1 px-[12px] pb-[24px]">
+    // 확인 후 pb-[44px] 제거 필요
+    <div className="w-1/2 h-full grid grid-cols-9 grid-rows-5 gap-1 px-[20px] pb-[44px] pt-[20px]">
       {positionsList.map(([key, positions], columnIndex) =>
         positions.map((position, rowIndex) => {
           const soccerPlayer = formation?.[position];
@@ -70,6 +71,7 @@ export const UserSearchFormationHalfCoat = ({
           const positionColor = getPositionColor(positionCategory);
           const gradeBgColor = getGradeBgColor(grade);
           const gradeTextColor = getGradeTextColor(grade);
+          const goal = soccerPlayer.status.goal;
 
           return (
             <div
@@ -81,6 +83,7 @@ export const UserSearchFormationHalfCoat = ({
               }}
             >
               <div className="relative w-[50px] h-[60px] flex items-center justify-center">
+                <Goal goal={goal} />
                 <SafeImage
                   src={getPlayerImageSrc(soccerPlayer.spId)}
                   alt={playerName ? playerName : "선수 이미지"}
@@ -121,7 +124,6 @@ export const UserSearchFormationHalfCoat = ({
                   </div>
                 )}
               </div>
-              <div className="text-[10px] text-center" title={playerName}></div>
             </div>
           );
         })
