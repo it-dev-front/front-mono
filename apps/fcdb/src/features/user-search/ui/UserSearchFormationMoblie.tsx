@@ -1,17 +1,17 @@
 import { PositionIndicator } from "@/entities/formation/ui/PositionIndicator";
-import { UserSearchFormationHalfCoat } from "@/features/user-search/ui/UserSearchFormationHalfCoat";
+import { UserSearchFormationHalfCoatMoblie } from "@/features/user-search/ui/UserSearchFormationHalfCoatMoblie";
 import { PlayerType } from "@/entities/match/types/match.types";
 
-interface UserSearchFormationProps {
+interface UserSearchFormationMoblieProps {
   matchPlayers: Array<{
     players: Record<string, PlayerType>;
     bestPlayer: PlayerType & { total: number };
   }>;
 }
 
-export const UserSearchFormation = ({
+export const UserSearchFormationMoblie = ({
   matchPlayers,
-}: UserSearchFormationProps) => {
+}: UserSearchFormationMoblieProps) => {
   const getPlayers = (idx: 0 | 1) => {
     if (!matchPlayers || !matchPlayers[idx]) {
       return {};
@@ -47,25 +47,24 @@ export const UserSearchFormation = ({
       </div>
 
       <div className="pt-[10px] px-[8px] lg:pt-[12px] lg:px-[16px]">
-        <div
-          className="relative w-full h-0 pb-[60%] bg-contain bg-center bg-no-repeat"
-          style={{
-            backgroundImage: "url('/images/soccer_coat.png')",
-          }}
-        >
-          <div className="absolute inset-0 flex">
+        <div className="relative w-full h-[1200px] bg-[url('/images/soccer_coat_mobile.png')] bg-[length:100%_100%]">
+          <div className="absolute flex-col w-full h-full">
             {firstUserFormation && (
-              <UserSearchFormationHalfCoat
-                formation={firstUserFormation}
-                formationGroup="first"
-              />
+              <div className="h-1/2 w-full">
+                <UserSearchFormationHalfCoatMoblie
+                  formation={firstUserFormation}
+                  formationGroup="first"
+                />
+              </div>
             )}
 
             {secondUserFormation && (
-              <UserSearchFormationHalfCoat
-                formation={secondUserFormation}
-                formationGroup="second"
-              />
+              <div className="h-1/2 w-full ">
+                <UserSearchFormationHalfCoatMoblie
+                  formation={secondUserFormation}
+                  formationGroup="second"
+                />
+              </div>
             )}
           </div>
         </div>
