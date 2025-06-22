@@ -2,7 +2,7 @@
 
 import { RankingTableRow } from "@/features/ranking/ui/RankingTableRow";
 import { RankingTableHeader } from "@/widgets/ranking/RankingTableHeader";
-import { useInfiniteRanking } from "@/entities/ranking/model/queries";
+import { useInfiniteRankingData } from "@/features/ranking/hooks/useInfiniteRankingData";
 import { BallSpinner } from "@/shared/ui/spinner/BallSpinner";
 import { Fragment } from "react";
 
@@ -14,7 +14,7 @@ export const RankingTable = () => {
     error,
     loadMoreRef,
     isFetching,
-  } = useInfiniteRanking();
+  } = useInfiniteRankingData();
 
   if (error) {
     return (
