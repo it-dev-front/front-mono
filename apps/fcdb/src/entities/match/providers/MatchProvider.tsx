@@ -74,6 +74,7 @@ export const fetchMatchDetails = async (
 
 interface MatchFetcherProps {
   children: React.ReactNode;
+  ouid: string;
 }
 
 interface MatchFetcherContextType {
@@ -105,10 +106,7 @@ export const useMatchFetcher = () => {
   return context;
 };
 
-const MatchProvider = ({ children }: MatchFetcherProps) => {
-  const searchParams = useSearchParams();
-  const ouid = searchParams.get("q") ?? "";
-
+const MatchProvider = ({ children, ouid }: MatchFetcherProps) => {
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useMatchInfinityScroll({
       ouid,
