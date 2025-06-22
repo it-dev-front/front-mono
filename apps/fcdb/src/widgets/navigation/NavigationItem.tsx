@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { Typography } from "@/shared/ui/typography";
 
 interface NavigationItemProps {
@@ -19,16 +18,7 @@ export const NavigationItem = ({
         {label}
       </Typography>
       {isActive && (
-        <motion.div
-          layoutId="activeTab"
-          className="absolute bottom-0 left-0 right-0 h-1 bg-primary-300"
-          initial={false}
-          transition={{
-            type: "spring" as const,
-            stiffness: 500,
-            damping: 30,
-          }}
-        />
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary-300" />
       )}
     </Link>
   );
