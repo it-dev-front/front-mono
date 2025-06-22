@@ -1,5 +1,3 @@
-"use client";
-
 import RankingPageHeader from "@/widgets/ranking/RankingPageHeader";
 import { RankingTable } from "@/widgets/ranking/RankingTable";
 import Image from "next/image";
