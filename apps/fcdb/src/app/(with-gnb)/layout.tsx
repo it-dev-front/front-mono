@@ -1,4 +1,4 @@
-import { Header } from "@/widgets/Header";
+import { Navigation } from "@/widgets/navigation";
 import { Footer } from "@/widgets/Footer";
 
 export default function WithGNBLayout({
@@ -8,7 +8,7 @@ export default function WithGNBLayout({
 }) {
   return (
     <>
-      <Header />
+      <Navigation />
       <main>{children}</main>
       <Footer />
     </>
