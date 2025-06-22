@@ -30,8 +30,8 @@ export const UserSearchFormation = ({
     return players;
   };
 
-  const leftUserFormation = getPlayersBySpPositon(0);
-  const rightUserFormation = getPlayersBySpPositon(1);
+  const firstUserFormation = getPlayersBySpPositon(0);
+  const secondUserFormation = getPlayersBySpPositon(1);
 
   return (
     <div>
@@ -55,16 +55,16 @@ export const UserSearchFormation = ({
           }}
         >
           <div className="absolute inset-0 flex">
-            {leftUserFormation && (
+            {firstUserFormation && (
               <UserSearchFormationHalfCoat
-                formation={leftUserFormation}
+                formation={firstUserFormation}
                 formationGroup="first"
               />
             )}
 
-            {rightUserFormation && (
+            {secondUserFormation && (
               <UserSearchFormationHalfCoat
-                formation={rightUserFormation}
+                formation={secondUserFormation}
                 formationGroup="second"
               />
             )}
