@@ -3,13 +3,9 @@
 import { useQueries } from "@tanstack/react-query";
 import { ProfileSummary } from "./ProfileSummary";
 import { ProfileQueries } from "@/entities/profile/model/queries";
-import { useSearchParams } from "next/navigation";
 import { useMatchFetcher } from "@/entities/match/providers/MatchProvider";
 
-export const UserProfileFetcher = () => {
-  const searchParams = useSearchParams();
-  const ouid = searchParams.get("q") ?? "";
-
+export const UserProfileFetcher = ({ ouid }: { ouid: string }) => {
   const results = useQueries({
     queries: [
       ProfileQueries.getUserProfile(ouid),
