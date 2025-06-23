@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { CircularProgressBar } from "@/shared/ui/progressbar/CircularProgressBar";
 import { RankingRecord } from "@/entities/ranking/types/ranking-record.types";
 
@@ -7,13 +10,23 @@ interface RankingTableRowProps {
 }
 
 export const RankingTableRow = ({ record }: RankingTableRowProps) => {
+  const router = useRouter();
   const recordData = record.record || { win: 0, draw: 0, lose: 0 };
   const totalGames = recordData.win + recordData.draw + recordData.lose;
   const winCount = recordData.win || 0;
   const loseCount = recordData.lose || 0;
 
+  const handleRowClick = () => {
+    if (record.nickname) {
+      router.push(`/user/${record.nickname}`);
+    }
+  };
+
   return (
-    <tr className="flex items-center h-[84px] px-10 py-3 bg-gray-900 rounded-[8px] text-[16px] text-white mobile:text-[12px] mobile:px-[15px] mobile:py-[3px] mobile:justify-between hover:bg-gray-800 cursor-pointer">
+    <tr
+      className="flex items-center h-[84px] px-10 py-3 bg-gray-900 rounded-[8px] text-[16px] text-white mobile:text-[12px] mobile:px-[15px] mobile:py-[3px] mobile:justify-between cursor-pointer hover:bg-gray-800 transition-colors"
+      onClick={handleRowClick}
+    >
       <td className="w-20 text-center text-[24px] mobile:w-10 mobile:text-[18px]">
         {record.rankNo}
       </td>

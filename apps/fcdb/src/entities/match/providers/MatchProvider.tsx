@@ -2,7 +2,6 @@
 
 import { getScorePanel } from "@/entities/match/lib/getMatchInfo";
 import { MatchSummaryType } from "@/entities/match/types/match.info.types";
-import { useSearchParams } from "next/navigation";
 import { createContext, useContext } from "react";
 import {
   PlayerType,
@@ -22,6 +21,7 @@ type ScorePanel = {
 
 interface MatchFetcherProps {
   children: React.ReactNode;
+  ouid: string;
 }
 
 interface MatchFetcherContextType {
@@ -58,11 +58,8 @@ export const useMatchFetcher = () => {
   return context;
 };
 
-const MatchProvider = ({ children }: MatchFetcherProps) => {
-  const searchParams = useSearchParams();
-  const ouid = searchParams.get("q") ?? "";
-
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+const MatchProvider = ({ children, ouid }: MatchFetcherProps) => {
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useMatchInfinityScroll({
       ouid,
     });
