@@ -17,9 +17,7 @@ export const RankingTableRow = ({ record }: RankingTableRowProps) => {
   const loseCount = recordData.lose || 0;
 
   const handleRowClick = () => {
-    if (record.nickname) {
-      router.push(`/user/${record.nickname}`);
-    }
+    if (record.nickname) router.push(`user/${record.nickname}`);
   };
 
   return (
