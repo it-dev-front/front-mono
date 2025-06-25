@@ -1,15 +1,8 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "./globals.css";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-});
+import "./(app)/styles/globals.css";
+import "./(app)/styles/tailwind.css";
+import { AppProvider } from "./(app)/providers";
+import { Toast } from "@/shared/ui/toast";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,8 +16,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body>
+        <AppProvider>{children}</AppProvider>
+        <Toast position="top-right" />
       </body>
     </html>
   );
