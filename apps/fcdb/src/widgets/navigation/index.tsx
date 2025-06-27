@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NavigationItem } from "./NavigationItem";
 import { navigationConfig } from "@/shared/config/navigation";
-import { useSlideUnderlineAnimation } from "./hooks/useSlideUnderlineAnimation";
+import { useSlideUnderlineAnimation } from "@/shared/hooks";
 
 export const Navigation = () => {
   const pathname = usePathname();
