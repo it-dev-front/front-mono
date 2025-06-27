@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 
 const INITIAL_STATE = {
@@ -11,6 +12,7 @@ export const useSlideUnderlineAnimation = <ItemElement extends HTMLElement>(
 ) => {
   const containerRef = useRef<HTMLElement>(null);
   const itemRefs = useRef<(ItemElement | null)[]>([]);
+  const [isInitialMount, setIsInitialMount] = useState(true);
   const [underlineStyle, setUnderlineStyle] =
     useState<typeof INITIAL_STATE>(INITIAL_STATE);
 
@@ -27,11 +29,19 @@ export const useSlideUnderlineAnimation = <ItemElement extends HTMLElement>(
         const containerRect = container.getBoundingClientRect();
         const itemRect = activeItem.getBoundingClientRect();
 
-        setUnderlineStyle({
+        const newStyle = {
           left: itemRect.left - containerRect.left,
           width: itemRect.width,
           opacity: 1,
-        });
+        };
+
+        setUnderlineStyle(newStyle);
+
+        if (isInitialMount) {
+          requestAnimationFrame(() => {
+            setIsInitialMount(false);
+          });
+        }
       }
     } else {
       setUnderlineStyle((previous) => ({ ...previous, opacity: 0 }));
@@ -42,9 +52,13 @@ export const useSlideUnderlineAnimation = <ItemElement extends HTMLElement>(
     itemRefs.current[index] = element;
   };
 
+  const className = clsx(
+    "absolute bottom-0 h-1 bg-primary-300 ease-out",
+    isInitialMount ? "transition-none" : "transition-all duration-300"
+  );
+
   const underlineProps = {
-    className:
-      "absolute bottom-0 h-1 bg-primary-300 transition-all duration-300 ease-out",
+    className,
     style: underlineStyle,
   };
 
