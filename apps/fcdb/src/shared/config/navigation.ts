@@ -1,8 +1,8 @@
-interface NavigationItem {
+type NavigationItem = {
   href: string;
   label: string;
   isActive: (pathname: string) => boolean;
-}
+};
 
 export const navigationConfig: NavigationItem[] = [
   {

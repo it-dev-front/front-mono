@@ -5,9 +5,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NavigationItem } from "./NavigationItem";
 import { navigationConfig } from "@/shared/config/navigation";
+import { useSlideUnderlineAnimation } from "./hooks/useSlideUnderlineAnimation";
 
 export const Navigation = () => {
   const pathname = usePathname();
+
+  const activeIndex = navigationConfig.findIndex((item) =>
+    item.isActive(pathname)
+  );
+
+  const { containerRef, setItemRef, underlineProps } =
+    useSlideUnderlineAnimation(activeIndex);
 
   return (
     <header className="w-full min-w-[366px] h-[50px] flex items-center mobile:h-[56px] bg-gray-900 fixed top-0 left-0 z-50 px-4">
@@ -20,15 +28,20 @@ export const Navigation = () => {
           <Image src="/logo.svg" alt="logo" width={108} height={20} />
         </Link>
 
-        <nav className="h-full flex items-center gap-[36px]">
-          {navigationConfig.map((item) => (
+        <nav
+          ref={containerRef}
+          className="h-full flex items-center gap-[36px] relative"
+        >
+          {navigationConfig.map((item, index) => (
             <NavigationItem
-              key={item.href}
+              key={index}
+              ref={setItemRef(index)}
               href={item.href}
               label={item.label}
-              isActive={item.isActive(pathname)}
             />
           ))}
+
+          <div {...underlineProps} />
         </nav>
       </div>
     </header>
