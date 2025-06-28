@@ -128,4 +128,4 @@ type MatchDetailType = {
   matchInfo: MatchPlayerInfoType[];
 };
 
-export type { MatchDetailType, MatchPlayerInfoType, PlayerType };
+export type { MatchDetailType, MatchPlayerInfoType, PlayerType, MatchInfoType };

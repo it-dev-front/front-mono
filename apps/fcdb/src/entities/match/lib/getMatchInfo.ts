@@ -1,6 +1,10 @@
 import { MatchDetailResponse } from "@/entities/fc-database/types";
 import { ConvertedMatchInfo } from "../types/match.info.types";
-import { MatchPlayerInfoType, PlayerType } from "../types/match.types";
+import {
+  MatchInfoType,
+  MatchPlayerInfoType,
+  PlayerType,
+} from "../types/match.types";
 import { POSITION } from "@/shared/constant/position";
 
 const covertMatchStatus = (match: MatchDetailResponse) => {
@@ -100,35 +104,36 @@ type ScorePanel = {
   total: number;
 };
 
-const getScorePanel = (matchInfo: any[]): ScorePanel => {
-  let win = 0;
-  let defeat = 0;
-  let draw = 0;
-  let total = 0;
-  matchInfo.forEach((match) => {
-    const matchResult = match[0].matchDetail?.matchResult || "";
+const getScorePanel = (matchInfo: MatchPlayerInfoType[]): ScorePanel => {
+  const scoreObj = {
+    win: 0,
+    defeat: 0,
+    draw: 0,
+    total: 0,
+    winRate: 0,
+  };
+
+  if (matchInfo.length === 0 || !matchInfo) return scoreObj;
+
+  matchInfo.forEach((match: MatchPlayerInfoType) => {
+    const matchResult = match.matchDetail?.matchResult || "";
+    scoreObj.total++;
+
     if (matchResult === "승") {
-      win++;
+      scoreObj.win++;
     } else if (matchResult === "패") {
-      defeat++;
+      scoreObj.defeat++;
     } else if (matchResult === "무") {
-      draw++;
+      scoreObj.draw++;
     } else {
-      defeat++;
+      scoreObj.defeat++;
     }
-    total++;
   });
 
-  const sum = win + defeat + draw;
-  const winRate = sum > 0 ? (win / sum) * 100 : 0;
+  const sum = scoreObj.win + scoreObj.defeat + scoreObj.draw;
+  scoreObj.winRate = sum > 0 ? (scoreObj.win / sum) * 100 : 0;
 
-  return {
-    win,
-    defeat,
-    draw,
-    winRate,
-    total,
-  };
+  return scoreObj;
 };
 
 export { convertMatchInfo, covertMatchStatus, convertPlayers, getScorePanel };
