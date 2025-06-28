@@ -21,11 +21,13 @@ export const MobileProfileSummary = ({
   ratingData,
   scorePanel,
   bestPlayer,
+  updatedAt,
 }: {
   profileData: UserProfileResponse;
   ratingData: BestGradeResponse;
   scorePanel: any;
   bestPlayer: any;
+  updatedAt: Date;
 }): ReactElement => {
   const tierData = parseTierData(ratingData);
 
@@ -47,7 +49,7 @@ export const MobileProfileSummary = ({
         <div className="w-[120px] h-[80px] inline-block" />
       </div>
 
-      <MobileScoreRefresh updatedAt="10분전" />
+      <MobileScoreRefresh updatedAt={updatedAt} />
     </div>
   );
 };
@@ -58,11 +60,13 @@ export const PcProfileSummary = ({
   ratingData,
   scorePanel,
   bestPlayer,
+  updatedAt,
 }: {
   profileData: UserProfileResponse;
   ratingData: BestGradeResponse;
   scorePanel: any;
   bestPlayer: any;
+  updatedAt: Date;
 }): ReactElement => {
   return (
     <div className="mx-auto w-full flex items-center justify-between bg-gray-900 max-w-[1080px] h-[240px] p-[40px]">
@@ -78,7 +82,7 @@ export const PcProfileSummary = ({
       <div className="flex items-end gap-[66px]">
         <TierBadge data={ratingData} />
         <Score score={scorePanel} />
-        <ScoreRefresh updatedAt={"10분전"} />
+        <ScoreRefresh updatedAt={updatedAt} />
       </div>
     </div>
   );
@@ -89,11 +93,13 @@ export const ProfileSummary = ({
   ratingData,
   scorePanel,
   bestPlayer,
+  updatedAt,
 }: {
   profileData: UserProfileResponse;
   ratingData: BestGradeResponse;
   scorePanel: any;
   bestPlayer: any;
+  updatedAt: Date;
 }): React.ReactElement => {
   return (
     <>
@@ -103,6 +109,7 @@ export const ProfileSummary = ({
           ratingData={ratingData}
           scorePanel={scorePanel}
           bestPlayer={bestPlayer}
+          updatedAt={updatedAt}
         />
       </div>
 
@@ -113,6 +120,7 @@ export const ProfileSummary = ({
           ratingData={ratingData}
           scorePanel={scorePanel}
           bestPlayer={bestPlayer}
+          updatedAt={updatedAt}
         />
       </div>
     </>

@@ -2,7 +2,6 @@
 
 import { getScorePanel } from "@/entities/match/lib/getMatchInfo";
 import { MatchSummaryType } from "@/entities/match/types/match.info.types";
-import { useSearchParams } from "next/navigation";
 import { createContext, useContext } from "react";
 import {
   PlayerType,
@@ -29,6 +28,7 @@ interface MatchFetcherContextType {
   matches: MatchSummaryType[] | undefined;
   scorePanel: ScorePanel;
   bestPlayer: PlayerType | null;
+  updatedAt: Date;
 }
 
 const MatchFetcherContext = createContext<MatchFetcherContextType | undefined>(
@@ -87,6 +87,7 @@ const MatchProvider = ({ children, ouid }: MatchFetcherProps) => {
           matches,
           scorePanel,
           bestPlayer,
+          updatedAt: new Date(),
         }}
       >
         {children}

@@ -1,14 +1,12 @@
 "use client";
 
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { RotateCcw } from "lucide-react";
 import { QueryClient, useQueryClient } from "@tanstack/react-query";
 import { MATH_QUERY_KEY } from "@/entities/match/model/keys/queryKeys";
 
-// TODO 쿼리 캐시 초기화
-
 interface ScoreRefreshProps {
-  updatedAt: string;
+  updatedAt: Date;
   onRefresh: () => void;
 }
 
@@ -16,17 +14,55 @@ const refreshMatch = (queryClient: QueryClient) => {
   queryClient.resetQueries({ queryKey: [MATH_QUERY_KEY.IDS] });
   queryClient.resetQueries({ queryKey: [MATH_QUERY_KEY.LIST] });
   queryClient.resetQueries({ queryKey: [MATH_QUERY_KEY.DETAIL] });
+  queryClient.resetQueries({ queryKey: [MATH_QUERY_KEY.INFINITY] });
+};
+
+const getTimeAgo = (updatedAt: Date): string => {
+  const now = new Date();
+  const diffMs = now.getTime() - updatedAt.getTime();
+
+  const diffSeconds = Math.floor(diffMs / 1000);
+  const diffMinutes = Math.floor(diffSeconds / 60);
+  const diffHours = Math.floor(diffMinutes / 60);
+  const diffDays = Math.floor(diffHours / 24);
+
+  if (diffSeconds < 60) {
+    return `업데이트 ${diffSeconds}초 전`;
+  } else if (diffMinutes < 60) {
+    return `업데이트 ${diffMinutes}분 전`;
+  } else if (diffHours < 24) {
+    return `업데이트 ${diffHours}시간 전`;
+  } else {
+    return `업데이트 ${diffDays}일 전`;
+  }
 };
 
 export const ScoreRefresh = ({
-  updatedAt,
+  updatedAt: initialUpdatedAt,
 }: Pick<ScoreRefreshProps, "updatedAt">) => {
+  const [updatedAt, setUpdatedAt] = useState<Date>(initialUpdatedAt);
+  const [timeAgo, setTimeAgo] = useState<string>(getTimeAgo(initialUpdatedAt));
+
   const queryClient = useQueryClient();
-  const handleClickOnRefresh = (): void => refreshMatch(queryClient);
+
+  const handleClickOnRefresh = (): void => {
+    refreshMatch(queryClient);
+    const now = new Date();
+    setUpdatedAt(now);
+    setTimeAgo(getTimeAgo(now));
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeAgo(getTimeAgo(updatedAt));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [updatedAt]);
 
   return (
     <div className="flex flex-col items-center gap-[8px] text-sm text-gray-400">
-      <p className="text-[14px] w-full text-right">{updatedAt} 업데이트</p>
+      <p className="text-[14px] w-full text-right">{timeAgo} 업데이트</p>
       <ScoreRefreshButton onRefresh={handleClickOnRefresh} />
     </div>
   );
@@ -40,7 +76,9 @@ export const MobileScoreRefresh = ({
 
   return (
     <div className="w-full flex flex-col items-center gap-[8px] text-sm text-gray-400">
-      <p className="text-[14px] w-full text-right">{updatedAt} 업데이트</p>
+      <p className="text-[14px] w-full text-right">
+        {getTimeAgo(updatedAt)} 업데이트
+      </p>
       <MobileScoreRefreshButton onRefresh={handleClickOnRefresh} />
     </div>
   );

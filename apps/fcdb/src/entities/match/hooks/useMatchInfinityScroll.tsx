@@ -3,10 +3,11 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { MatchSummaryType } from "../types/match.info.types";
 import { convertPlayers, covertMatchStatus } from "../lib/getMatchInfo";
 import { convertMatchInfo } from "../lib/getMatchInfo";
+import { MATH_QUERY_KEY } from "../model/keys/queryKeys";
 
 export const useMatchInfinityScroll = ({ ouid }: { ouid: string }) => {
   return useInfiniteQuery({
-    queryKey: ["match-infinite", ouid],
+    queryKey: [MATH_QUERY_KEY.INFINITY, ouid],
     queryFn: async ({ pageParam = 1 }) => {
       try {
         const page = pageParam as unknown as number;
