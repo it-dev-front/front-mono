@@ -35,6 +35,7 @@ interface MatchSummaryType {
   matchPlayers: Array<{
     players: Record<string, PlayerType>;
     bestPlayer: PlayerType & { total: number };
+    subPlayers: PlayerType[];
   }>;
 }
 

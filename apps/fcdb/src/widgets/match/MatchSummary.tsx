@@ -12,6 +12,7 @@ import MatchDateLabel from "@/entities/match/ui/MatchDateLabel";
 import { UserSearchFormation } from "@/features/user-search/ui/UserSearchFormation";
 import { UserSearchFormationMoblie } from "@/features/user-search/ui/UserSearchFormationMoblie";
 import { MatchSummaryType } from "@/entities/match/types/match.info.types";
+import { UserSearchSubPlayers } from "@/features/user-search/ui/UserSearchSubPlayers";
 
 interface MatchSummaryProps {
   match: MatchSummaryType;
@@ -96,6 +97,7 @@ const MatchSummary = ({ match }: MatchSummaryProps) => {
           <div className="block lg:hidden">
             <UserSearchFormationMoblie matchPlayers={match.matchPlayers} />
           </div>
+          <UserSearchSubPlayers matchPlayers={match.matchPlayers} />
         </div>
       </section>
     </article>
