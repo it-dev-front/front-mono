@@ -46,9 +46,17 @@ const convertPlayers = (
 ): Array<{
   players: Record<string, PlayerType>;
   bestPlayer: PlayerType & { total: number };
+  subPlayers: PlayerType[];
 }> => {
   return matchInfo.map((match) => {
     const bestPlayer = getBestPlayer(match.player);
+
+    if (!bestPlayer) {
+      throw new Error("최고 플레이어를 찾을 수 없습니다");
+    }
+
+    const subPlayers = match.player.filter((player) => player.spPosition === 28);
+
     const players = match.player.reduce(
       (acc, player) => {
         const position = POSITION[player.spPosition as keyof typeof POSITION];
@@ -64,6 +72,7 @@ const convertPlayers = (
     return {
       players,
       bestPlayer,
+      subPlayers,
     };
   });
 };

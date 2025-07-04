@@ -19,6 +19,7 @@ import {
 } from "@/entities/match/types/match.types";
 import { useIntersectionObserver } from "../hooks/useIntersectionObserver";
 import { useMatchInfinityScroll } from "../hooks/useMatchInfinityScroll";
+import { BallSpinner } from "@/shared/ui/spinner/BallSpinner";
 
 // ScorePanel 타입 직접 정의
 type ScorePanel = {
@@ -135,7 +136,9 @@ const MatchProvider = ({ children, ouid }: MatchFetcherProps) => {
       >
         {children}
         {isFetchingNextPage ? (
-          <div>로딩</div>
+          <div className="flex justify-center items-center py-[30px]">
+            <BallSpinner />
+          </div>
         ) : (
           <div className="h-[1px]" ref={setTarget} />
         )}
