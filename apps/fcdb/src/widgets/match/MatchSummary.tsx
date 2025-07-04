@@ -29,7 +29,7 @@ const MatchSummary = ({ match }: MatchSummaryProps) => {
       />
 
       <section className="flex flex-col w-full">
-        <header className="flex justify-between items-center h-[165px] mobile:h-[98px]">
+        <header className="flex justify-between items-center h-[165px] mobile:h-[108px]">
           <MatchSummaryHeader
             matchType={match.matchStatus.matchType}
             matchResult={match.matchInfo.matchResult}
