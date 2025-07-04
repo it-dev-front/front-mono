@@ -20,12 +20,12 @@ export const UserSearchSubPlayers = ({
 }: UserSearchSubPlayersProps) => {
   const { data: soccerPlayerMeta } = useQuery(MetaQueries.getPlayerMeta());
   const { data: seasonIdMeta } = useQuery(MetaQueries.getSeasonIdMeta());
-  console.log("@@@ firstUserSubPlayer", matchPlayers[0]?.subPlayers);
-  console.log("@@@ secondUserSubPlayer", matchPlayers[1]?.subPlayers);
+  // console.log("@@@ firstUserSubPlayer", matchPlayers[0]?.subPlayers);
+  // console.log("@@@ secondUserSubPlayer", matchPlayers[1]?.subPlayers);
 
   return (
     <div className="w-full flex justify-center flex-col">
-      <div>
+      <div className="flex justify-center pb-[20px]">
         <p className="text-[16px]">교체 선수</p>
       </div>
       <div>
@@ -41,7 +41,6 @@ export const UserSearchSubPlayers = ({
             />
           ))}
           {matchPlayers[1]?.subPlayers.map((player) => (
-            // <div key={player.spId}>{player.spId}</div>
             <UserSearchPlayer
               soccerPlayer={player}
               soccerPlayerMeta={soccerPlayerMeta ?? []}

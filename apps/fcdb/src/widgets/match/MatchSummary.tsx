@@ -86,8 +86,7 @@ const MatchSummary = ({ match }: MatchSummaryProps) => {
         <div
           className={clsx(
             "overflow-hidden transition-[height] duration-300 ease-in-out",
-            // 기존 mobile:h-[1014px]는 선수 이미지를 너무 작게 해야해서 mobile:h-[1300px]로 변경
-            isExpanded ? "h-[814px] mobile:h-[1300px]" : "h-0"
+            isExpanded ? "h-[1300px] lg:h-[880px] " : "h-0"
           )}
         >
           {/* Accordion content */}
@@ -97,7 +96,9 @@ const MatchSummary = ({ match }: MatchSummaryProps) => {
           <div className="block lg:hidden">
             <UserSearchFormationMoblie matchPlayers={match.matchPlayers} />
           </div>
-          <UserSearchSubPlayers matchPlayers={match.matchPlayers} />
+          <div className="hidden lg:block">
+            <UserSearchSubPlayers matchPlayers={match.matchPlayers} />
+          </div>
         </div>
       </section>
     </article>
