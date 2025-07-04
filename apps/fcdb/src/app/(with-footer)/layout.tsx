@@ -1,14 +1,12 @@
-import { Navigation } from "@/widgets/navigation";
 import { Footer } from "@/widgets/Footer";
 
-export default function WithGNBLayout({
+export default function WithFooterLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
     <>
-      <Navigation />
       <main>{children}</main>
       <Footer />
     </>

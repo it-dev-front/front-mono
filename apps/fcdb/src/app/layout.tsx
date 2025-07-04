@@ -3,6 +3,7 @@ import "./(app)/styles/globals.css";
 import "./(app)/styles/tailwind.css";
 import { AppProvider } from "./(app)/providers";
 import { Toast } from "@/shared/ui/toast";
+import { Navigation } from "@/widgets/navigation";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -25,7 +26,10 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <AppProvider>{children}</AppProvider>
+        <AppProvider>
+          <Navigation />
+          {children}
+        </AppProvider>
         <Toast position="top-right" />
       </body>
     </html>
