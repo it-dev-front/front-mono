@@ -25,7 +25,7 @@ export const Navigation = () => {
           href="/"
           className="w-[108px] h-[20px] min-w-[108px] min-h-[20px] shrink-0 flex items-center"
         >
-          <Image src="/logo.svg" alt="logo" width={108} height={20} />
+          <Image src="/logo.svg" alt="logo" width={108} height={20} priority />
         </Link>
 
         <nav
