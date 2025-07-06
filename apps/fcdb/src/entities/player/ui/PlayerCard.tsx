@@ -1,12 +1,12 @@
 import { PlayerType } from "@/entities/match/types/match.types";
 import { MetaQueries } from "@/entities/meta/model/queries";
 import Badge from "@/entities/player/ui/Badge";
-import { getPlayerImageSrc } from "@/features/user-search/ui/UserSearchFormationHalfCoat";
 import { POSITION } from "@/shared/constant/position";
 import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import Image from "next/image";
 import { memo, useMemo } from "react";
+import { playerActionImageSource } from "../lib";
 
 // TODO: 컴포넌트 분리, SRP에 맞게 분리
 // 포지션: spposition:number -> desc:string 교환`
@@ -29,7 +29,7 @@ const PlayerCard = ({ bestPlayer, isUser = true }: PlayerCardProps) => {
   const { spPosition, spGrade } = bestPlayer ?? {};
 
   const playerImageSrc = useMemo(() => {
-    return bestPlayer ? getPlayerImageSrc(bestPlayer.spId) : "";
+    return bestPlayer ? playerActionImageSource(bestPlayer.spId) : "";
   }, [bestPlayer]);
 
   const seasonId = useMemo(() => {
@@ -59,7 +59,7 @@ const PlayerCard = ({ bestPlayer, isUser = true }: PlayerCardProps) => {
   return (
     <figure className="flex flex-col justify-between w-[124px] h-[117px] mobile:w-[80px] mobile:h-[82px]">
       <section className="relative h-[93px]">
-        <Badge.Mvp isMvp />
+        <Badge.Mvp isMvp={isUser} />
         <div
           className={isUser ? userImageOverlayStyle : opponentImageOverlayStyle}
         >

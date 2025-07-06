@@ -20,6 +20,8 @@ interface MatchSummaryProps {
 const MatchSummary = ({ match }: MatchSummaryProps): ReactElement => {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  const winPlayer = match.matchInfo.matchResult === "승";
+
   return (
     <article className="flex w-full max-w-[1080px] rounded-[8px] bg-gray-900 border border-gray-800 overflow-hidden mobile:rounded-none">
       <aside
@@ -37,9 +39,9 @@ const MatchSummary = ({ match }: MatchSummaryProps): ReactElement => {
 
           <div className="flex items-center gap-[34.5px] mx-auto">
             <PlayerCard
+              isUser={winPlayer}
               bestPlayer={match?.matchPlayers[0]?.bestPlayer || null}
             />
-
             <div className="flex flex-col items-center justify-center gap-2 [&>*:not(:nth-child(2))]:hidden mobile:[&>*:not(:nth-child(2))]:block">
               <MatchResultLabel
                 matchResult={match.matchInfo.matchResult as "승" | "패" | "무"}
@@ -50,8 +52,8 @@ const MatchSummary = ({ match }: MatchSummaryProps): ReactElement => {
               />
               <MatchDateLabel matchDate={match.matchStatus.matchDate} />
             </div>
-
             <PlayerCard
+              isUser={!winPlayer}
               bestPlayer={match?.matchPlayers[1]?.bestPlayer || null}
             />
           </div>
