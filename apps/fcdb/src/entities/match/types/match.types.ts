@@ -1,3 +1,8 @@
+/**
+ * @description Nexon Api Response Type
+ * 넥슨에서 반환하는 매치 타입 정의
+ */
+
 type ControllerType = "keyboard" | "gamepad" | "etc";
 
 type MatchInfoType = {

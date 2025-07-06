@@ -1,4 +1,9 @@
+import { MatchDetailResponse } from "@/entities/fc-database/types";
 import { MatchPlayerInfoType, PlayerType } from "./match.types";
+
+/**
+ * @description fcdb 매치 정보 커스텀 타입
+ */
 
 interface ConvertedIndicatorType {
   userNickName: string;
@@ -12,10 +17,19 @@ interface ConvertedScoreType {
   opponentScore: number;
 }
 
+// TODO 인터페이스 정의
 interface ConvertedPlayersType {
   user: any[];
   opponent: any[];
 }
+
+type ScorePanelType = {
+  win: number;
+  defeat: number;
+  draw: number;
+  winRate: number; // 승률 (%)
+  total: number;
+};
 
 interface ConvertedMatchInfo {
   indicator: ConvertedIndicatorType;
@@ -29,14 +43,16 @@ interface ConvertedMatchStatus {
   matchDate: Date;
 }
 
+type PlayerListType = {
+  players: Record<string, PlayerType>;
+  bestPlayer: (PlayerType & { total: number }) | null;
+};
+
 interface MatchSummaryType {
   matchInfo: ConvertedMatchInfo;
   matchStatus: ConvertedMatchStatus;
-  matchPlayers: Array<{
-    players: Record<string, PlayerType>;
-    bestPlayer: PlayerType & { total: number };
-  }>;
-  matches: MatchPlayerInfoType[];
+  matchPlayers: PlayerListType[];
+  matches: MatchDetailResponse;
 }
 
 export type {
@@ -46,4 +62,6 @@ export type {
   ConvertedMatchInfo,
   ConvertedMatchStatus,
   MatchSummaryType,
+  PlayerListType,
+  ScorePanelType,
 };
