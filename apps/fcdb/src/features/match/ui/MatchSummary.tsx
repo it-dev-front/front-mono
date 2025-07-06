@@ -1,23 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import Image from "next/image";
 import clsx from "clsx";
 import PlayerCard from "@/entities/player/ui/PlayerCard";
-import MatchSummaryHeader from "@/widgets/match/MatchSummaryHeader";
-import PossessionIndicator from "@/entities/match/ui/PossessionIndicator";
+import MatchSummaryHeader from "@/features/match/ui/MatchSummaryHeader";
 import ScoreCard from "@/entities/match/ui/ScoreBoard";
 import MatchResultLabel from "@/entities/match/ui/MatchResultLabel";
 import MatchDateLabel from "@/entities/match/ui/MatchDateLabel";
+import { MatchSummaryType } from "@/entities/match/types/match.info.types";
+import PossessionIndicator from "@/entities/match/ui/PossessionIndicator";
 import { UserSearchFormation } from "@/features/user-search/ui/UserSearchFormation";
 import { UserSearchFormationMoblie } from "@/features/user-search/ui/UserSearchFormationMoblie";
-import { MatchSummaryType } from "@/entities/match/types/match.info.types";
 
 interface MatchSummaryProps {
   match: MatchSummaryType;
 }
 
-const MatchSummary = ({ match }: MatchSummaryProps) => {
+const MatchSummary = ({ match }: MatchSummaryProps): ReactElement => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -85,17 +85,19 @@ const MatchSummary = ({ match }: MatchSummaryProps) => {
         <div
           className={clsx(
             "overflow-hidden transition-[height] duration-300 ease-in-out",
-            // 기존 mobile:h-[1014px]는 선수 이미지를 너무 작게 해야해서 mobile:h-[1300px]로 변경
             isExpanded ? "h-[814px] mobile:h-[1300px]" : "h-0"
           )}
         >
-          {/* Accordion content */}
-          <div className="hidden lg:block">
-            <UserSearchFormation matchPlayers={match.matchPlayers} />
-          </div>
-          <div className="block lg:hidden">
-            <UserSearchFormationMoblie matchPlayers={match.matchPlayers} />
-          </div>
+          {isExpanded && (
+            <>
+              <div className="hidden lg:block">
+                <UserSearchFormation matchPlayers={match.matchPlayers} />
+              </div>
+              <div className="block lg:hidden">
+                <UserSearchFormationMoblie matchPlayers={match.matchPlayers} />
+              </div>
+            </>
+          )}
         </div>
       </section>
     </article>
