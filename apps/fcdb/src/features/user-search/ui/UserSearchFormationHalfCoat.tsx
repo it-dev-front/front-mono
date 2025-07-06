@@ -6,12 +6,7 @@ import SafeImage from "@/shared/components/SafeImage";
 import { getPositionColor, findPositionCategory } from "@/shared/lib/position";
 import { PlayerType } from "@/entities/match/types/match.types";
 import { Goal } from "@/entities/formation/ui/Goal";
-
-export const getPlayerImageSrc = (spId: number) => {
-  const imgSrc = `https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p${spId}.png`;
-
-  return imgSrc;
-};
+import { playerActionImageSource } from "@/entities/player/lib";
 
 export const getGradeBgColor = (grade: number) => {
   if (grade > 4 && grade < 8) return "#CBCED5";
@@ -85,7 +80,7 @@ export const UserSearchFormationHalfCoat = ({
               <div className="relative w-[50px] h-[60px] flex items-center justify-center">
                 <Goal goal={goal} />
                 <SafeImage
-                  src={getPlayerImageSrc(soccerPlayer.spId)}
+                  src={playerActionImageSource(soccerPlayer.spId)}
                   alt={playerName ? playerName : "선수 이미지"}
                   width={50}
                   height={60}
