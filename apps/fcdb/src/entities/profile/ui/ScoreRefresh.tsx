@@ -69,16 +69,31 @@ export const ScoreRefresh = ({
 };
 
 export const MobileScoreRefresh = ({
-  updatedAt,
+  updatedAt: initialUpdatedAt,
 }: Pick<ScoreRefreshProps, "updatedAt">) => {
+  const [updatedAt, setUpdatedAt] = useState<Date>(initialUpdatedAt);
+  const [timeAgo, setTimeAgo] = useState<string>(getTimeAgo(initialUpdatedAt));
+
   const queryClient = useQueryClient();
-  const handleClickOnRefresh = (): void => refreshMatch(queryClient);
+
+  const handleClickOnRefresh = (): void => {
+    refreshMatch(queryClient);
+    const now = new Date();
+    setUpdatedAt(now);
+    setTimeAgo(getTimeAgo(now));
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeAgo(getTimeAgo(updatedAt));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [updatedAt]);
 
   return (
     <div className="w-full flex flex-col items-center gap-[8px] text-sm text-gray-400">
-      <p className="text-[14px] w-full text-right">
-        {getTimeAgo(updatedAt)} 업데이트
-      </p>
+      <p className="text-[14px] w-full text-right">{timeAgo} 업데이트</p>
       <MobileScoreRefreshButton onRefresh={handleClickOnRefresh} />
     </div>
   );

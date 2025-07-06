@@ -1,33 +1,29 @@
-import { UserProfileFetcher } from "@/features/profile/ui/UserProfileFetcher";
-import { MatchSummaryFetcher } from "@/features/match/ui/MatchSummaryFetcher";
-import MatchProvider from "@/entities/match/providers/MatchProvider";
 import { redirect } from "next/navigation";
 import { getOuidApi } from "@/entities/id/api";
+import { MatchList } from "@/features/match/ui/MatchList";
+import { QueryClient } from "@tanstack/react-query";
+import { getMatchIds } from "@/entities/match/model/api";
+import { MATH_QUERY_KEY } from "@/entities/match/model/keys/queryKeys";
 
 export const User = async ({ nickname }: { nickname: string }) => {
   const decodedNickname = decodeURIComponent(nickname);
 
   try {
+    const queryClient = new QueryClient();
+
     const result = await getOuidApi(decodedNickname);
 
     if (!result.ouid) {
       redirect("/");
     }
 
-    return (
-      <>
-        <main className="w-full min-w-[366px] flex flex-col min-h-screen pt-[62px]">
-          <MatchProvider ouid={result.ouid}>
-            <div className="w-full flex justify-center py-0 md:py-[1rem] border-t border-[#424242] md:border-t-0">
-              <UserProfileFetcher ouid={result.ouid} />
-            </div>
-            <div className="w-full flex flex-col items-center gap-[8px]">
-              <MatchSummaryFetcher />
-            </div>
-          </MatchProvider>
-        </main>
-      </>
-    );
+    queryClient.prefetchInfiniteQuery({
+      queryKey: [MATH_QUERY_KEY.INFINITY, result.ouid],
+      queryFn: ({ pageParam = 1 }) => getMatchIds(result.ouid, pageParam),
+      initialPageParam: 1,
+    });
+
+    return <MatchList ouid={result.ouid} />;
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     console.log("에러 메시지:", errorMessage);

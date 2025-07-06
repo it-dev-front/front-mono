@@ -1,13 +1,16 @@
 import { MatchDetailResponse } from "@/entities/fc-database/types";
-import { ConvertedMatchInfo } from "../types/match.info.types";
 import {
-  MatchInfoType,
-  MatchPlayerInfoType,
-  PlayerType,
-} from "../types/match.types";
+  ConvertedMatchInfo,
+  ConvertedMatchStatus,
+  PlayerListType,
+  ScorePanelType,
+} from "../types/match.info.types";
+import { MatchPlayerInfoType, PlayerType } from "../types/match.types";
 import { POSITION } from "@/shared/constant/position";
 
-const covertMatchStatus = (match: MatchDetailResponse) => {
+const covertMatchStatus = (
+  match: MatchDetailResponse
+): ConvertedMatchStatus => {
   return {
     matchType: match.matchType,
     matchDate: match.matchDate,
@@ -45,12 +48,7 @@ const convertMatchInfo = (
 };
 
 /**@description 선수 리스트 조회 */
-const convertPlayers = (
-  matchInfo: MatchPlayerInfoType[]
-): Array<{
-  players: Record<string, PlayerType>;
-  bestPlayer: PlayerType & { total: number };
-}> => {
+const convertPlayers = (matchInfo: MatchPlayerInfoType[]): PlayerListType[] => {
   return matchInfo.map((match) => {
     const bestPlayer = getBestPlayer(match.player);
     const players = match.player.reduce(
@@ -84,27 +82,43 @@ const getBestPlayer = (
   players: PlayerType[]
 ): (PlayerType & { total: number }) | null => {
   if (players.length === 0) return null;
+
+  const firstPlayer = players[0];
+  if (!firstPlayer) return null;
+
   return players.reduce(
     (best, player) => {
       const total = getPlayerTotal(player);
       const bestTotal = getPlayerTotal(best);
       return total > bestTotal
-        ? { ...(player as PlayerType), total }
-        : { ...(best as PlayerType), total: bestTotal };
+        ? { ...player, total }
+        : { ...best, total: bestTotal };
     },
-    { ...(players[0] as PlayerType), total: getPlayerTotal(players[0]) }
+    { ...firstPlayer, total: getPlayerTotal(firstPlayer) }
   );
 };
 
-type ScorePanel = {
-  win: number;
-  defeat: number;
-  draw: number;
-  winRate: number; // 승률 (%)
-  total: number;
+const getBestPlayerActionShoot = (
+  players: PlayerListType[]
+): (PlayerType & { total: number }) | null => {
+  const validPlayers = players
+    .map((item) => item.bestPlayer)
+    .filter(
+      (player): player is PlayerType & { total: number } => player !== null
+    );
+
+  if (validPlayers.length === 0) return null;
+
+  return validPlayers.reduce((prev, current) => {
+    const prevScore = prev.status.goal + prev.status.assist + prev.status.shoot;
+    const currentScore =
+      current.status.goal + current.status.assist + current.status.shoot;
+
+    return currentScore > prevScore ? current : prev;
+  });
 };
 
-const getScorePanel = (matchInfo: MatchPlayerInfoType[]): ScorePanel => {
+const getScorePanel = (matchInfo: MatchPlayerInfoType[]): ScorePanelType => {
   const scoreObj = {
     win: 0,
     defeat: 0,
@@ -112,7 +126,6 @@ const getScorePanel = (matchInfo: MatchPlayerInfoType[]): ScorePanel => {
     total: 0,
     winRate: 0,
   };
-
   if (matchInfo.length === 0 || !matchInfo) return scoreObj;
 
   matchInfo.forEach((match: MatchPlayerInfoType) => {
@@ -136,4 +149,10 @@ const getScorePanel = (matchInfo: MatchPlayerInfoType[]): ScorePanel => {
   return scoreObj;
 };
 
-export { convertMatchInfo, covertMatchStatus, convertPlayers, getScorePanel };
+export {
+  convertMatchInfo,
+  covertMatchStatus,
+  convertPlayers,
+  getScorePanel,
+  getBestPlayerActionShoot,
+};
