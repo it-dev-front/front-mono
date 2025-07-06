@@ -38,6 +38,17 @@
   --color-loss: #fc5555;
 }
 
+@theme inline {
+  --font-noto-sans: var(--font-noto-sans-kr);
+  --font-nexon-gothic: var(--font-nexon-lv1-gothic);
+}
+
+@layer base {
+  html {
+    font-family: var(--font-noto-sans-kr), var(--font-nexon-lv1-gothic);
+  }
+}
+
 @custom-variant mobile {
   @media (max-width: 1023px) {
     @slot;

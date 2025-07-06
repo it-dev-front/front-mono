@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./(app)/styles/globals.css";
 import "./(app)/styles/tailwind.css";
+import { fontClasses } from "@/shared/fonts";
 import { AppProvider } from "./(app)/providers";
 import { Toast } from "@/shared/ui/toast";
 import { Navigation } from "@/widgets/navigation";
@@ -16,15 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="ko" className={`${fontClasses}`}>
       <body>
         <AppProvider>
           <Navigation />
