@@ -8,10 +8,10 @@ interface UseInfiniteRankingDataProps {
   enabled?: boolean;
 }
 
-export function useInfiniteRankingData({
+export function useInfiniteRankingData<TargetElement extends HTMLElement>({
   enabled = true,
 }: UseInfiniteRankingDataProps = {}) {
-  const loadMoreRef = useRef<HTMLDivElement>(null);
+  const loadMoreRef = useRef<TargetElement>(null);
 
   const {
     data,

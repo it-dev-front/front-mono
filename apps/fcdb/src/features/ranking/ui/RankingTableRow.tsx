@@ -50,7 +50,12 @@ export const RankingTableRow = ({ record }: RankingTableRowProps) => {
       <td className="flex justify-center text-center w-30 mobile:w-[50px]">
         <div className="relative overflow-hidden rounded-full w-15 h-15 mobile:w-10 mobile:h-10">
           {record.rankBestImg && (
-            <Image src={record.rankBestImg} fill alt="최고등급" />
+            <Image
+              src={record.rankBestImg}
+              fill
+              alt="최고등급"
+              sizes="(max-width: 1024px) 40px, 60px"
+            />
           )}
         </div>
       </td>
