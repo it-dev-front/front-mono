@@ -4,12 +4,6 @@ import { MetaQueries } from "@/entities/meta/model/queries";
 import { PlayerType } from "@/entities/match/types/match.types";
 import { UserSearchPlayer } from "@/features/user-search/ui/UserSearchPlayer";
 
-export const getPlayerImageSrc = (spId: number) => {
-  const imgSrc = `https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p${spId}.png`;
-
-  return imgSrc;
-};
-
 export const getGradeBgColor = (grade: number) => {
   if (grade > 4 && grade < 8) return "#CBCED5";
   if (grade > 7) return "#FFEB34";

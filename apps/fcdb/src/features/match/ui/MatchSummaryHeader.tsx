@@ -1,3 +1,4 @@
+import { memo, ReactElement } from "react";
 import MatchDateLabel from "@/entities/match/ui/MatchDateLabel";
 import MatchResultLabel from "@/entities/match/ui/MatchResultLabel";
 import MatchTypeLabel from "@/entities/match/ui/MatchTypeLabel";
@@ -12,7 +13,7 @@ const MatchSummaryHeader = ({
   matchType,
   matchResult,
   matchDate,
-}: MatchSummaryHeaderProps) => {
+}: MatchSummaryHeaderProps): ReactElement => {
   return (
     <div className="w-[80px] h-[103px] flex flex-col gap-4 items-center text-color-white text-center leading-none mobile:hidden ml-[24px]">
       <div className="flex flex-col gap-2">
@@ -27,4 +28,4 @@ const MatchSummaryHeader = ({
   );
 };
 
-export default MatchSummaryHeader;
+export default memo(MatchSummaryHeader);

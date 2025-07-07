@@ -7,7 +7,8 @@ export type ApiRequestConfig = {
 
 export type ApiRequest = <T>(
   url: string,
-  config?: ApiRequestConfig
+  config?: RequestInit,
+  query?: Record<string, any>
 ) => Promise<T>;
 
 export type ApiResponse<T> = {

@@ -14,6 +14,8 @@ import {
   BestGradeResponse,
   UserProfileResponse,
 } from "@/entities/fc-database/types";
+import { ScorePanelType } from "@/entities/match/types/match.info.types";
+import { PlayerType } from "@/entities/match/types/match.types";
 
 /**@description Mobile 프로필 */
 export const MobileProfileSummary = ({
@@ -21,18 +23,20 @@ export const MobileProfileSummary = ({
   ratingData,
   scorePanel,
   bestPlayer,
+  updatedAt,
 }: {
   profileData: UserProfileResponse;
   ratingData: BestGradeResponse;
-  scorePanel: any;
-  bestPlayer: any;
+  scorePanel: ScorePanelType;
+  bestPlayer: (PlayerType & { total: number }) | null;
+  updatedAt: Date;
 }): ReactElement => {
   const tierData = parseTierData(ratingData);
 
   return (
     <div className="mx-auto h-auto w-full flex flex-col items-start justify-between bg-gray-900 px-[20px] py-[16px] gap-[16px]">
       <div className="w-full flex items-center justify-evenly gap-[24px]">
-        <PlayerProfileCard spId={bestPlayer?.spId} />
+        {bestPlayer && <PlayerProfileCard spId={bestPlayer?.spId} />}
         <Score score={scorePanel} />
       </div>
       <div className="flex items-center w-full justify-evenly">
@@ -47,7 +51,7 @@ export const MobileProfileSummary = ({
         <div className="w-[120px] h-[80px] inline-block" />
       </div>
 
-      <MobileScoreRefresh updatedAt="10분전" />
+      <MobileScoreRefresh updatedAt={updatedAt} />
     </div>
   );
 };
@@ -58,16 +62,18 @@ export const PcProfileSummary = ({
   ratingData,
   scorePanel,
   bestPlayer,
+  updatedAt,
 }: {
   profileData: UserProfileResponse;
   ratingData: BestGradeResponse;
-  scorePanel: any;
-  bestPlayer: any;
+  scorePanel: ScorePanelType;
+  bestPlayer: (PlayerType & { total: number }) | null;
+  updatedAt: Date;
 }): ReactElement => {
   return (
-    <div className="mx-auto w-full flex items-center justify-between bg-gray-900 max-w-[1080px] h-[240px] p-[40px]">
+    <div className="mx-auto w-full flex items-center justify-between bg-gray-900 max-w-[1080px] h-[240px] p-[40px] rounded-lg my-[8px]">
       <div className="flex items-center gap-[24px]">
-        <PlayerProfileCard spId={bestPlayer?.spId} />
+        {bestPlayer && <PlayerProfileCard spId={bestPlayer?.spId} />}
         <ProfileBox
           user={{
             nickname: profileData.nickname,
@@ -78,7 +84,7 @@ export const PcProfileSummary = ({
       <div className="flex items-end gap-[66px]">
         <TierBadge data={ratingData} />
         <Score score={scorePanel} />
-        <ScoreRefresh updatedAt={"10분전"} />
+        <ScoreRefresh updatedAt={updatedAt} />
       </div>
     </div>
   );
@@ -89,11 +95,13 @@ export const ProfileSummary = ({
   ratingData,
   scorePanel,
   bestPlayer,
+  updatedAt,
 }: {
   profileData: UserProfileResponse;
   ratingData: BestGradeResponse;
-  scorePanel: any;
-  bestPlayer: any;
+  scorePanel: ScorePanelType;
+  bestPlayer: (PlayerType & { total: number }) | null;
+  updatedAt: Date;
 }): React.ReactElement => {
   return (
     <>
@@ -103,6 +111,7 @@ export const ProfileSummary = ({
           ratingData={ratingData}
           scorePanel={scorePanel}
           bestPlayer={bestPlayer}
+          updatedAt={updatedAt}
         />
       </div>
 
@@ -113,6 +122,7 @@ export const ProfileSummary = ({
           ratingData={ratingData}
           scorePanel={scorePanel}
           bestPlayer={bestPlayer}
+          updatedAt={updatedAt}
         />
       </div>
     </>

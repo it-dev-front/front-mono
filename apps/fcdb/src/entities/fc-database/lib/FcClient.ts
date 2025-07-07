@@ -1,5 +1,5 @@
 import { API_URL, NEXON_API_KEY } from "@/app/(app)/config/env";
-import { ApiRequestConfig, ApiErrorResponse } from "../types";
+import { ApiErrorResponse } from "../types";
 import { apiFactoryMap } from "../model/apiFactoryMap";
 
 type ApiFactoryMap = typeof apiFactoryMap;
@@ -19,20 +19,20 @@ const buildUrl = (url: string, query?: Record<string, any>) => {
 export class FcClient {
   private static async request<T>(
     url: string,
-    config: ApiRequestConfig = {}
+    config: RequestInit = {},
+    query?: Record<string, any>
   ): Promise<T> {
-    const { method = "GET", headers = {}, body, query } = config;
     const targetUrl = buildUrl(url, query);
 
     try {
       const response = await fetch(targetUrl, {
-        method,
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
           "x-nxopen-api-key": NEXON_API_KEY,
-          ...headers,
+          ...config.headers,
         },
-        body: body ? JSON.stringify(body) : undefined,
+        ...config,
       });
 
       const json = await response.json();

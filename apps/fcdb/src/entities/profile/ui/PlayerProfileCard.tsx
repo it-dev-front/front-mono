@@ -1,16 +1,11 @@
 import { ReactElement } from "react";
 import styles from "./PlayerProfileCard.module.css";
 import Image from "next/image";
+import { playerActionImageSource } from "@/entities/player/lib";
 
 interface PlayerProfileCardProps {
   spId: number;
 }
-
-const playerActionImageSource = (spId: number): string => {
-  // 선수 일반 이미지 경로
-  // `https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/players/p${spId}.png`;
-  return `https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p${spId}.png`;
-};
 
 /**
  * @description 선수 기준

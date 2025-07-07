@@ -1,7 +1,7 @@
 import { ApiRequest, MatchListParams, MatchDetailResponse } from "../types";
 
 /**@description 매치 (경기) 관련 API*/
-export const matchApi = (request: ApiRequest) => ({
+export const matchApi = async (request: ApiRequest) => ({
   /**
    * 닉네임으로 계정 식별자(ouid)를 조회합니다.
    * @param matchtype - 매치 타입
@@ -12,9 +12,15 @@ export const matchApi = (request: ApiRequest) => ({
    * @example ["64f0a0000a000c2518b00016", "64f0a0000a000c2518b00016"]
    */
   getMatchInfo: async (params: MatchListParams): Promise<string[]> => {
-    const response = await request<any>(`/fconline/v1/match`, {
-      query: { ...params },
-    });
+    const response = await request<any>(
+      `/fconline/v1/match`,
+      {
+        next: {
+          revalidate: 60,
+        },
+      },
+      { ...params }
+    );
     return response;
   },
   /**
@@ -25,7 +31,12 @@ export const matchApi = (request: ApiRequest) => ({
   getMatchDetail: async (matchid: string): Promise<MatchDetailResponse> => {
     const response = await request<MatchDetailResponse>(
       `/fconline/v1/match-detail`,
-      { query: { matchid } }
+      {
+        next: {
+          revalidate: 60,
+        },
+      },
+      { matchid }
     );
     return response;
   },
