@@ -1,11 +1,12 @@
 import { PlayerType } from "@/entities/match/types/match.types";
 import { MetaQueries } from "@/entities/meta/model/queries";
 import Badge from "@/entities/player/ui/Badge";
-import { getPlayerImageSrc } from "@/features/user-search/ui/UserSearchFormationHalfCoat";
 import { POSITION } from "@/shared/constant/position";
 import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import Image from "next/image";
+import { memo, useMemo } from "react";
+import { playerActionImageSource } from "../lib";
 
 // TODO: 컴포넌트 분리, SRP에 맞게 분리
 // 포지션: spposition:number -> desc:string 교환`
@@ -16,24 +17,36 @@ import Image from "next/image";
 // "name": "앨런 시어러"
 // 이미지: spid 뒷 6자리
 // 시즌: seasonId 앞 3자리
-const isUser = true;
 
 interface PlayerCardProps {
   bestPlayer: (PlayerType & { total: number }) | null;
+  isUser?: boolean;
 }
 
-const PlayerCard = ({ bestPlayer }: PlayerCardProps) => {
+const PlayerCard = ({ bestPlayer, isUser = true }: PlayerCardProps) => {
   const { data: soccerPlayerMeta } = useQuery(MetaQueries.getPlayerMeta());
+
+  const { spPosition, spGrade } = bestPlayer ?? {};
+
+  const playerImageSrc = useMemo(() => {
+    return bestPlayer ? playerActionImageSource(bestPlayer.spId) : "";
+  }, [bestPlayer]);
+
+  const seasonId = useMemo(() => {
+    return bestPlayer ? Number(bestPlayer.spId.toString().slice(0, 3)) : null;
+  }, [bestPlayer]);
+
+  const playerName = useMemo(() => {
+    if (!bestPlayer || !soccerPlayerMeta) return "";
+    const found = soccerPlayerMeta.find(
+      (player) => player.id === bestPlayer.spId
+    );
+    return found?.name || "";
+  }, [bestPlayer, soccerPlayerMeta]);
 
   if (!bestPlayer) {
     return null;
   }
-
-  const { spId, spPosition, spGrade } = bestPlayer;
-  const seasonId = Number(spId.toString().slice(0, 3));
-  const playerName = soccerPlayerMeta?.find(
-    (player) => player.id === spId
-  )?.name;
 
   const imageOverlayBaseStyle =
     "relative w-[72px] h-[72px] rounded-full border-[2px] bg-gray-900 mx-auto overflow-hidden";
@@ -46,21 +59,22 @@ const PlayerCard = ({ bestPlayer }: PlayerCardProps) => {
   return (
     <figure className="flex flex-col justify-between w-[124px] h-[117px] mobile:w-[80px] mobile:h-[88px]">
       <section className="relative h-[93px]">
-        <Badge.Mvp isMvp />
+        <Badge.Mvp isMvp={isUser} />
         <div
           className={isUser ? userImageOverlayStyle : opponentImageOverlayStyle}
         >
           <Image
-            src={getPlayerImageSrc(spId)}
-            alt={playerName ? playerName : "선수 이미지"}
+            src={playerImageSrc}
+            sizes="72px"
+            alt={playerName || "선수 이미지"}
             fill
             className="object-cover"
+            priority
           />
         </div>
-        {/* 하단 뱃지 */}
         <div className="absolute w-full bottom-0 flex justify-center gap-[8px] z-1">
-          <Badge.Season seasonId={seasonId} />
-          <Badge.Grade spGrade={spGrade} />
+          {seasonId && <Badge.Season seasonId={seasonId} />}
+          <Badge.Grade spGrade={spGrade ?? 0} />
         </div>
       </section>
 
@@ -68,11 +82,10 @@ const PlayerCard = ({ bestPlayer }: PlayerCardProps) => {
         <span className="text-[#CE535D]">
           {POSITION[spPosition as keyof typeof POSITION]}
         </span>
-
         <span className="text-color-white">{playerName}</span>
       </section>
     </figure>
   );
 };
 
-export default PlayerCard;
+export default memo(PlayerCard);

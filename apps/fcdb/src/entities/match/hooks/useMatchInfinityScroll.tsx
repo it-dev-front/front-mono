@@ -3,10 +3,11 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { MatchSummaryType } from "../types/match.info.types";
 import { convertPlayers, covertMatchStatus } from "../lib/getMatchInfo";
 import { convertMatchInfo } from "../lib/getMatchInfo";
+import { MATH_QUERY_KEY } from "../model/keys/queryKeys";
 
 export const useMatchInfinityScroll = ({ ouid }: { ouid: string }) => {
   return useInfiniteQuery({
-    queryKey: ["match-infinite", ouid],
+    queryKey: [MATH_QUERY_KEY.INFINITY, ouid],
     queryFn: async ({ pageParam = 1 }) => {
       try {
         const page = pageParam as unknown as number;
@@ -34,7 +35,7 @@ export const useMatchInfinityScroll = ({ ouid }: { ouid: string }) => {
               matchInfo,
               matchStatus,
               matchPlayers,
-              mathces: response.matchInfo,
+              matches: response.matchInfo,
             };
           }
         );
@@ -42,20 +43,13 @@ export const useMatchInfinityScroll = ({ ouid }: { ouid: string }) => {
         return {
           matchDetail,
         };
-      } catch (e: any) {
-        if (e.response && e.response.data) {
-          const { statusCode, message } = e.response.data as {
-            statusCode: number;
-            message: string;
+      } catch (e: unknown) {
+        if (e instanceof Error) {
+          return {
+            matchDetail: [],
           };
-          if (statusCode === 404) {
-            return {
-              matchDetail: [],
-              scorePanel: null,
-              bestPlayer: null,
-            };
-          }
         }
+
         throw e;
       }
     },

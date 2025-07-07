@@ -17,7 +17,7 @@ export const Score = ({ score }: { score: ScoreType }): ReactElement => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const fontSize = isMobile ? 12 : 16;
   const isScore = (score: number): number => {
-    return !score ? 0 : score;
+    return !score ? 0 : Math.floor(score);
   };
 
   return (

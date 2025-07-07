@@ -1,25 +1,26 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import Image from "next/image";
 import clsx from "clsx";
 import PlayerCard from "@/entities/player/ui/PlayerCard";
-import MatchSummaryHeader from "@/widgets/match/MatchSummaryHeader";
-import PossessionIndicator from "@/entities/match/ui/PossessionIndicator";
+import MatchSummaryHeader from "@/features/match/ui/MatchSummaryHeader";
 import ScoreCard from "@/entities/match/ui/ScoreBoard";
 import MatchResultLabel from "@/entities/match/ui/MatchResultLabel";
 import MatchDateLabel from "@/entities/match/ui/MatchDateLabel";
+import { MatchSummaryType } from "@/entities/match/types/match.info.types";
+import PossessionIndicator from "@/entities/match/ui/PossessionIndicator";
 import { UserSearchFormation } from "@/features/user-search/ui/UserSearchFormation";
 import { UserSearchFormationMoblie } from "@/features/user-search/ui/UserSearchFormationMoblie";
-import { MatchSummaryType } from "@/entities/match/types/match.info.types";
-import { UserSearchSubPlayers } from "@/features/user-search/ui/UserSearchSubPlayers";
 
 interface MatchSummaryProps {
   match: MatchSummaryType;
 }
 
-const MatchSummary = ({ match }: MatchSummaryProps) => {
+const MatchSummary = ({ match }: MatchSummaryProps): ReactElement => {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const winPlayer = match.matchInfo.matchResult === "승";
 
   return (
     <article className="flex w-full max-w-[1080px] rounded-[8px] bg-gray-900 border border-gray-800 overflow-hidden mobile:rounded-none">
@@ -29,7 +30,7 @@ const MatchSummary = ({ match }: MatchSummaryProps) => {
       />
 
       <section className="flex flex-col w-full">
-        <header className="flex justify-between items-center h-[165px] mobile:h-[108px]">
+        <header className="flex justify-between items-center h-[165px] mobile:h-[98px]">
           <MatchSummaryHeader
             matchType={match.matchStatus.matchType}
             matchResult={match.matchInfo.matchResult}
@@ -38,9 +39,9 @@ const MatchSummary = ({ match }: MatchSummaryProps) => {
 
           <div className="flex items-center gap-[34.5px] mx-auto">
             <PlayerCard
+              isUser={winPlayer}
               bestPlayer={match?.matchPlayers[0]?.bestPlayer || null}
             />
-
             <div className="flex flex-col items-center justify-center gap-2 [&>*:not(:nth-child(2))]:hidden mobile:[&>*:not(:nth-child(2))]:block">
               <MatchResultLabel
                 matchResult={match.matchInfo.matchResult as "승" | "패" | "무"}
@@ -51,8 +52,8 @@ const MatchSummary = ({ match }: MatchSummaryProps) => {
               />
               <MatchDateLabel matchDate={match.matchStatus.matchDate} />
             </div>
-
             <PlayerCard
+              isUser={!winPlayer}
               bestPlayer={match?.matchPlayers[1]?.bestPlayer || null}
             />
           </div>
@@ -86,19 +87,19 @@ const MatchSummary = ({ match }: MatchSummaryProps) => {
         <div
           className={clsx(
             "overflow-hidden transition-[height] duration-300 ease-in-out",
-            isExpanded ? "h-[1300px] lg:h-[880px] " : "h-0"
+            isExpanded ? "h-[814px] mobile:h-[1300px]" : "h-0"
           )}
         >
-          {/* Accordion content */}
-          <div className="hidden lg:block">
-            <UserSearchFormation matchPlayers={match.matchPlayers} />
-          </div>
-          <div className="block lg:hidden">
-            <UserSearchFormationMoblie matchPlayers={match.matchPlayers} />
-          </div>
-          <div className="hidden lg:block">
-            <UserSearchSubPlayers matchPlayers={match.matchPlayers} />
-          </div>
+          {isExpanded && (
+            <>
+              <div className="hidden lg:block">
+                <UserSearchFormation matchPlayers={match.matchPlayers} />
+              </div>
+              <div className="block lg:hidden">
+                <UserSearchFormationMoblie matchPlayers={match.matchPlayers} />
+              </div>
+            </>
+          )}
         </div>
       </section>
     </article>
