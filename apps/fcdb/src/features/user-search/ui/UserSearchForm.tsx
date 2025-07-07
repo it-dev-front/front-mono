@@ -4,15 +4,23 @@ import Form from "next/form";
 import { userSearchAction } from "./UserSearchForm.server";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export const UserSearchForm = () => {
-  const [state, formAction] = useActionState(userSearchAction, { error: null });
+  const router = useRouter();
+  const [state, formAction] = useActionState(userSearchAction, {
+    url: null,
+    errorMessage: null,
+  });
 
   useEffect(() => {
-    if (state.error) {
-      toast.error(state.error);
+    if (state.errorMessage) {
+      toast.error(state.errorMessage);
     }
-  }, [state.error]);
+    if (state.url) {
+      router.push(state.url);
+    }
+  }, [state.errorMessage, state.url, router]);
 
   return (
     <Form action={formAction}>
