@@ -16,10 +16,10 @@ export const getMatchList = async (
 // 매치 아이디 불러오기
 export const getMatchIds = async (
   ouid: string,
-  page: number
+  page: number,
+  limit: number
 ): Promise<string[]> => {
   const userApi = await FcClient.get("User");
-  const limit = 5;
   const offset = (page - 1) * limit;
 
   return await userApi.getUserMatchList({
