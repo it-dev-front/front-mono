@@ -1,9 +1,14 @@
 import { redirect } from "next/navigation";
 import { getOuidApi } from "@/entities/id/api";
 import { MatchList } from "@/features/match/ui/MatchList";
-import { QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import { getMatchIds } from "@/entities/match/model/api";
 import { MATH_QUERY_KEY } from "@/entities/match/model/keys/queryKeys";
+import { ProfileQueries } from "@/entities/profile/model/queries";
 
 export const User = async ({ nickname }: { nickname: string }) => {
   const decodedNickname = decodeURIComponent(nickname);
@@ -19,11 +24,22 @@ export const User = async ({ nickname }: { nickname: string }) => {
 
     queryClient.prefetchInfiniteQuery({
       queryKey: [MATH_QUERY_KEY.INFINITY, result.ouid],
-      queryFn: ({ pageParam = 1 }) => getMatchIds(result.ouid, pageParam),
+      queryFn: ({ pageParam = 1 }) => getMatchIds(result.ouid, pageParam, 20),
       initialPageParam: 1,
     });
 
-    return <MatchList ouid={result.ouid} />;
+    queryClient.prefetchQuery({
+      queryKey: [MATH_QUERY_KEY.IDS, result.ouid, MATH_QUERY_KEY.PROFILE],
+      queryFn: () => getMatchIds(result.ouid, 1, 20),
+    });
+    queryClient.prefetchQuery(ProfileQueries.getUserProfile(result.ouid));
+    queryClient.prefetchQuery(ProfileQueries.getUserBestRating(result.ouid));
+
+    return (
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <MatchList ouid={result.ouid} />
+      </HydrationBoundary>
+    );
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     console.log("에러 메시지:", errorMessage);

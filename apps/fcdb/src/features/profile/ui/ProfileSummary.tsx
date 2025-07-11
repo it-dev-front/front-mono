@@ -16,6 +16,10 @@ import {
 } from "@/entities/fc-database/types";
 import { ScorePanelType } from "@/entities/match/types/match.info.types";
 import { PlayerType } from "@/entities/match/types/match.types";
+import {
+  MobileProfileBoxLoading,
+  PcProfileBoxLoading,
+} from "@/entities/profile/ui/ProfileBoxLoading";
 
 /**@description Mobile 프로필 */
 export const MobileProfileSummary = ({
@@ -96,34 +100,48 @@ export const ProfileSummary = ({
   scorePanel,
   bestPlayer,
   updatedAt,
+  isLoading,
 }: {
   profileData: UserProfileResponse;
   ratingData: BestGradeResponse;
   scorePanel: ScorePanelType;
   bestPlayer: (PlayerType & { total: number }) | null;
   updatedAt: Date;
+  isLoading: boolean;
 }): React.ReactElement => {
   return (
     <>
       <div className="block md:hidden w-full">
-        <MobileProfileSummary
-          profileData={profileData}
-          ratingData={ratingData}
-          scorePanel={scorePanel}
-          bestPlayer={bestPlayer}
-          updatedAt={updatedAt}
-        />
+        {isLoading ? (
+          <MobileProfileBoxLoading />
+        ) : (
+          <>
+            <MobileProfileSummary
+              profileData={profileData}
+              ratingData={ratingData}
+              scorePanel={scorePanel}
+              bestPlayer={bestPlayer}
+              updatedAt={updatedAt}
+            />
+          </>
+        )}
       </div>
 
       {/* PC 전용 */}
       <div className="hidden md:block w-full">
-        <PcProfileSummary
-          profileData={profileData}
-          ratingData={ratingData}
-          scorePanel={scorePanel}
-          bestPlayer={bestPlayer}
-          updatedAt={updatedAt}
-        />
+        {isLoading ? (
+          <PcProfileBoxLoading />
+        ) : (
+          <>
+            <PcProfileSummary
+              profileData={profileData}
+              ratingData={ratingData}
+              scorePanel={scorePanel}
+              bestPlayer={bestPlayer}
+              updatedAt={updatedAt}
+            />
+          </>
+        )}
       </div>
     </>
   );
