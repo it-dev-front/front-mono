@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     template: "%s | FCDB",
   },
   description:
-    "FC 온라인 전적, 선수 정보, 매치 히스토리, 팀 전술 등 다양한 데이터를 확인할 수 있는 통합 데이터베이스 플랫폼입니다.",
+    "FC 온라인 전적, 선수 정보, 매치 히스토리, 팀 전술 등 다양한 정보를 확인할 수 있는 플랫폼입니다.",
   keywords: [
     "FCDB",
     "FC 온라인",
@@ -21,8 +21,6 @@ export const metadata: Metadata = {
     "FC온라인 전적",
     "선수 정보",
     "스쿼드",
-    "팀 분석",
-    "게임 데이터베이스",
     "FC Online",
     "FIFA 온라인",
   ],
