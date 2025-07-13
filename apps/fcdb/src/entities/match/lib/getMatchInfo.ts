@@ -150,21 +150,17 @@ const getScorePanel = (matchInfo: MatchPlayerInfoType[]): ScorePanelType => {
 };
 
 const formatPossession = (user: number, opponent: number) => {
-  if (user === 0 && opponent > 0) {
-    return {
-      userPossession: `${Math.max(100 - opponent, MIN_WIDTH)}%`,
-      opponentPossession: `${Math.max(opponent, MIN_WIDTH)}%`,
-    };
-  }
-  if (opponent === 0 && user > 0) {
-    return {
-      userPossession: `${Math.max(user, MIN_WIDTH)}%`,
-      opponentPossession: `${Math.max(100 - user, MIN_WIDTH)}%`,
-    };
-  }
+  const clamp = (value: number) => Math.max(value, MIN_WIDTH);
+
+  let userValue = user;
+  let opponentValue = opponent;
+
+  if (user === 0 && opponent > 0) userValue = 100 - opponent;
+  if (opponent === 0 && user > 0) opponentValue = 100 - user;
+
   return {
-    userPossession: `${Math.max(user, MIN_WIDTH)}%`,
-    opponentPossession: `${Math.max(opponent, MIN_WIDTH)}%`,
+    userPossession: `${clamp(userValue)}%`,
+    opponentPossession: `${clamp(opponentValue)}%`,
   };
 };
 

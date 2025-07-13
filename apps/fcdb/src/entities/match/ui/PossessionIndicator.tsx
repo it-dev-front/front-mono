@@ -17,8 +17,8 @@ const PossessionIndicator = ({
 }: PossessionIndicatorProps) => {
   const sectionBaseStyle =
     "flex items-center justify-between gap-[30px] px-[24px] mobile:px-[16px]";
-  const userSectionStyle = clsx(sectionBaseStyle, "bg-gray-800");
-  const opponentSectionStyle = clsx(sectionBaseStyle, "bg-gray-700");
+  const userSectionStyle = `${sectionBaseStyle} bg-gray-800`;
+  const opponentSectionStyle = `${sectionBaseStyle} bg-gray-700`;
 
   const formattedPosession = formatPossession(
     userPossession,
