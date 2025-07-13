@@ -7,6 +7,7 @@ import {
 } from "../types/match.info.types";
 import { MatchPlayerInfoType, PlayerType } from "../types/match.types";
 import { POSITION } from "@/shared/constant/position";
+import { MIN_WIDTH } from "../constants";
 
 const covertMatchStatus = (
   match: MatchDetailResponse
@@ -31,9 +32,9 @@ const convertMatchInfo = (
   return {
     indicator: {
       userNickName: firstMatch.nickname,
-      userPossession: firstMatch.matchDetail.possession ?? null,
+      userPossession: firstMatch.matchDetail.possession ?? 0,
       opponentNickName: secondMatch.nickname,
-      opponentPossession: secondMatch.matchDetail.possession ?? null,
+      opponentPossession: secondMatch.matchDetail.possession ?? 0,
     },
     score: {
       userScore: firstMatch.shoot.goalTotalDisplay,
@@ -148,10 +149,30 @@ const getScorePanel = (matchInfo: MatchPlayerInfoType[]): ScorePanelType => {
   return scoreObj;
 };
 
+const formatPossession = (user: number, opponent: number) => {
+  if (user === 0 && opponent > 0) {
+    return {
+      userPossession: `${Math.max(100 - opponent, MIN_WIDTH)}%`,
+      opponentPossession: `${Math.max(opponent, MIN_WIDTH)}%`,
+    };
+  }
+  if (opponent === 0 && user > 0) {
+    return {
+      userPossession: `${Math.max(user, MIN_WIDTH)}%`,
+      opponentPossession: `${Math.max(100 - user, MIN_WIDTH)}%`,
+    };
+  }
+  return {
+    userPossession: `${Math.max(user, MIN_WIDTH)}%`,
+    opponentPossession: `${Math.max(opponent, MIN_WIDTH)}%`,
+  };
+};
+
 export {
   convertMatchInfo,
   covertMatchStatus,
   convertPlayers,
   getScorePanel,
   getBestPlayerActionShoot,
+  formatPossession,
 };
