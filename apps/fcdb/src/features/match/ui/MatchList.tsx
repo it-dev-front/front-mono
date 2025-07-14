@@ -28,6 +28,18 @@ const Loading = (): ReactElement => {
 };
 
 export const MatchList = ({ ouid, nickName }: MatchListProps): ReactElement => {
+  const { data: matchIds, isLoading: isInitialLoading } = useQuery({
+    queryKey: [MATH_QUERY_KEY.IDS, ouid],
+    queryFn: () => getMatchIds(ouid, 1, 20),
+  });
+
+  const { data: initialMatches, isLoading: isLoadingMatchDetails } = useQuery({
+    queryKey: [MATH_QUERY_KEY.DETAIL, ouid],
+    queryFn: () => getMatchList(matchIds ?? []),
+    enabled: !!matchIds,
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 10,
+  });
 
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
