@@ -7,6 +7,7 @@ import {
 } from "../types/match.info.types";
 import { MatchPlayerInfoType, PlayerType } from "../types/match.types";
 import { POSITION } from "@/shared/constant/position";
+import { MIN_WIDTH } from "../constants";
 
 const covertMatchStatus = (
   match: MatchDetailResponse
@@ -31,9 +32,9 @@ const convertMatchInfo = (
   return {
     indicator: {
       userNickName: firstMatch.nickname,
-      userPossession: firstMatch.matchDetail.possession ?? null,
+      userPossession: firstMatch.matchDetail.possession ?? 0,
       opponentNickName: secondMatch.nickname,
-      opponentPossession: secondMatch.matchDetail.possession ?? null,
+      opponentPossession: secondMatch.matchDetail.possession ?? 0,
     },
     score: {
       userScore: firstMatch.shoot.goalTotalDisplay,
@@ -148,10 +149,26 @@ const getScorePanel = (matchInfo: MatchPlayerInfoType[]): ScorePanelType => {
   return scoreObj;
 };
 
+const formatPossession = (user: number, opponent: number) => {
+  const clamp = (value: number) => Math.max(value, MIN_WIDTH);
+
+  let userValue = user;
+  let opponentValue = opponent;
+
+  if (user === 0 && opponent > 0) userValue = 100 - opponent;
+  if (opponent === 0 && user > 0) opponentValue = 100 - user;
+
+  return {
+    userPossession: `${clamp(userValue)}%`,
+    opponentPossession: `${clamp(opponentValue)}%`,
+  };
+};
+
 export {
   convertMatchInfo,
   covertMatchStatus,
   convertPlayers,
   getScorePanel,
   getBestPlayerActionShoot,
+  formatPossession,
 };
