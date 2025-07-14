@@ -17,6 +17,10 @@ export const UserSearchForm = () => {
   });
 
   useEffect(() => {
+    if (isPending) {
+      return;
+    }
+
     if (state.errorMessage) {
       toast.error(state.errorMessage);
       setIsLoading(false);
@@ -24,7 +28,7 @@ export const UserSearchForm = () => {
     if (state.url) {
       router.push(state.url);
     }
-  }, [state.errorMessage, state.url, router]);
+  }, [state.errorMessage, state.url, router, isPending]);
 
   useEffect(() => {
     if (isPending) {
