@@ -36,10 +36,11 @@ export const User = async ({ nickname }: { nickname: string }) => {
     queryClient.prefetchQuery(ProfileQueries.getUserBestRating(result.ouid));
 
     return (
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <MatchList ouid={result.ouid} />
-      </HydrationBoundary>
-    );
+       <HydrationBoundary state={dehydrate(queryClient)}>
+      <MatchList ouid={result.ouid} nickName={decodedNickname}/>
+               </HydrationBoundary>
+       );
+
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     console.log("에러 메시지:", errorMessage);

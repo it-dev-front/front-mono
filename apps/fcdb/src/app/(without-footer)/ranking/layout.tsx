@@ -1,4 +1,22 @@
+import { Metadata } from "next";
 import Image from "next/image";
+
+export const metadata: Metadata = {
+  title: "FCDB 랭킹 | FC 온라인 전적 검색",
+  description: "FC 온라인 랭킹점수 검색 페이지입니다.",
+  openGraph: {
+    title: "FCDB 랭킹 | FC 온라인 전적 검색",
+    description: "FC 온라인 랭킹점수 검색 페이지입니다.",
+    images: [
+      {
+        url: "https://fcdb.co.kr/images/banner.png",
+        width: 1200,
+        height: 630,
+        alt: "FCDB 랭킹 - FC 온라인 전적 검색",
+      },
+    ],
+  },
+};
 
 const RankingLayout = ({ children }: { children: React.ReactNode }) => {
   return (
