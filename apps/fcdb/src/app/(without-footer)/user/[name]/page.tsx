@@ -11,8 +11,20 @@ export async function generateMetadata({
   const { name } = await params;
   const decodedName = decodeURIComponent(name);
   return {
-    title: `${decodedName} | FCDB - FC 온라인 전적 검색`,
+    title: `${decodedName} | FC 온라인 전적 검색`,
     description: `${decodedName}님의 FC 온라인 전적 정보입니다.`,
+    openGraph: {
+      title: `${decodedName} | FC 온라인 전적 검색`,
+      description: `${decodedName}님의 FC 온라인 전적 정보입니다.`,
+      images: [
+        {
+          url: "https://fcdb.co.kr/images/banner.png",
+          width: 1200,
+          height: 630,
+          alt: "FCDB - FC 온라인 전적 검색",
+        },
+      ],
+    },
   };
 }
 

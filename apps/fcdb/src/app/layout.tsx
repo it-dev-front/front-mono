@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     template: "%s | FCDB",
   },
   description:
-    "FC 온라인 전적, 선수 정보, 매치 히스토리, 팀 전술 등 다양한 정보를 확인할 수 있는 플랫폼입니다.",
+    "FC 온라인 전적, 선수 정보, 매치 히스토리, 팀 전술, 랭킹 등 다양한 정보를 확인할 수 있는 플랫폼입니다.",
   keywords: [
     "FCDB",
     "FC 온라인",
@@ -39,14 +39,14 @@ export const metadata: Metadata = {
       "FC 온라인 유저의 전적, 선수 통계, 스쿼드 분석 등 모든 정보를 제공합니다.",
     url: "https://fcdb.co.kr",
     siteName: "FCDB",
-    // images: [
-    //   {
-    //     url: "https://fcdb.co.kr/og-image.png",
-    //     width: 1200,
-    //     height: 630,
-    //     alt: "FCDB - FC 온라인 전적 검색",
-    //   },
-    // ],
+    images: [
+      {
+        url: "https://fcdb.co.kr/images/banner.png",
+        width: 1200,
+        height: 630,
+        alt: "FCDB - FC 온라인 전적 검색",
+      },
+    ],
     locale: "ko_KR",
     type: "website",
   },
