@@ -107,7 +107,7 @@ export const ScoreRefreshButton = ({
       onClick={onRefresh}
       type="button"
       aria-label="전적 갱신 버튼"
-      className="flex items-center justify-center gap-1 w-[120px] h-[40px] bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white text-m px-3 py-1.5 rounded-md transition"
+      className="flex items-center justify-center gap-1 w-[120px] h-[40px] bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white text-m px-3 py-1.5 rounded-md transition hover:cursor-pointer"
     >
       전적갱신
       <RotateCcw size={14} className="text-primary-300" />
@@ -123,7 +123,7 @@ export const MobileScoreRefreshButton = ({
       type="button"
       onClick={onRefresh}
       aria-label="전적 갱신 버튼"
-      className="flex items-center justify-center gap-1 w-full h-[40px] bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white text-m px-3 py-1.5 rounded-md transition"
+      className="flex items-center justify-center gap-1 w-full h-[40px] bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white text-m px-3 py-1.5 rounded-md transition hover:cursor-pointer"
     >
       전적갱신
       <RotateCcw size={14} className="text-primary-300" />
