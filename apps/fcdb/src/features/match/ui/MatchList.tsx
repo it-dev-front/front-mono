@@ -21,6 +21,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 
 interface MatchListProps {
   ouid: string;
+  nickName: string;
 }
 
 const Loading = (): ReactElement => {
@@ -31,7 +32,7 @@ const Loading = (): ReactElement => {
   );
 };
 
-export const MatchList = ({ ouid }: MatchListProps): ReactElement => {
+export const MatchList = ({ ouid, nickName }: MatchListProps): ReactElement => {
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery(MatchQueries.getMatchList({ ouid }));
 
@@ -40,9 +41,13 @@ export const MatchList = ({ ouid }: MatchListProps): ReactElement => {
     return data.pages.flatMap((page) =>
       page.map((match: MatchDetailResponse) => {
         const { matchInfo } = match;
-        const info = convertMatchInfo(matchInfo);
+        const sortedMatchInfo = matchInfo.sort((a, b) => {
+          return a.nickname === nickName ? -1 : b.nickname === nickName ? 1 : 0;
+        });
+
+        const info = convertMatchInfo(sortedMatchInfo);
         const status = covertMatchStatus(match);
-        const players = convertPlayers(matchInfo);
+        const players = convertPlayers(sortedMatchInfo);
 
         return {
           matchInfo: info,

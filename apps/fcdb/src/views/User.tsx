@@ -23,7 +23,7 @@ export const User = async ({ nickname }: { nickname: string }) => {
       initialPageParam: 1,
     });
 
-    return <MatchList ouid={result.ouid} />;
+    return <MatchList ouid={result.ouid} nickName={decodedNickname}/>;
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     console.log("에러 메시지:", errorMessage);
