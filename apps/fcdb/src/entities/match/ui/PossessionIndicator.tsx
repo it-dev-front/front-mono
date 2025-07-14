@@ -1,5 +1,3 @@
-import clsx from "clsx";
-import { MIN_WIDTH } from "../constants";
 import { formatPossession } from "../lib/getMatchInfo";
 
 interface PossessionIndicatorProps {
