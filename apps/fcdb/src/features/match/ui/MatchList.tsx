@@ -1,23 +1,18 @@
 "use client";
 
 import { ReactElement, useMemo } from "react";
-import { MatchDetailResponse } from "@/entities/fc-database/types";
 import {
   convertMatchInfo,
   convertPlayers,
   covertMatchStatus,
-  getBestPlayerActionShoot,
-  getScorePanel,
 } from "@/entities/match/lib/getMatchInfo";
-import { MatchQueries } from "@/entities/match/model/queries";
-import {
-  MatchSummaryType,
-  ScorePanelType,
-} from "@/entities/match/types/match.info.types";
+import { MatchSummaryType } from "@/entities/match/types/match.info.types";
 import { UserProfileFetcher } from "@/features/profile/ui/UserProfileFetcher";
 import { BallSpinner } from "@/shared/ui/spinner/BallSpinner";
 import MatchSummary from "@/features/match/ui/MatchSummary";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { getMatchIds, getMatchList } from "@/entities/match/model/api";
+import { MATH_QUERY_KEY } from "@/entities/match/model/keys/queryKeys";
 
 interface MatchListProps {
   ouid: string;
@@ -33,13 +28,47 @@ const Loading = (): ReactElement => {
 };
 
 export const MatchList = ({ ouid, nickName }: MatchListProps): ReactElement => {
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery(MatchQueries.getMatchList({ ouid }));
+  const { data: matchIds, isLoading: isInitialLoading } = useQuery({
+    queryKey: [MATH_QUERY_KEY.IDS, ouid],
+    queryFn: () => getMatchIds(ouid, 1, 20),
+  });
 
-  const summaries = useMemo<MatchSummaryType[]>(() => {
+  const { data: initialMatches, isLoading: isLoadingMatchDetails } = useQuery({
+    queryKey: [MATH_QUERY_KEY.DETAIL, ouid],
+    queryFn: () => getMatchList(matchIds ?? []),
+    enabled: !!matchIds,
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 10,
+  });
+
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: [MATH_QUERY_KEY.INFINITY, ouid],
+      queryFn: async ({ pageParam = 1 }) => {
+        const matchIds = await getMatchIds(ouid, pageParam, 20);
+        if (matchIds.length === 0) return [];
+
+        const matchDetails = await getMatchList(matchIds);
+        return matchDetails;
+      },
+      getNextPageParam: (lastPage, allPages) => {
+        if (lastPage.length === 0) return undefined;
+        return allPages.length + 1;
+      },
+      enabled: !!initialMatches,
+      initialPageParam: 1,
+      staleTime: 1000 * 60 * 5,
+      gcTime: 1000 * 60 * 10,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+    });
+
+  const infiniteSummaries = useMemo(() => {
     if (!data) return [];
+
     return data.pages.flatMap((page) =>
-      page.map((match: MatchDetailResponse) => {
+      page.map((match) => {
         const { matchInfo } = match;
         const sortedMatchInfo = matchInfo.sort((a, b) => {
           return a.nickname === nickName ? -1 : b.nickname === nickName ? 1 : 0;
@@ -59,41 +88,24 @@ export const MatchList = ({ ouid, nickName }: MatchListProps): ReactElement => {
     );
   }, [data]);
 
-  const bestPlayer = useMemo(() => {
-    return getBestPlayerActionShoot(
-      summaries?.map((match) => match.matchPlayers).flat() || []
-    );
-  }, [summaries]);
-
-  const scorePanel = useMemo<ScorePanelType>(() => {
-    const matches = summaries?.map((match: MatchSummaryType) => match.matches);
-    const matchInfo = matches
-      ?.map((match) => match.matchInfo[0])
-      .filter((info): info is NonNullable<typeof info> => info !== undefined);
-    return getScorePanel(matchInfo);
-  }, [summaries]);
-
   return (
     <div className="w-full min-w-[366px] flex flex-col min-h-screen pt-[50px]">
-      {isLoading ? (
+      {isLoading || isInitialLoading || isLoadingMatchDetails ? (
         <Loading />
       ) : (
         <>
-          <UserProfileFetcher
-            ouid={ouid}
-            scorePanel={scorePanel}
-            bestPlayer={bestPlayer}
-            updatedAt={new Date()}
-          />
+          <UserProfileFetcher ouid={ouid} updatedAt={new Date()} />
           <div className="w-full flex flex-col justify-center items-center gap-4">
-            {summaries?.map((match: MatchSummaryType, index: number) => (
-              <div
-                key={`${index}_match_list`}
-                className="w-full flex justify-center items-center"
-              >
-                <MatchSummary match={match} />
-              </div>
-            ))}
+            {infiniteSummaries?.map(
+              (match: MatchSummaryType, index: number) => (
+                <div
+                  key={`${index}_match_list`}
+                  className="w-full flex justify-center items-center"
+                >
+                  <MatchSummary match={match} />
+                </div>
+              )
+            )}
           </div>
           <div className="w-full flex justify-center items-center my-5">
             {isFetchingNextPage ? (

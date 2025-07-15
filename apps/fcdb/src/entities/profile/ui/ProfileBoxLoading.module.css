@@ -1,0 +1,21 @@
+.donutSkeleton {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: conic-gradient(
+    rgba(107, 114, 128, 0.6) 0% 25%,
+    rgba(55, 65, 81, 0.3) 25% 100%
+  );
+  position: relative;
+}
+
+.donutSkeleton::after {
+  content: "";
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  height: 80%;
+  background-color: #232323;
+  border-radius: 50%;
+}
