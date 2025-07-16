@@ -2,7 +2,7 @@ import Image from "next/image";
 import { POSITION_LOCATIONS } from "@/shared/constant/position";
 import { useQuery } from "@tanstack/react-query";
 import { MetaQueries } from "@/entities/meta/model/queries";
-import SafeImage from "@/shared/components/SafeImage";
+import PlayerImage from "@/shared/components/PlayerImage";
 import { getPositionColor, findPositionCategory } from "@/shared/lib/position";
 import { PlayerType } from "@/entities/match/types/match.types";
 import { Goal } from "@/entities/formation/ui/Goal";
@@ -78,8 +78,8 @@ export const UserSearchFormationHalfCoatMoblie = ({
             >
               <div className="relative w-full h-full flex items-center justify-center">
                 <Goal goal={goal} />
-                <SafeImage
-                  src={playerActionImageSource(soccerPlayer.spId)}
+                <PlayerImage
+                  spId={soccerPlayer.spId}
                   alt={playerName ? playerName : "선수 이미지"}
                   width={38}
                   height={38}
