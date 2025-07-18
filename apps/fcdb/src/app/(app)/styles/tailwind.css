@@ -45,7 +45,7 @@
 
 @layer base {
   html {
-    font-family: var(--font-noto-sans-kr), var(--font-nexon-lv1-gothic);
+    font-family: var(--font-nexon-lv1-gothic), var(--font-noto-sans-kr);
   }
 }
 

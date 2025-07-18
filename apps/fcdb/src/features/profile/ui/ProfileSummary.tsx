@@ -9,7 +9,6 @@ import {
 import { PlayerProfileCard } from "@/entities/profile/ui/PlayerProfileCard";
 import { TierImage } from "@/entities/tier/ui/TierImage";
 import { DivisionLabel } from "@/entities/tier/ui/DivisionLabel";
-import { Typography } from "@/shared/ui/typography";
 import {
   BestGradeResponse,
   UserProfileResponse,
@@ -48,8 +47,8 @@ export const MobileProfileSummary = ({
           <TierImage divisionId={tierData?.division || 0} />
           <div className={"flex flex-col gap-[8px]"}>
             <DivisionLabel divisionId={tierData?.division || 0} />
-            <Typography fontSize={20}>{profileData.nickname}</Typography>
-            <Typography fontSize={18}>Lv. {profileData.level}</Typography>
+            <p className="text-[20px]">{profileData.nickname}</p>
+            <p className="text-[18px]">Lv. {profileData.level}</p>
           </div>
         </div>
         <div className="w-[120px] h-[80px] inline-block" />

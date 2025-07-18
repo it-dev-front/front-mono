@@ -1,7 +1,6 @@
 "use client";
 
 import { CircularProgressBar } from "@/shared/ui/progressbar/CircularProgressBar";
-import { Typography } from "@/shared/ui/typography";
 import { ReactElement } from "react";
 import { useMediaQuery } from "react-responsive";
 
@@ -23,20 +22,16 @@ export const Score = ({ score }: { score: ScoreType }): ReactElement => {
   return (
     <div className="flex flex-col gap-4">
       <CircularProgressBar percentage={isScore(score?.winRate)} />
-      <p className="flex gap-2">
-        <Typography as={"span"} fontSize={fontSize}>
+      <div className="flex gap-2">
+        <span className={`text-[${fontSize}px]`}>
           {isScore(score?.total)}전
-        </Typography>
-        <Typography as={"span"} fontSize={fontSize}>
-          {isScore(score?.win)}승
-        </Typography>
-        <Typography as={"span"} fontSize={fontSize}>
+        </span>
+        <span className={`text-[${fontSize}px]`}>{isScore(score?.win)}승</span>
+        <span className={`text-[${fontSize}px]`}>
           {isScore(score?.defeat)}패
-        </Typography>
-        <Typography as={"span"} fontSize={fontSize}>
-          {isScore(score?.draw)}무
-        </Typography>
-      </p>
+        </span>
+        <span className={`text-[${fontSize}px]`}>{isScore(score?.draw)}무</span>
+      </div>
     </div>
   );
 };
