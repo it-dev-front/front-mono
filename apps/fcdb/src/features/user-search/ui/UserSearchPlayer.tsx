@@ -1,5 +1,5 @@
 import { Goal } from "@/entities/formation/ui/Goal";
-import SafeImage from "@/shared/components/SafeImage";
+import PlayerImage from "@/shared/components/PlayerImage";
 import Image from "next/image";
 import { PlayerType } from "@/entities/match/types/match.types";
 import { getPositionColor, findPositionCategory } from "@/shared/lib/position";
@@ -19,17 +19,10 @@ export const UserSearchPlayer = ({
   gradeBgColor,
   gradeTextColor,
 }: UserSearchPlayerProps) => {
-  const getPlayerImageSrc = (spId: number) => {
-    const imgSrc = `https://fco.dn.nexoncdn.co.kr/live/externalAssets/common/playersAction/p${spId}.png`;
-
-    return imgSrc;
-  };
-
   const goal = soccerPlayer.status.goal;
   const playerName = soccerPlayerMeta?.find(
     (player) => player.id === soccerPlayer.spId
   )?.name;
-  const imageSrc = getPlayerImageSrc(soccerPlayer.spId);
   const seasonId = Number(soccerPlayer.spId.toString().slice(0, 3));
   const seasonImg = seasonIdMeta?.find(
     (element) => element.seasonId == seasonId
@@ -43,8 +36,8 @@ export const UserSearchPlayer = ({
   return (
     <div className="relative w-[50px] h-[60px] flex items-center justify-center">
       <Goal goal={goal} />
-      <SafeImage
-        src={imageSrc}
+      <PlayerImage
+        spId={soccerPlayer.spId}
         alt={playerName ? playerName : "선수 이미지"}
         width={50}
         height={60}
