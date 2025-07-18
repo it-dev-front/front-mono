@@ -1,54 +1,51 @@
 import { redirect } from "next/navigation";
 import { getOuidApi } from "@/entities/id/api";
 import { MatchList } from "@/features/match/ui/MatchList";
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from "@tanstack/react-query";
-import { getMatchIds } from "@/entities/match/model/api";
-import { MATH_QUERY_KEY } from "@/entities/match/model/keys/queryKeys";
-import { ProfileQueries } from "@/entities/profile/model/queries";
+
+import { onlyServerApi as onlyServerMatchApi } from "@/entities/match/model/api/only-server-api";
+import { onlyServerApi as onlyServerProfileApi } from "@/entities/profile/model/api/only-server-api";
+
+function handleApiError(error: unknown) {
+  const errorMessage = error instanceof Error ? error.message : String(error);
+  if (errorMessage.includes("OPENAPI00007")) {
+    console.log("🔄 FC Online API 서버 일시적 오류 - 홈으로 리다이렉트");
+  } else {
+    console.log("🔄 기타 API 에러 - 홈으로 리다이렉트");
+  }
+  redirect("/");
+}
 
 export const User = async ({ nickname }: { nickname: string }) => {
   const decodedNickname = decodeURIComponent(nickname);
 
+  let ouid: string | undefined;
   try {
-    const queryClient = new QueryClient();
-
     const result = await getOuidApi(decodedNickname);
+    ouid = result.ouid;
+  } catch (error) {
+    handleApiError(error);
+  }
 
-    if (!result.ouid) {
-      redirect("/");
-    }
+  if (!ouid) redirect("/");
 
-    queryClient.prefetchInfiniteQuery({
-      queryKey: [MATH_QUERY_KEY.INFINITY, result.ouid],
-      queryFn: ({ pageParam = 1 }) => getMatchIds(result.ouid, pageParam, 20),
-      initialPageParam: 1,
-    });
-
-    queryClient.prefetchQuery({
-      queryKey: [MATH_QUERY_KEY.IDS, result.ouid, MATH_QUERY_KEY.PROFILE],
-      queryFn: () => getMatchIds(result.ouid, 1, 20),
-    });
-    queryClient.prefetchQuery(ProfileQueries.getUserProfile(result.ouid));
-    queryClient.prefetchQuery(ProfileQueries.getUserBestRating(result.ouid));
+  try {
+    const [profile, bestRating, matchIds] = await Promise.all([
+      onlyServerProfileApi.getUserProfile(ouid),
+      onlyServerProfileApi.getBestRating(ouid),
+      onlyServerMatchApi.getMatchIds(ouid, 1, 20),
+    ]);
+    const matchList = await onlyServerMatchApi.getMatchList(matchIds);
+    profile.nickname = decodedNickname;
 
     return (
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <MatchList ouid={result.ouid} nickName={decodedNickname} />
-      </HydrationBoundary>
+      <MatchList
+        ouid={ouid}
+        matchList={matchList}
+        profileInfo={profile}
+        bestRating={bestRating}
+      />
     );
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error);
-    console.log("에러 메시지:", errorMessage);
-    if (errorMessage.includes("OPENAPI00007")) {
-      console.log("🔄 FC Online API 서버 일시적 오류 - 홈으로 리다이렉트");
-    } else {
-      console.log("🔄 기타 API 에러 - 홈으로 리다이렉트");
-    }
-
-    redirect("/");
+    handleApiError(error);
   }
 };
