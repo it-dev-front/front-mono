@@ -1,7 +1,6 @@
 import { ReactElement } from "react";
 import styles from "./PlayerProfileCard.module.css";
-import Image from "next/image";
-import { playerActionImageSource } from "@/entities/player/lib";
+import PlayerImage from "@/shared/components/PlayerImage";
 
 interface PlayerProfileCardProps {
   spId: number;
@@ -14,13 +13,11 @@ interface PlayerProfileCardProps {
 export const PlayerProfileCard = ({
   spId,
 }: PlayerProfileCardProps): ReactElement => {
-  const imageSource = playerActionImageSource(spId);
   return (
     <div className={styles["profile-card"]}>
       {spId && (
-        <Image
-          className="absolute bottom-[6px]"
-          src={imageSource}
+        <PlayerImage
+          spId={spId}
           alt={`${spId}_action_image`}
           width={140}
           height={160}

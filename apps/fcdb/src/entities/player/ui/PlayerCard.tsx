@@ -4,9 +4,9 @@ import Badge from "@/entities/player/ui/Badge";
 import { POSITION } from "@/shared/constant/position";
 import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
-import Image from "next/image";
 import { memo, useMemo } from "react";
 import { playerActionImageSource } from "../lib";
+import PlayerImage from "@/shared/components/PlayerImage";
 
 // TODO: 컴포넌트 분리, SRP에 맞게 분리
 // 포지션: spposition:number -> desc:string 교환`
@@ -45,7 +45,7 @@ const PlayerCard = ({ bestPlayer, isUser = true }: PlayerCardProps) => {
   }, [bestPlayer, soccerPlayerMeta]);
 
   if (!bestPlayer) {
-    return null;
+    return <div className="w-[124px] block" />;
   }
 
   const imageOverlayBaseStyle =
@@ -63,13 +63,12 @@ const PlayerCard = ({ bestPlayer, isUser = true }: PlayerCardProps) => {
         <div
           className={isUser ? userImageOverlayStyle : opponentImageOverlayStyle}
         >
-          <Image
-            src={playerImageSrc}
-            sizes="72px"
+          <PlayerImage
+            spId={bestPlayer.spId}
             alt={playerName || "선수 이미지"}
-            fill
+            width={72}
+            height={72}
             className="object-cover"
-            priority
           />
         </div>
         <div className="absolute w-full bottom-0 flex justify-center gap-[8px] z-1">
