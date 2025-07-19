@@ -30,7 +30,7 @@ export const MatchList = ({
     initialData,
     fetchNextPage,
     hasNextPage,
-    isFetchingNextPage,
+    loading,
   } = useInfiniteMatchSummaries(ouid, matchList, profileInfo);
 
   return (
@@ -40,6 +40,7 @@ export const MatchList = ({
         profileInfo={profileInfo}
         bestRating={bestRating}
         initialSummaries={initialData}
+        isLoading={loading}
       />
       <div className="w-full flex flex-col justify-center items-center gap-4">
         {infiniteSummaries?.map((match: MatchSummaryType, index: number) => (
@@ -54,11 +55,15 @@ export const MatchList = ({
       <div className="w-full flex justify-center items-center my-5">
         <button
           type="button"
-          className="bg-primary-300 text-white px-4 py-2 rounded-md w-[244px] h-[48px] cursor-pointer"
+          className={`bg-primary-300 text-white px-4 py-2 rounded-md w-[244px] h-[48px] ${
+            loading
+              ? "bg-primary-100 opacity-80 cursor-default"
+              : "cursor-pointer"
+          }`}
           onClick={() => fetchNextPage()}
-          disabled={!hasNextPage || isFetchingNextPage}
+          disabled={!hasNextPage || loading}
         >
-          {isFetchingNextPage ? <ButtonSpinner /> : "더 보기"}
+          {loading ? <ButtonSpinner /> : "더 보기"}
         </button>
       </div>
     </div>

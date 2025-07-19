@@ -20,6 +20,7 @@ interface UserProfileFetcherProps {
   profileInfo: UserProfileResponse;
   bestRating: BestGradeResponse;
   initialSummaries: MatchSummaryType[];
+  isLoading?: boolean;
 }
 
 export const UserProfileFetcher = ({
@@ -27,6 +28,7 @@ export const UserProfileFetcher = ({
   profileInfo,
   bestRating,
   initialSummaries,
+  isLoading = false,
 }: UserProfileFetcherProps) => {
   const bestPlayer = useMemo(() => {
     return getBestPlayerActionShoot(
@@ -51,7 +53,7 @@ export const UserProfileFetcher = ({
       scorePanel={scorePanel}
       bestPlayer={bestPlayer}
       updatedAt={updatedAt}
-      isLoading={false}
+      isLoading={isLoading}
     />
   );
 };

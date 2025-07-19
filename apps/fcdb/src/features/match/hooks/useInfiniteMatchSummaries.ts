@@ -23,7 +23,7 @@ export function useInfiniteMatchSummaries(
   matchList: MatchDetailResponse[],
   profileInfo: UserProfileResponse
 ) {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, fetchNextPage, isLoading, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery(MatchQueries.infinityMatchQuery(ouid, matchList));
 
   const infiniteSummaries = useMemo(() => {
@@ -57,11 +57,15 @@ export function useInfiniteMatchSummaries(
     return infiniteSummaries.slice(0, 20);
   }, [matchList]);
 
+  const loading = useMemo(() => {
+    return isLoading || isFetchingNextPage;
+  }, [isLoading, isFetchingNextPage]);
+
   return {
     infiniteSummaries,
     initialData,
     fetchNextPage,
     hasNextPage,
-    isFetchingNextPage,
+    loading,
   };
 }
