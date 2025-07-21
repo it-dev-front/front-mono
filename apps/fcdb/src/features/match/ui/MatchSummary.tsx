@@ -9,6 +9,7 @@ import ScoreCard from "@/entities/match/ui/ScoreBoard";
 import MatchResultLabel from "@/entities/match/ui/MatchResultLabel";
 import MatchDateLabel from "@/entities/match/ui/MatchDateLabel";
 import { MatchSummaryType } from "@/entities/match/types/match.info.types";
+import { PlayerType } from "@/entities/match/types/match.types";
 import PossessionIndicator from "@/entities/match/ui/PossessionIndicator";
 import { UserSearchFormation } from "@/features/user-search/ui/UserSearchFormation";
 import { UserSearchFormationMoblie } from "@/features/user-search/ui/UserSearchFormationMoblie";
@@ -79,9 +80,9 @@ const MatchSummary = ({ match }: MatchSummaryProps): ReactElement => {
 
         <PossessionIndicator
           userNickName={match.matchInfo.indicator.userNickName}
-          userPossession={match.matchInfo.indicator.userPossession}
+          userPossession={match.matchInfo.indicator.userPossession ?? 0}
           opponentNickName={match.matchInfo.indicator.opponentNickName}
-          opponentPossession={match.matchInfo.indicator.opponentPossession}
+          opponentPossession={match.matchInfo.indicator.opponentPossession ?? 0}
         />
 
         <div
@@ -92,12 +93,29 @@ const MatchSummary = ({ match }: MatchSummaryProps): ReactElement => {
         >
           {isExpanded && (
             <>
-              <div className="hidden lg:block">
-                <UserSearchFormation matchPlayers={match.matchPlayers} />
-              </div>
-              <div className="block lg:hidden">
-                <UserSearchFormationMoblie matchPlayers={match.matchPlayers} />
-              </div>
+              {(() => {
+                const filteredMatchPlayers = match.matchPlayers.filter(
+                  (player) => player.bestPlayer !== null
+                ) as Array<{
+                  players: Record<string, PlayerType>;
+                  bestPlayer: PlayerType & { total: number };
+                }>;
+
+                return (
+                  <>
+                    <div className="hidden lg:block">
+                      <UserSearchFormation
+                        matchPlayers={filteredMatchPlayers}
+                      />
+                    </div>
+                    <div className="block lg:hidden">
+                      <UserSearchFormationMoblie
+                        matchPlayers={filteredMatchPlayers}
+                      />
+                    </div>
+                  </>
+                );
+              })()}
             </>
           )}
         </div>
