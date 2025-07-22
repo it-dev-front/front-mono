@@ -20,7 +20,7 @@ const getUserInfoApi = async (ouid: string) => {
     method: "GET",
     headers: {
       accept: "application/json",
-      "x-nxopen-api-key": process.env.FCONLINE_DEV_API_KEY as string,
+      "x-nxopen-api-key": process.env.FCONLINE_PROD_API_KEY as string,
     },
     next: {
       revalidate: 60 * 60, // 1시간 동안 캐시
@@ -38,7 +38,7 @@ const getUserBestRatingApi = async (ouid: string) => {
     method: "GET",
     headers: {
       accept: "application/json",
-      "x-nxopen-api-key": process.env.FCONLINE_DEV_API_KEY as string,
+      "x-nxopen-api-key": process.env.FCONLINE_PROD_API_KEY as string,
     },
     next: {
       revalidate: 60 * 60, // 1시간 동안 캐시
