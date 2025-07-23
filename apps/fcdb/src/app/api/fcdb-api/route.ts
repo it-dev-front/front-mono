@@ -5,18 +5,12 @@ const API_CONFIG = {
     baseUrl: "https://open.api.nexon.com",
     apiKey: process.env.FCONLINE_PROD_API_KEY,
   },
-  // 외부 API 추가 시 예시
-  // naver: {
-  //   baseUrl: "https://openapi.naver.com",
-  //   apiKey: process.env.NAVER_API_KEY,
-  // },
 };
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
   const searchParams = url.searchParams;
 
-  // service 체크 후 없으면 기본값 'nexon' 사용
   const service = searchParams.get("service") || "nexon";
   if (!(service in API_CONFIG)) {
     return NextResponse.json({ error: "Invalid service" }, { status: 400 });
@@ -37,19 +31,18 @@ export async function GET(req: NextRequest) {
 
   const { baseUrl, apiKey } = API_CONFIG[service as keyof typeof API_CONFIG];
 
-  let finalUrl = baseUrl + path;
+  let fetchUrl = baseUrl + path;
   if (queryParams.toString()) {
-    finalUrl += (path.includes("?") ? "&" : "?") + queryParams.toString();
+    fetchUrl += (path.includes("?") ? "&" : "?") + queryParams.toString();
   }
 
-  console.log("@@@ finalUrl", finalUrl);
-
   try {
-    const res = await fetch(finalUrl, {
+    const res = await fetch(fetchUrl, {
       method: "GET",
+      cache: "no-store",
       headers: {
         "Content-Type": "application/json",
-        ...(apiKey ? { "x-nxopen-api-key": apiKey } : {}),
+        "x-nxopen-api-key": apiKey as string,
       },
     });
 
