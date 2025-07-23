@@ -12,9 +12,12 @@ const buildUrl = (url: string, query?: Record<string, any>) => {
   if (url.startsWith("http://") || url.startsWith("https://")) {
     return `${url}${qs}`;
   }
-  console.log("@@@", `${"http://localhost:3000/api/fcdb?path="}${url}${qs}`);
+  console.log(
+    "@@@",
+    `${"http://localhost:3000/api/fcdb-api?path="}${url}${qs}`
+  );
 
-  return `${"http://localhost:3000/api/fcdb?path="}${url}${qs}`;
+  return `${"http://localhost:3000/api/fcdb-api?path="}${url}${qs}`;
 };
 
 export class FcClient {
