@@ -1,9 +1,9 @@
 import { redirect } from "next/navigation";
 import { getOuidApi } from "@/entities/id/api";
 import { MatchList } from "@/features/match/ui/MatchList";
-
 import { onlyServerApi as onlyServerMatchApi } from "@/entities/match/model/api/only-server-api";
 import { onlyServerApi as onlyServerProfileApi } from "@/entities/profile/model/api/only-server-api";
+import { FetchBoundary } from "@/shared/components/boundaries";
 
 function handleApiError(error: unknown) {
   const errorMessage = error instanceof Error ? error.message : String(error);
@@ -29,21 +29,29 @@ export const User = async ({ nickname }: { nickname: string }) => {
   if (!ouid) redirect("/");
 
   try {
-    const [profile, bestRating, matchIds] = await Promise.all([
-      onlyServerProfileApi.getUserProfile(ouid),
-      onlyServerProfileApi.getBestRating(ouid),
-      onlyServerMatchApi.getMatchIds(ouid, 1, 20),
-    ]);
-    const matchList = await onlyServerMatchApi.getMatchList(matchIds);
-    profile.nickname = decodedNickname;
-
     return (
-      <MatchList
-        ouid={ouid}
-        matchList={matchList}
-        profileInfo={profile}
-        bestRating={bestRating}
-      />
+      <FetchBoundary
+        fetchFunctions={[
+          () => onlyServerProfileApi.getUserProfile(ouid),
+          () => onlyServerProfileApi.getBestRating(ouid),
+          async () => {
+            const matchIds = await onlyServerMatchApi.getMatchIds(ouid, 1, 20);
+            return onlyServerMatchApi.getMatchList(matchIds);
+          },
+        ]}
+      >
+        {([profile, bestRating, matchList]) => {
+          profile.nickname = decodedNickname;
+          return (
+            <MatchList
+              ouid={ouid}
+              matchList={matchList}
+              profileInfo={profile}
+              bestRating={bestRating}
+            />
+          );
+        }}
+      </FetchBoundary>
     );
   } catch (error) {
     handleApiError(error);
