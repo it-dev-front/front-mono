@@ -10,15 +10,14 @@ const API_CONFIG = {
   //   baseUrl: "https://openapi.naver.com",
   //   apiKey: process.env.NAVER_API_KEY,
   // },
-} as const;
+};
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
   const searchParams = url.searchParams;
 
   // service 체크 후 없으면 기본값 'nexon' 사용
-  const service =
-    (searchParams.get("service") as keyof typeof API_CONFIG | null) || "nexon";
+  const service = searchParams.get("service") || "nexon";
   if (!(service in API_CONFIG)) {
     return NextResponse.json({ error: "Invalid service" }, { status: 400 });
   }
@@ -36,7 +35,7 @@ export async function GET(req: NextRequest) {
     }
   });
 
-  const { baseUrl, apiKey } = API_CONFIG[service];
+  const { baseUrl, apiKey } = API_CONFIG[service as keyof typeof API_CONFIG];
 
   let finalUrl = baseUrl + path;
   if (queryParams.toString()) {
