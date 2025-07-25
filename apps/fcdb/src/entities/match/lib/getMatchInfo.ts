@@ -21,29 +21,25 @@ const covertMatchStatus = (
 /**@description 매치 정보 변환*/
 const convertMatchInfo = (
   matchInfo: MatchPlayerInfoType[]
-): ConvertedMatchInfo => {
+): ConvertedMatchInfo | null => {
   const firstMatch = matchInfo[0];
   const secondMatch = matchInfo[1];
 
-  if (!firstMatch || !secondMatch) {
-    throw new Error("매치 정보 없음");
-  }
-
   return {
     indicator: {
-      userNickName: firstMatch.nickname,
-      userPossession: firstMatch.matchDetail.possession ?? 0,
-      opponentNickName: secondMatch.nickname,
-      opponentPossession: secondMatch.matchDetail.possession ?? 0,
+      userNickName: firstMatch?.nickname ?? "",
+      userPossession: firstMatch?.matchDetail.possession ?? 0,
+      opponentNickName: secondMatch?.nickname ?? "",
+      opponentPossession: secondMatch?.matchDetail.possession ?? 0,
     },
     score: {
-      userScore: firstMatch.shoot.goalTotalDisplay,
-      opponentScore: secondMatch.shoot.goalTotalDisplay,
+      userScore: firstMatch?.shoot.goalTotalDisplay ?? 0,
+      opponentScore: secondMatch?.shoot.goalTotalDisplay ?? 0,
     },
-    matchResult: firstMatch.matchDetail.matchResult,
+    matchResult: firstMatch?.matchDetail.matchResult ?? "",
     players: {
-      user: firstMatch.player,
-      opponent: secondMatch.player,
+      user: firstMatch?.player ?? [],
+      opponent: secondMatch?.player ?? [],
     },
   };
 };
