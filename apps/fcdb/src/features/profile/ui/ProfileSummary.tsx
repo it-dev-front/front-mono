@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { ProfileBox } from "./ProfileBox";
-import { parseTierData, TierBadge } from "@/features/tier/ui/TierBadge";
+import { TierBadge, getOfficialMatchType } from "@/features/tier/ui/TierBadge";
 import { Score } from "./Score";
 import {
   MobileScoreRefresh,
@@ -34,7 +34,7 @@ export const MobileProfileSummary = ({
   bestPlayer: (PlayerType & { total: number }) | null;
   updatedAt: Date;
 }): ReactElement => {
-  const tierData = parseTierData(ratingData);
+  const tierData = getOfficialMatchType(ratingData);
 
   return (
     <div className="mx-auto h-auto w-full flex flex-col items-start justify-between bg-gray-900 px-[20px] py-[16px] gap-[16px]">
