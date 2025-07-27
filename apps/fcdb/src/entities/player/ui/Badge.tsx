@@ -9,7 +9,7 @@ const MvpBadge = ({ isMvp }: MvpBadgeProps) => {
   if (!isMvp) return null;
 
   return (
-    <div className="flex items-center justify-center absolute top-0 w-[42px] h-[25px] mobile:w-[30px] mobile:h-[18px] bg-[#ABEE02] text-[#000000] rounded-sm z-1">
+    <div className="flex items-center justify-center absolute top-0 -left-[28px] w-[42px] h-[25px] mobile:-left-[10px] mobile:w-[30px] mobile:h-[18px] bg-[#ABEE02] text-[#000000] rounded-sm z-1">
       <span className="font-medium mobile:font-[700] mobile:text-[10px]">
         MVP
       </span>
