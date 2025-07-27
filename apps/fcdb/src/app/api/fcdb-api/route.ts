@@ -31,10 +31,12 @@ export async function GET(req: NextRequest) {
 
   const { baseUrl, apiKey } = API_CONFIG[service as keyof typeof API_CONFIG];
 
-  let fetchUrl = baseUrl + path;
-  if (queryParams.toString()) {
-    fetchUrl += (path.includes("?") ? "&" : "?") + queryParams.toString();
-  }
+  const fetchUrl =
+    baseUrl +
+    path +
+    (queryParams.toString()
+      ? (path.includes("?") ? "&" : "?") + queryParams.toString()
+      : "");
 
   try {
     const res = await fetch(fetchUrl, {
