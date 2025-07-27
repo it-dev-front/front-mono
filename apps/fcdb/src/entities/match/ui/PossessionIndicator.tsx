@@ -33,12 +33,7 @@ const PossessionIndicator = ({
           width: formattedPosession.userPossession,
         }}
       >
-        <span
-          className="truncate whitespace-nowrap hover:cursor-pointer hover:scale-102 transition-transform"
-          onClick={() => onNicknameClick(userNickName)}
-        >
-          {userNickName}
-        </span>
+        <span className="truncate whitespace-nowrap">{userNickName}</span>
         <span className="mobile:hidden">
           {formattedPosession.userPossession}
         </span>
