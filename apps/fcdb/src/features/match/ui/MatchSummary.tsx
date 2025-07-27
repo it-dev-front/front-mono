@@ -13,15 +13,21 @@ import { PlayerType } from "@/entities/match/types/match.types";
 import PossessionIndicator from "@/entities/match/ui/PossessionIndicator";
 import { UserSearchFormation } from "@/features/user-search/ui/UserSearchFormation";
 import { UserSearchFormationMoblie } from "@/features/user-search/ui/UserSearchFormationMoblie";
+import { useRouter } from "next/navigation";
 
 interface MatchSummaryProps {
   match: MatchSummaryType;
 }
 
 const MatchSummary = ({ match }: MatchSummaryProps): ReactElement => {
+  const router = useRouter();
   const [isExpanded, setIsExpanded] = useState(false);
 
   const winPlayer = match.matchInfo.matchResult === "승";
+
+  const handleNicknameClick = (nickname: string) => {
+    if (nickname) router.push(`/user/${nickname}`);
+  };
 
   return (
     <article className="flex w-full max-w-[1080px] rounded-[8px] bg-gray-900 border border-gray-800 overflow-hidden mobile:rounded-none">
@@ -83,6 +89,7 @@ const MatchSummary = ({ match }: MatchSummaryProps): ReactElement => {
           userPossession={match.matchInfo.indicator.userPossession ?? 0}
           opponentNickName={match.matchInfo.indicator.opponentNickName}
           opponentPossession={match.matchInfo.indicator.opponentPossession ?? 0}
+          onNicknameClick={handleNicknameClick}
         />
 
         <div
