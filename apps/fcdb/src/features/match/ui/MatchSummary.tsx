@@ -68,7 +68,7 @@ const MatchSummary = ({ match }: MatchSummaryProps): ReactElement => {
           <button
             type="button"
             aria-expanded={isExpanded}
-            className="flex justify-center items-center w-[48px] h-[133px] mobile:w-[30px] mobile:h-[82px] border-l-2 border-gray-600 cursor-pointer"
+            className="flex justify-center items-center w-[48px] h-[133px] mobile:w-[40px] mobile:h-[82px] border-l-2 border-gray-600 cursor-pointer"
             onClick={() => setIsExpanded((prev) => !prev)}
           >
             <Image
