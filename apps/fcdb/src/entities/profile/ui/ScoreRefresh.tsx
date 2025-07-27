@@ -27,13 +27,13 @@ const getTimeAgo = (updatedAt: Date): string => {
   const diffDays = Math.floor(diffHours / 24);
 
   if (diffSeconds < 60) {
-    return `업데이트 ${diffSeconds}초 전`;
+    return `${diffSeconds}초 전`;
   } else if (diffMinutes < 60) {
-    return `업데이트 ${diffMinutes}분 전`;
+    return `${diffMinutes}분 전`;
   } else if (diffHours < 24) {
-    return `업데이트 ${diffHours}시간 전`;
+    return `${diffHours}시간 전`;
   } else {
-    return `업데이트 ${diffDays}일 전`;
+    return `${diffDays}일 전`;
   }
 };
 
@@ -62,7 +62,9 @@ export const ScoreRefresh = ({
 
   return (
     <div className="flex flex-col items-center gap-[8px] text-sm text-gray-400">
-      <p className="text-[14px] w-full text-right">{timeAgo} 업데이트</p>
+      <p className="text-[14px] w-[120px] text-right truncate">
+        {timeAgo} 업데이트
+      </p>
       <ScoreRefreshButton onRefresh={handleClickOnRefresh} />
     </div>
   );
