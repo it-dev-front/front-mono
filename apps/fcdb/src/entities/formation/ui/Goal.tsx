@@ -12,7 +12,7 @@ export const Goal = ({ goal }: GoalProps) => {
   return (
     <div>
       <div className="mobile:hidden">
-        <div className="flex items-center justify-center -top-6 absolute">
+        <div className="flex items-center justify-center -top-[20px] absolute">
           <Image
             src={"/images/ball.png"}
             alt="ball-image"
