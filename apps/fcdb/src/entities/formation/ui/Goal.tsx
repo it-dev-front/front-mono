@@ -11,11 +11,11 @@ export const Goal = ({ goal }: GoalProps) => {
 
   return (
     <div>
-      <div className="hidden lg:block">
+      <div className="mobile:hidden">
         <div className="flex items-center justify-center -top-6 absolute">
           <Image
             src={"/images/ball.png"}
-            alt="season-image"
+            alt="ball-image"
             width={24}
             height={24}
             className="rounded-[4px]"
@@ -23,11 +23,11 @@ export const Goal = ({ goal }: GoalProps) => {
           <p className="mb-[2px] text-[#ABEE02]">{`x${goal}`}</p>
         </div>
       </div>
-      <div className="block lg:hidden">
-        <div className="flex items-center justify-center -top-[-20px] right-[-12px] absolute">
+      <div className="hidden mobile:block">
+        <div className="flex items-center justify-center top-[0px] -right-[28px] absolute">
           <Image
             src={"/images/ball.png"}
-            alt="season-image"
+            alt="ball-image"
             width={22}
             height={22}
             className="rounded-[4px]"
