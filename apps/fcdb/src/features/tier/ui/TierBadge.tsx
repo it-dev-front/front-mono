@@ -20,7 +20,7 @@ interface TierBadgeProps {
 export const TierBadge = ({ data }: TierBadgeProps): ReactElement => {
   const parseData = getOfficialMatchType(data);
 
-  if (!parseData) return <div>정보가 없움</div>;
+  if (!parseData) return <div />;
 
   return (
     <div className="flex flex-col items-center space-y-2">
