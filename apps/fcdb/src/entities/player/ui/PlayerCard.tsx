@@ -57,7 +57,7 @@ const PlayerCard = ({ bestPlayer, isUser = true }: PlayerCardProps) => {
   const userImageOverlayStyle = clsx(imageOverlayBaseStyle, "border-[#ABEE02]");
 
   return (
-    <figure className="flex flex-col justify-between w-[124px] h-[117px] mobile:w-[80px] mobile:h-[88px]">
+    <figure className="flex flex-col justify-between w-[124px] h-[117px] mobile:w-[80px] mobile:h-[88px] items-center">
       <section className="relative h-[93px]">
         <Badge.Mvp isMvp={isUser} />
         <div
@@ -78,10 +78,12 @@ const PlayerCard = ({ bestPlayer, isUser = true }: PlayerCardProps) => {
       </section>
 
       <section className="flex gap-[4px] text-[14px] whitespace-nowrap mobile:pt-[6px]">
-        <span className="text-[#CE535D]">
+        <span className="text-[#CE535D] mobile:text-[10px]">
           {POSITION[spPosition as keyof typeof POSITION]}
         </span>
-        <span className="text-color-white">{playerName}</span>
+        <span className="text-color-white mobile:text-[10px]">
+          {playerName}
+        </span>
       </section>
     </figure>
   );

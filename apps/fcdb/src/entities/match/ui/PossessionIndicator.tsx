@@ -26,14 +26,14 @@ const PossessionIndicator = ({
   );
 
   return (
-    <figure className="flex w-full h-[36px] mobile:h-[44px] text-[20px] mobile:text-[10px] font-bold mobile:pt-[10px]">
+    <figure className="flex w-full h-[36px] mobile:h-[36px] text-[20px] mobile:text-[10px] font-bold mobile:pt-[12px]">
       <section
         className={userSectionStyle}
         style={{
           width: formattedPosession.userPossession,
         }}
       >
-        <span className="truncate whitespace-nowrap text-[16px]">
+        <span className="truncate whitespace-nowrap mobile:text-[12px]">
           {userNickName}
         </span>
         <span className="mobile:hidden">
@@ -51,7 +51,7 @@ const PossessionIndicator = ({
           {formattedPosession.opponentPossession}
         </span>
         <span
-          className="truncate whitespace-nowrap hover:cursor-pointer hover:scale-102 transition-transform w-full text-right text-[16px]"
+          className="truncate whitespace-nowrap hover:cursor-pointer hover:scale-102 transition-transform w-full text-right mobile:text-[12px]"
           onClick={() => onNicknameClick(opponentNickName)}
         >
           {opponentNickName}
