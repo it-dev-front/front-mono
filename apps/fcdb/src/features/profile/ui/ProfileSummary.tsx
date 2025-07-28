@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { ProfileBox } from "./ProfileBox";
-import { parseTierData, TierBadge } from "@/features/tier/ui/TierBadge";
+import { TierBadge, getOfficialMatchType } from "@/features/tier/ui/TierBadge";
 import { Score } from "./Score";
 import {
   MobileScoreRefresh,
@@ -34,7 +34,23 @@ export const MobileProfileSummary = ({
   bestPlayer: (PlayerType & { total: number }) | null;
   updatedAt: Date;
 }): ReactElement => {
-  const tierData = parseTierData(ratingData);
+  const tierData = getOfficialMatchType(ratingData);
+
+  const renderTierImg = () => {
+    if (!tierData) {
+      return null;
+    }
+
+    return <TierImage divisionId={tierData?.division || 0} />;
+  };
+
+  const renderDivisionLabel = () => {
+    if (!tierData) {
+      return null;
+    }
+
+    return <DivisionLabel divisionId={tierData?.division || 0} />;
+  };
 
   return (
     <div className="mx-auto h-auto w-full flex flex-col items-start justify-between bg-gray-900 px-[20px] py-[16px] gap-[16px]">
@@ -44,9 +60,9 @@ export const MobileProfileSummary = ({
       </div>
       <div className="flex items-center w-full justify-evenly">
         <div className="w-[200px] flex items-center justify-start gap-[16px]">
-          <TierImage divisionId={tierData?.division || 0} />
+          {renderTierImg()}
           <div className={"flex flex-col gap-[8px]"}>
-            <DivisionLabel divisionId={tierData?.division || 0} />
+            {renderDivisionLabel()}
             <p className="text-[20px]">{profileData.nickname}</p>
             <p className="text-[18px]">Lv. {profileData.level}</p>
           </div>

@@ -4,20 +4,13 @@ import { MatchTypeLabel } from "@/entities/tier/ui/MatchTypeLabel";
 import { TierImage } from "@/entities/tier/ui/TierImage";
 import { ReactElement } from "react";
 
-export const parseTierData = (
+export const getOfficialMatchType = (
   data: TierBadgeType | TierBadgeType[]
 ): TierBadgeType | null => {
   if (Array.isArray(data)) {
-    if (data.length === 0) return null;
-    const sorted = data.sort(
-      (a, b) =>
-        new Date(b.achievementDate).getTime() -
-        new Date(a.achievementDate).getTime()
-    );
-    return sorted[0] ?? null;
+    return data.find((item) => item.matchType === 50) ?? null;
   }
-
-  return data ?? null;
+  return data.matchType === 50 ? data : null;
 };
 
 interface TierBadgeProps {
@@ -25,9 +18,9 @@ interface TierBadgeProps {
 }
 
 export const TierBadge = ({ data }: TierBadgeProps): ReactElement => {
-  const parseData = parseTierData(data);
+  const parseData = getOfficialMatchType(data);
 
-  if (!parseData) return <div>정보가 없움</div>;
+  if (!parseData) return <div />;
 
   return (
     <div className="flex flex-col items-center space-y-2">
