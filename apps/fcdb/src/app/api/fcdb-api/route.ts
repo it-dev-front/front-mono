@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const API_CONFIG = {
   nexon: {
-    baseUrl: "https://open.api.nexon.com",
+    baseUrl: process.env.NEXT_PUBLIC_FCONLINE_API_URL,
     apiKey: process.env.FCONLINE_PROD_API_KEY,
   },
 };
