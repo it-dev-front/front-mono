@@ -1,4 +1,4 @@
-import { API_URL, NEXON_API_KEY } from "@/app/(app)/config/env";
+import { NEXON_API_KEY, FCDB_PROXY_URL } from "@/app/(app)/config/env";
 import { ApiErrorResponse } from "../types";
 import { apiFactoryMap } from "../model/apiFactoryMap";
 
@@ -13,7 +13,7 @@ const buildUrl = (url: string, query?: Record<string, any>) => {
     return `${url}${qs}`;
   }
 
-  return `${"http://localhost:3000/api/fcdb-api?path="}${url}${qs}`;
+  return `${FCDB_PROXY_URL}${url}${qs}`;
 };
 
 export class FcClient {
