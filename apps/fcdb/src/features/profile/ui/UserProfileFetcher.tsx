@@ -3,6 +3,7 @@
 import { ProfileSummary } from "./ProfileSummary";
 import {
   MatchSummaryType,
+  PlayerListType,
   ScorePanelType,
 } from "@/entities/match/types/match.info.types";
 import { useMemo } from "react";
@@ -32,7 +33,13 @@ export const UserProfileFetcher = ({
 }: UserProfileFetcherProps) => {
   const bestPlayer = useMemo(() => {
     return getBestPlayerActionShoot(
-      initialSummaries?.map((match) => match.matchPlayers).flat() || []
+      initialSummaries
+        ?.map((match) => {
+          if (match.matchPlayers.length === 0) return [];
+          return match.matchPlayers[0];
+        })
+        .filter((player): player is PlayerListType => player !== undefined)
+        .flat() || []
     );
   }, [initialSummaries]);
 
