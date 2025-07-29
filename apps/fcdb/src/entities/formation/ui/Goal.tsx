@@ -24,7 +24,7 @@ export const Goal = ({ goal }: GoalProps) => {
         </div>
       </div>
       <div className="hidden mobile:block">
-        <div className="flex items-center justify-center top-[0px] -right-[28px] absolute">
+        <div className="flex items-center justify-center top-0 -right-[28px] absolute">
           <Image
             src={"/images/ball.png"}
             alt="ball-image"
