@@ -77,14 +77,16 @@ export const UserSearchFormationHalfCoatMoblie = ({
               }}
             >
               <div className="relative w-full h-full flex items-center justify-center">
-                <Goal goal={goal} />
-                <PlayerImage
-                  spId={soccerPlayer.spId}
-                  alt={playerName ? playerName : "선수 이미지"}
-                  width={38}
-                  height={38}
-                  className="rounded-full border-[1px] border-[#ABEE02]"
-                />
+                <div className="relative">
+                  <Goal goal={goal} />
+                  <PlayerImage
+                    spId={soccerPlayer.spId}
+                    alt={playerName ? playerName : "선수 이미지"}
+                    width={38}
+                    height={38}
+                    className="rounded-full border-[1px] border-[#ABEE02]"
+                  />
+                </div>
                 {seasonImg && (
                   <div className="absolute left-0 -bottom-[8px] w-full">
                     <div className="flex justify-center gap-[4px] w-full items-center">
