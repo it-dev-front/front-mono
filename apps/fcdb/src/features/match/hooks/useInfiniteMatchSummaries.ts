@@ -40,13 +40,13 @@ export function useInfiniteMatchSummaries(
         });
 
         const info = convertMatchInfo(sortedMatchInfo);
-        const status = covertMatchStatus(match);
-        const players = convertPlayers(sortedMatchInfo);
+        const matchStatus = covertMatchStatus(match);
+        const matchPlayers = convertPlayers(sortedMatchInfo);
 
         return {
           matchInfo: info,
-          matchStatus: status,
-          matchPlayers: players,
+          matchStatus,
+          matchPlayers,
           matches: match,
         };
       })
