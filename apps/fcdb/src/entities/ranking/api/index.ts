@@ -1,17 +1,15 @@
-import { supabase } from "@/shared/utils/supabase";
-
 export const getRanking = async (page: number, pageSize: number = 20) => {
-  const from = (page - 1) * pageSize;
-  const to = from + pageSize;
+  const response = await fetch(`/api/rank?page=${page}&pageSize=${pageSize}`);
 
-  const { data, error } = await supabase
-    .from("ranking")
-    .select("*")
-    .order("rankNo", { ascending: true })
-    .range(from, to); // 한 개 더 가져옴
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
 
-  const hasNextPage = data && data.length > pageSize;
-  const pageData = hasNextPage ? data.slice(0, pageSize) : data;
+  const result = await response.json();
 
-  return { data: pageData, error, hasNextPage };
+  return {
+    data: result.data,
+    error: result.error,
+    hasNextPage: result.hasNextPage,
+  };
 };
