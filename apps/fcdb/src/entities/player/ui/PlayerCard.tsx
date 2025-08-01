@@ -1,12 +1,13 @@
-import { PlayerType } from "@/entities/match/types/match.types";
-import { MetaQueries } from "@/entities/meta/model/queries";
-import Badge from "@/entities/player/ui/Badge";
-import { POSITION } from "@/shared/constant/position";
-import { useQuery } from "@tanstack/react-query";
-import clsx from "clsx";
 import { memo, useMemo } from "react";
-import { playerActionImageSource } from "../lib";
+
+import Badge from "@/entities/player/ui/Badge";
+import { MetaQueries } from "@/entities/meta/model/queries";
+import { POSITION } from "@/shared/constant/position";
 import PlayerImage from "@/shared/components/PlayerImage";
+import { PlayerType } from "@/entities/match/types/match.types";
+import clsx from "clsx";
+import { playerActionImageSource } from "../lib";
+import { useQuery } from "@tanstack/react-query";
 
 // TODO: 컴포넌트 분리, SRP에 맞게 분리
 // 포지션: spposition:number -> desc:string 교환`
@@ -49,7 +50,7 @@ const PlayerCard = ({ bestPlayer, isUser = true }: PlayerCardProps) => {
   }
 
   const imageOverlayBaseStyle =
-    "relative w-[72px] h-[72px] rounded-full border-[2px] bg-gray-900 mx-auto overflow-hidden";
+    "relative w-[72px] h-[72px] mobile:w-[62px] mobile:h-[62px] rounded-full border-[2px] bg-gray-900 mx-auto overflow-hidden";
   const opponentImageOverlayStyle = clsx(
     imageOverlayBaseStyle,
     "border-gray-600"

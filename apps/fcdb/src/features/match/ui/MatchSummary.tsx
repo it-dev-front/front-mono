@@ -1,18 +1,19 @@
 "use client";
 
 import React, { ReactElement, useState } from "react";
+
 import Image from "next/image";
-import clsx from "clsx";
-import PlayerCard from "@/entities/player/ui/PlayerCard";
-import MatchSummaryHeader from "@/features/match/ui/MatchSummaryHeader";
-import ScoreCard from "@/entities/match/ui/ScoreBoard";
-import MatchResultLabel from "@/entities/match/ui/MatchResultLabel";
 import MatchDateLabel from "@/entities/match/ui/MatchDateLabel";
+import MatchResultLabel from "@/entities/match/ui/MatchResultLabel";
+import MatchSummaryHeader from "@/features/match/ui/MatchSummaryHeader";
 import { MatchSummaryType } from "@/entities/match/types/match.info.types";
+import PlayerCard from "@/entities/player/ui/PlayerCard";
 import { PlayerType } from "@/entities/match/types/match.types";
 import PossessionIndicator from "@/entities/match/ui/PossessionIndicator";
+import ScoreCard from "@/entities/match/ui/ScoreBoard";
 import { UserSearchFormation } from "@/features/user-search/ui/UserSearchFormation";
 import { UserSearchFormationMoblie } from "@/features/user-search/ui/UserSearchFormationMoblie";
+import clsx from "clsx";
 import { useRouter } from "next/navigation";
 
 interface MatchSummaryProps {
@@ -44,7 +45,7 @@ const MatchSummary = ({ match }: MatchSummaryProps): ReactElement => {
             matchDate={match.matchStatus.matchDate}
           />
 
-          <div className="flex items-center gap-[34.5px] mx-auto">
+          <div className="flex items-center gap-[34.5px] mx-auto mobile:pt-[12px]">
             <PlayerCard
               isUser={winPlayer}
               bestPlayer={match?.matchPlayers[0]?.bestPlayer || null}
