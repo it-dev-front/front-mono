@@ -6,6 +6,8 @@ import { AppProvider } from "./(app)/providers";
 import { Toast } from "@/shared/ui/toast";
 import { Navigation } from "@/widgets/navigation";
 import NextTopLoader from "nextjs-toploader";
+import { GoogleTagManager, GoogleAnalytics } from "@next/third-parties/google";
+import { isProd } from "@/shared/lib/environment";
 
 // 기본 메타 태그
 export const metadata: Metadata = {
@@ -77,9 +79,23 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const renderGTM = () => {
+    if (isProd) {
+      return (
+        <>
+          <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID as string} />;
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID as string} />
+        </>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <html lang="ko" className={`${fontClasses}`}>
       <body>
+        {renderGTM()}
         <AppProvider>
           <Navigation />
           <NextTopLoader color="#ABEE02" showSpinner={false} />
