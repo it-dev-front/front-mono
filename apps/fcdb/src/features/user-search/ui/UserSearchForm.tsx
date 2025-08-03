@@ -8,6 +8,7 @@ import { useRouter } from "nextjs-toploader/app";
 import { ButtonSpinner } from "@/shared/ui/spinner/ButtonSpinner";
 import { useState } from "react";
 import { sendGTMEvent } from "@next/third-parties/google";
+import { isProd } from "@/shared/lib/environment";
 
 export const UserSearchForm = () => {
   const router = useRouter();
@@ -40,7 +41,7 @@ export const UserSearchForm = () => {
   const handleSubmit = (formData: FormData) => {
     const name = formData.get("name") as string;
 
-    if (name) {
+    if (name && isProd) {
       sendGTMEvent({
         event: "user_search_submit",
         value: {
