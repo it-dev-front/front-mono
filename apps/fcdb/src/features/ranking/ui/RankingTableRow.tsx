@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import { CircularProgressBar } from "@/shared/ui/progressbar/CircularProgressBar";
 import { RankingRecord } from "@/entities/ranking/types/ranking-record.types";
 

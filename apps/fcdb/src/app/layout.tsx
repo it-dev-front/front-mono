@@ -5,6 +5,7 @@ import { fontClasses } from "@/shared/fonts";
 import { AppProvider } from "./(app)/providers";
 import { Toast } from "@/shared/ui/toast";
 import { Navigation } from "@/widgets/navigation";
+import NextTopLoader from "nextjs-toploader";
 
 // 기본 메타 태그
 export const metadata: Metadata = {
@@ -81,6 +82,7 @@ export default function RootLayout({
       <body>
         <AppProvider>
           <Navigation />
+          <NextTopLoader color="#ABEE02" showSpinner={false} />
           {children}
         </AppProvider>
         <Toast position="top-right" />
