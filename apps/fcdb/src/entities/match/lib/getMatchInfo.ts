@@ -21,7 +21,7 @@ const covertMatchStatus = (
 /**@description 매치 정보 변환*/
 const convertMatchInfo = (
   matchInfo: MatchPlayerInfoType[]
-): ConvertedMatchInfo | null => {
+): ConvertedMatchInfo => {
   const firstMatch = matchInfo[0];
   const secondMatch = matchInfo[1];
 

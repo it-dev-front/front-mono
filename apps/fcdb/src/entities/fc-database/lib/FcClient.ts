@@ -53,6 +53,6 @@ export class FcClient {
 
   static get<T extends ApiType>(type: T): ReturnType<ApiFactoryMap[T]> {
     const factory = apiFactoryMap[type];
-    return factory(this.request);
+    return factory(this.request) as ReturnType<ApiFactoryMap[T]>;
   }
 }
