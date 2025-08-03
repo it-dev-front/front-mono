@@ -35,9 +35,7 @@ export const UserSearchFormation = ({
 
   return (
     <div>
-      <p className="text-center text-[18px] pt-[20px] pb-[8px] lg:pt-[16px] lg:text-[20px] lg:pb-[14px]">
-        스쿼드 정보
-      </p>
+      <p className="text-center pt-[16px] text-[20px] pb-[14px]">스쿼드 정보</p>
 
       <div className="flex gap-[12px] px-[20px] lg:gap-[24px]">
         <PositionIndicator color="#CE535D" label="FW" />
