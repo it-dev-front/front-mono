@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { useRouter } from "nextjs-toploader/app";
 import { ButtonSpinner } from "@/shared/ui/spinner/ButtonSpinner";
 import { useState } from "react";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 export const UserSearchForm = () => {
   const router = useRouter();
@@ -36,8 +37,23 @@ export const UserSearchForm = () => {
     }
   }, [isPending]);
 
+  const handleSubmit = (formData: FormData) => {
+    const name = formData.get("name") as string;
+
+    if (name) {
+      sendGTMEvent({
+        event: "user_search_submit",
+        value: {
+          nickname: name,
+        },
+      });
+    }
+
+    formAction(formData);
+  };
+
   return (
-    <Form action={formAction} className="flex items-center">
+    <Form action={handleSubmit} className="flex items-center">
       <input
         name="name"
         placeholder="구단주 이름을 입력해주세요."
