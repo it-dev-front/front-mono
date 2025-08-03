@@ -14,7 +14,7 @@ import ScoreCard from "@/entities/match/ui/ScoreBoard";
 import { UserSearchFormation } from "@/features/user-search/ui/UserSearchFormation";
 import { UserSearchFormationMoblie } from "@/features/user-search/ui/UserSearchFormationMoblie";
 import clsx from "clsx";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 
 interface MatchSummaryProps {
   match: MatchSummaryType;
