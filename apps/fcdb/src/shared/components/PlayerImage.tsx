@@ -17,6 +17,7 @@ export default function PlayerImage({ spId, ...rest }: any) {
 
   return (
     <Image
+      unoptimized
       {...rest}
       src={imgSrc}
       onError={() => {
