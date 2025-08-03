@@ -96,7 +96,7 @@ const MatchSummary = ({ match }: MatchSummaryProps): ReactElement => {
         <div
           className={clsx(
             "overflow-hidden transition-[height] duration-300 ease-in-out",
-            isExpanded ? "h-[814px] mobile:h-[1300px]" : "h-0"
+            isExpanded ? "h-[726px] mobile:h-[1300px]" : "h-0"
           )}
         >
           {isExpanded && (

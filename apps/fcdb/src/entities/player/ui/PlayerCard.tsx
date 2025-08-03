@@ -46,7 +46,7 @@ const PlayerCard = ({ bestPlayer, isUser = true }: PlayerCardProps) => {
   }, [bestPlayer, soccerPlayerMeta]);
 
   if (!bestPlayer) {
-    return <div className="w-[124px] block" />;
+    return <div className="w-[124px] block mobile:w-[80px]" />;
   }
 
   const imageOverlayBaseStyle =

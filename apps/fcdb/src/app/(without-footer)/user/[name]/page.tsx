@@ -2,7 +2,7 @@ import { User } from "@/views/User";
 import { Metadata } from "next";
 
 interface UserPageProps {
-  params: { name: string };
+  params: Promise<{ name: string }>;
 }
 
 export async function generateMetadata({
