@@ -4,7 +4,7 @@ import Form from "next/form";
 import { userSearchAction } from "./UserSearchForm.server";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import { ButtonSpinner } from "@/shared/ui/spinner/ButtonSpinner";
 import { useState } from "react";
 
