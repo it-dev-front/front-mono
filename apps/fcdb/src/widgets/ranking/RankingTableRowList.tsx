@@ -21,7 +21,7 @@ export const RankingTableRowList = () => {
 
   return (
     <>
-      <tbody className="flex flex-col gap-1 pb-21">
+      <tbody className="flex flex-col gap-1">
         {allItems.map((record) => (
           <Fragment key={record.rankNo}>
             <RankingTableRow record={record} />
@@ -33,8 +33,8 @@ export const RankingTableRowList = () => {
         <tr>
           <td>
             {hasNextPage && <div ref={loadMoreRef} className="h-4" />}
-            {isFetchingNextPage && (
-              <div className="flex justify-center items-center h-auto">
+            {!isFetchingNextPage && (
+              <div className="flex justify-center items-center h-auto my-10">
                 <BallSpinner />
               </div>
             )}
