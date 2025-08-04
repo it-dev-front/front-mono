@@ -42,7 +42,7 @@ export const MatchList = ({
         initialSummaries={initialData}
         isLoading={loading}
       />
-      <div className="w-full flex flex-col justify-center items-center gap-[8px] mobile:gap-[4px]">
+      <div className="w-full flex flex-col justify-center items-center gap-[8px] mobile:gap-[10px]">
         {infiniteSummaries?.map((match: MatchSummaryType, index: number) => (
           <div
             key={`${index}_match_list`}
