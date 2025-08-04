@@ -83,7 +83,7 @@ export default function RootLayout({
     if (isProd) {
       return (
         <>
-          <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID as string} />;
+          <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID as string} />
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID as string} />
         </>
       );
