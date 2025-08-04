@@ -55,15 +55,20 @@ export const UserSearchForm = () => {
 
   return (
     <Form action={handleSubmit} className="flex items-center">
-      <input
-        name="name"
-        placeholder="구단주 이름을 입력해주세요."
-        className="w-[64vw] h-10  bg-white text-xs text-[#000000] px-4 py-2  rounded-lg lg:text-[16px] lg:w-[500px] lg:h-14"
-      />
+      <div className="flex-1">
+        <div className="transform scale-[0.875] origin-left lg:scale-100">
+          <input
+            name="name"
+            disabled={isLoading}
+            placeholder="구단주 이름을 입력해주세요."
+            className="w-[114%] h-10 text-[16px] bg-white text-black px-4 py-2 rounded-lg lg:w-[500px] lg:h-14 disabled:bg-[#ededed] disabled:text-[#b0b0b0] disabled:cursor-not-allowed"
+          />
+        </div>
+      </div>
       <button
         type="submit"
         disabled={isLoading}
-        className="ml-[2vw] w-[24vw] h-10 bg-gray-900 text-xs font-bold text-[#FFFFFF] px-4 py-2 rounded-lg hover:bg-gray-800 lg:text-[16px] lg:ml-4 lg:w-32 lg:h-14 cursor-pointer flex items-center justify-center"
+        className="ml-[2vw] w-[24vw] h-10 bg-gray-900 text-xs font-bold text-white px-4 py-2 rounded-lg hover:bg-gray-800 flex items-center justify-center lg:text-[16px] lg:ml-4 lg:w-32 lg:h-14 cursor-pointer"
       >
         {isLoading ? <ButtonSpinner /> : "전적보기"}
       </button>
