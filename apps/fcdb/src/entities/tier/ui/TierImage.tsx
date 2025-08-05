@@ -18,6 +18,7 @@ export const TierImage = ({ divisionId }: TierImageProps): ReactElement => {
   const imageSource = findTierImage(divisionId);
   return (
     <Image
+      unoptimized
       className={"border-solid border-1 rounded-[50%]"}
       src={imageSource}
       alt={`${findDivisionLabel(divisionId)}_티어_이미지`}

@@ -25,7 +25,13 @@ interface SeasonBadgeProps {
 const SeasonBadge = ({ seasonImg }: SeasonBadgeProps) => {
   return (
     <div className="relative w-[39px] h-[25px] mobile:w-[30px] mobile:h-[18px] rounded-[4px] overflow-hidden">
-      <Image src={seasonImg} fill className="object-fill" alt="season-badge" />
+      <Image
+        unoptimized
+        src={seasonImg}
+        fill
+        className="object-fill"
+        alt="season-badge"
+      />
     </div>
   );
 };
