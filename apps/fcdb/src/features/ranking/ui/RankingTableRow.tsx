@@ -51,6 +51,7 @@ export const RankingTableRow = ({ record }: RankingTableRowProps) => {
         <div className="relative overflow-hidden rounded-full w-15 h-15 mobile:w-10 mobile:h-10">
           {record.rankBestImg && (
             <Image
+              unoptimized
               src={record.rankBestImg}
               fill
               alt="최고등급"

@@ -91,6 +91,7 @@ export const UserSearchFormationHalfCoatMoblie = ({
                   <div className="absolute left-0 -bottom-[8px] w-full">
                     <div className="flex justify-center gap-[4px] w-full items-center">
                       <Image
+                        unoptimized
                         src={seasonImg}
                         alt="season-image"
                         width={20}

@@ -23,6 +23,7 @@ const RankingLayout = ({ children }: { children: React.ReactNode }) => {
     <main className="relative w-full min-w-[366px] flex flex-col min-h-screen pt-[62px]">
       <div className="w-[887px] h-[485px] fixed bottom-0 left-0 z-0 mobile:hidden">
         <Image
+          unoptimized
           src="/images/ranking-bg.png"
           fill
           alt="ranking-bg"

@@ -18,18 +18,18 @@ const MvpBadge = ({ isMvp }: MvpBadgeProps) => {
 };
 
 interface SeasonBadgeProps {
-  seasonId?: number;
+  seasonImg: string;
 }
 
 // 4px 겹쳐짐
-const SeasonBadge = ({ seasonId }: SeasonBadgeProps) => {
-  // TODO: mapping하여 시즌이미지 가져오기
+const SeasonBadge = ({ seasonImg }: SeasonBadgeProps) => {
   return (
     <div className="relative w-[39px] h-[25px] mobile:w-[30px] mobile:h-[18px] rounded-[4px] overflow-hidden">
       <Image
-        src="https://ssl.nexon.com/s2/game/fc/online/obt/externalAssets/new/season/lki.png"
+        unoptimized
+        src={seasonImg}
         fill
-        className="object-cover"
+        className="object-fill"
         alt="season-badge"
       />
     </div>
@@ -43,7 +43,7 @@ interface GradeBadgeProps {
 const GradeBadge = ({ spGrade }: GradeBadgeProps) => {
   //TODO: bg 스타일 tailwind에 정의
   const baseStyle =
-    "flex items-center justify-center w-[25px] h-[25px] rounded-[4px] mobile:w-[18px] mobile:h-[18px]";
+    "flex items-center justify-center w-[25px] h-[25px] rounded-[4px] mobile:w-[18px] mobile:h-[18px] text-[14px] mobile:text-[12px]";
   const textColor = spGrade < 5 ? "text-gray-100" : "text-gray-900";
   const backgroundColor =
     spGrade < 2

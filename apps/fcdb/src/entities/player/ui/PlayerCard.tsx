@@ -26,6 +26,7 @@ interface PlayerCardProps {
 
 const PlayerCard = ({ bestPlayer, isUser = true }: PlayerCardProps) => {
   const { data: soccerPlayerMeta } = useQuery(MetaQueries.getPlayerMeta());
+  const { data: seasonIdMeta } = useQuery(MetaQueries.getSeasonIdMeta());
 
   const { spPosition, spGrade } = bestPlayer ?? {};
 
@@ -57,6 +58,10 @@ const PlayerCard = ({ bestPlayer, isUser = true }: PlayerCardProps) => {
   );
   const userImageOverlayStyle = clsx(imageOverlayBaseStyle, "border-[#ABEE02]");
 
+  const seasonImg = seasonIdMeta?.find(
+    (element) => element.seasonId == seasonId
+  )?.seasonImg;
+
   return (
     <figure className="flex flex-col justify-between w-[124px] h-[117px] mobile:w-[80px] mobile:h-[88px] items-center">
       <section className="relative h-[93px]">
@@ -73,7 +78,7 @@ const PlayerCard = ({ bestPlayer, isUser = true }: PlayerCardProps) => {
           />
         </div>
         <div className="absolute w-full bottom-0 flex justify-center gap-[8px] z-1">
-          {seasonId && <Badge.Season seasonId={seasonId} />}
+          {seasonImg && <Badge.Season seasonImg={seasonImg} />}
           <Badge.Grade spGrade={spGrade ?? 0} />
         </div>
       </section>
