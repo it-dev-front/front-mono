@@ -4,6 +4,7 @@ export const BallSpinner = () => {
   return (
     <div>
       <Image
+        unoptimized
         src="/images/ball-spinner.gif"
         width={60}
         height={60}

@@ -73,6 +73,7 @@ const MatchSummary = ({ match }: MatchSummaryProps): ReactElement => {
             onClick={() => setIsExpanded((prev) => !prev)}
           >
             <Image
+              unoptimized
               src="/arrow-green.svg"
               alt="접기/펼치기"
               width={16}

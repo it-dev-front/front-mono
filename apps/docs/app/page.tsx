@@ -12,8 +12,8 @@ const ThemeImage = (props: Props) => {
 
   return (
     <>
-      <Image {...rest} src={srcLight} className="imgLight" />
-      <Image {...rest} src={srcDark} className="imgDark" />
+      <Image unoptimized {...rest} src={srcLight} className="imgLight" />
+      <Image unoptimized {...rest} src={srcDark} className="imgDark" />
     </>
   );
 };
@@ -46,6 +46,7 @@ export default function Home() {
             rel="noopener noreferrer"
           >
             <Image
+              unoptimized
               className={styles.logo}
               src="/vercel.svg"
               alt="Vercel logomark"
@@ -74,6 +75,7 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <Image
+            unoptimized
             aria-hidden
             src="/window.svg"
             alt="Window icon"
@@ -88,6 +90,7 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <Image
+            unoptimized
             aria-hidden
             src="/globe.svg"
             alt="Globe icon"
