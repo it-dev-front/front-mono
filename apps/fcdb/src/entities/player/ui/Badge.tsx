@@ -18,20 +18,14 @@ const MvpBadge = ({ isMvp }: MvpBadgeProps) => {
 };
 
 interface SeasonBadgeProps {
-  seasonId?: number;
+  seasonImg: string;
 }
 
 // 4px 겹쳐짐
-const SeasonBadge = ({ seasonId }: SeasonBadgeProps) => {
-  // TODO: mapping하여 시즌이미지 가져오기
+const SeasonBadge = ({ seasonImg }: SeasonBadgeProps) => {
   return (
     <div className="relative w-[39px] h-[25px] mobile:w-[30px] mobile:h-[18px] rounded-[4px] overflow-hidden">
-      <Image
-        src="https://ssl.nexon.com/s2/game/fc/online/obt/externalAssets/new/season/lki.png"
-        fill
-        className="object-cover"
-        alt="season-badge"
-      />
+      <Image src={seasonImg} fill className="object-fill" alt="season-badge" />
     </div>
   );
 };
