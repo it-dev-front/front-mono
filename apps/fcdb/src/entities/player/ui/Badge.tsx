@@ -43,7 +43,7 @@ interface GradeBadgeProps {
 const GradeBadge = ({ spGrade }: GradeBadgeProps) => {
   //TODO: bg 스타일 tailwind에 정의
   const baseStyle =
-    "flex items-center justify-center w-[25px] h-[25px] rounded-[4px] mobile:w-[18px] mobile:h-[18px]";
+    "flex items-center justify-center w-[25px] h-[25px] rounded-[4px] mobile:w-[18px] mobile:h-[18px] text-[14px] mobile:text-[12px]";
   const textColor = spGrade < 5 ? "text-gray-100" : "text-gray-900";
   const backgroundColor =
     spGrade < 2
