@@ -11,6 +11,11 @@ import { isProd } from "@/shared/lib/environment";
 
 // 기본 메타 태그
 export const metadata: Metadata = {
+  verification: {
+    other: {
+      "naver-site-verification": "72f6346261589e578c576ec8e3a5b24b4e9e6d9b",
+    },
+  },
   title: {
     default: "FCDB | FC 온라인 전적 검색",
     template: "%s | FCDB",
