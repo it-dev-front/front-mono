@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import { TIME_FORMATS } from "@/shared/constant/time";
+import { convertUtcToKst } from "@/shared/utils/date";
 
 /**
  * 주어진 날짜와 현재 날짜의 차이를 상대적인 시간 표현으로 변환합니다.
@@ -17,9 +18,11 @@ export default function formatRelativeTime(date: Date): string {
     return "날짜 정보 없음";
   }
 
+  const koreaDate = convertUtcToKst(targetDate);
+
   // 두 날짜의 차이를 초 단위로 계산
   const elapsedSeconds = Math.trunc(
-    (new Date().getTime() - targetDate.getTime()) / 1000
+    (new Date().getTime() - koreaDate.getTime()) / 1000
   );
 
   // 특정 format 찾기
