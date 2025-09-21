@@ -2,7 +2,7 @@
   "name": "fcdb",
   "version": "0.0.2",
   "type": "module",
-  "private": true,
+  "private": false,
   "scripts": {
     "dev": "next dev --port 3000",
     "build": "next build",
