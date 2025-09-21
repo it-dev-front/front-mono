@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     branches:
-      - develop
+      - main
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -29,7 +29,6 @@ jobs:
       - name: Create Release Pull Request
         uses: changesets/action@v1
         with:
-          base: main
           publish: pnpm changeset tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
