@@ -1,5 +1,11 @@
 # fcdb
 
+## 0.0.6
+
+### Patch Changes
+
+- [#111](https://github.com/it-dev-front/front-mono/pull/111) [`f245515`](https://github.com/it-dev-front/front-mono/commit/f245515b8160fd72973c6a19f4216a9a9f1ac3a2) Thanks [@github-actions](https://github.com/apps/github-actions)! - 버전 관리 테스트
+
 ## 0.0.5
 
 ### Patch Changes
