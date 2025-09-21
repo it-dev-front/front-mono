@@ -1,5 +1,11 @@
 # fcdb
 
+## 0.0.3
+
+### Patch Changes
+
+- 79414b1: 1. 버전 관리 테스트
+
 ## 0.0.2
 
 ### Patch Changes
