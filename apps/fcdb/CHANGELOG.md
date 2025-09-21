@@ -1,5 +1,11 @@
 # fcdb
 
+## 0.0.4
+
+### Patch Changes
+
+- 115e115: 1. 버전 관리 테스트
+
 ## 0.0.3
 
 ### Patch Changes
