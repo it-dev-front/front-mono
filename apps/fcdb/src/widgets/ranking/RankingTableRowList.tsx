@@ -13,7 +13,7 @@ export const RankingTableRowList = () => {
     return (
       <tbody className="text-center py-8 text-red-500">
         <tr>
-          <td>데이터를 불러오는 중 오류가 발생했습니다.</td>
+          <td>데이터를 불러오는 중 오류가 발생했습니다</td>
         </tr>
       </tbody>
     );
