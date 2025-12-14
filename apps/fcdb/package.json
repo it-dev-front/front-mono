@@ -1,8 +1,8 @@
 {
   "name": "fcdb",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
-  "private": false,
+  "private": true,
   "scripts": {
     "dev": "next dev --port 3000",
     "build": "next build",
