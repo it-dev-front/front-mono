@@ -2,11 +2,11 @@
 
 import { RankingTableRow } from "@/features/ranking/ui/RankingTableRow";
 import { useInfiniteRankingData } from "@/features/ranking/hooks/useInfiniteRankingData";
-import { BallSpinner } from "@/shared/ui/spinner/BallSpinner";
+import { ShowMoreButton } from "@/shared/ui/button/ShowMoreButton";
 import { Fragment } from "react";
 
 export const RankingTableRowList = () => {
-  const { allItems, hasNextPage, isFetchingNextPage, error, loadMoreRef } =
+  const { allItems, hasNextPage, isFetchingNextPage, error, fetchNextPage } =
     useInfiniteRankingData<HTMLDivElement>();
 
   if (error) {
@@ -32,12 +32,13 @@ export const RankingTableRowList = () => {
       <tfoot>
         <tr>
           <td>
-            {hasNextPage && <div ref={loadMoreRef} className="h-4" />}
-            {!isFetchingNextPage && (
-              <div className="flex justify-center items-center h-auto my-10">
-                <BallSpinner />
-              </div>
-            )}
+            <div className="w-full flex justify-center items-center my-[16px]">
+              <ShowMoreButton
+                onClick={() => fetchNextPage()}
+                disabled={!hasNextPage || isFetchingNextPage}
+                loading={isFetchingNextPage}
+              />
+            </div>
           </td>
         </tr>
       </tfoot>

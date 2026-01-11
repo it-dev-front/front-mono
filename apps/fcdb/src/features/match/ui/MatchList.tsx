@@ -9,8 +9,8 @@ import {
   MatchDetailResponse,
   UserProfileResponse,
 } from "@/entities/fc-database/types";
-import { ButtonSpinner } from "@/shared/ui/spinner/ButtonSpinner";
 import { useInfiniteMatchSummaries } from "../hooks/useInfiniteMatchSummaries";
+import { ShowMoreButton } from "@/shared/ui/button/ShowMoreButton";
 
 interface MatchListProps {
   ouid: string;
@@ -51,20 +51,15 @@ export const MatchList = ({
             <MatchSummary match={match} />
           </div>
         ))}
-      </div>
-      <div className="w-full flex justify-center items-center my-5">
-        <button
-          type="button"
-          className={`bg-primary-300 text-white px-4 py-2 rounded-md w-[244px] h-[48px] ${
-            loading
-              ? "bg-primary-100 opacity-80 cursor-default"
-              : "cursor-pointer"
-          }`}
-          onClick={() => fetchNextPage()}
-          disabled={!hasNextPage || loading}
-        >
-          {loading ? <ButtonSpinner /> : "더 보기"}
-        </button>
+        <div className="w-full flex justify-center items-center mt-[8px] mobile:mt-[6px] mb-[16px] mobile:mb-[12px]">
+          <div className="w-full max-w-[1080px]">
+            <ShowMoreButton
+              onClick={() => fetchNextPage()}
+              disabled={!hasNextPage || loading}
+              loading={loading}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
